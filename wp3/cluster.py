@@ -60,6 +60,7 @@ def listifyTSV(tsvPath):
             cellIDs.append(left)
             clusterIDs.append(right)
             combinedIDs.append([left,right])
+    IDs.close()
     return cellIDs,clusterIDs,combinedIDs
     
 def main():
@@ -108,7 +109,7 @@ def main():
      # print(ID)
 
     allCells.close()
-    IDs.close()
+
 
 if __name__ == "__main__":
     main()
