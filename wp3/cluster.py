@@ -11,8 +11,9 @@ import bamnostic as bs
 #just for testing how to work with the VMs
 
 #input files, will change to argsparse later on
-bam = "/mnt/workspace_stud/stud8/testdata.bam"
-tsv = "/mnt/workspace_stud/stud8/clusterIDs.tsv"
+bam = "inputWP3/testdata.bam"
+tsv = "inputWP3/clusterIDs.tsv"
+outputDir="outputWP3/"
 
 #opening the files
 allCells = bs.AlignmentFile(bam,"rb")
