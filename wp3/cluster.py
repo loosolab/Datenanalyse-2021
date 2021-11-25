@@ -3,7 +3,7 @@
 """
 Created on Thu Nov 25 16:32:24 2021
 
-@author: marlin
+@author: moritz, marlin
 """
 
 import bamnostic as bs
@@ -23,9 +23,11 @@ def deduplicateList (listWithDuplicates):
     return deduplicated
 
 #for getting a list of all cell Barcodes, that belong to the provided cluster.
-#TODO still needs an input of cellbarcodes
-def getSingleClusterBarcodeList (clusterID):
+def getSingleClusterBarcodeList (clusterID,combinedIDs):
     cellBarcodesForCluster=[]
+    for pair in combinedIDs:
+        if pair[1] == clusterID:
+            cellBarcodesForCluster.append(pair[1])
     return cellBarcodesForCluster
 
 
@@ -42,6 +44,8 @@ def writeClusterBam (clusterID,cellIDsForCluster,sourceFilePath,outputDir):
     clusterFile.close()
 
 #uses tsv file path as input and returns three lists
+#cellIDs and clusterIDs contains all IDs in the order they appear, combined IDs is a list of lists with
+#two elements containing a pair of IDs that belong together
 def listifyTSV(tsvPath):
     cellIDs = []
     clusterIDs = []
@@ -70,45 +74,57 @@ def main():
     bam = "inputWP3/testdata.bam"
     tsv = "inputWP3/clusterIDs.tsv"
     outputDir="outputWP3/"
-
-    #opening the files
-    allCells = bs.AlignmentFile(bam,"rb")
     
-    #reading tsv
+    #read tsv file and convert it into lists
     cellIDs,clusterIDs,combinedIDs = listifyTSV(tsv)
-
-    #variables
-    tabsInIDFile = []
-    clusters = []
+    deduplicatedClusterIDs = deduplicateList(clusterIDs)
     
-    #splitting the tsv tabs into two lists to have a better ability to work with them
+    #clustering starts here
+    for cluster in deduplicatedClusterIDs:
+        #getting all cellbarcodes for current cluster
+        barcodesForCluster = getSingleClusterBarcodeList(cluster, combinedIDs)
+        #writing bam file for current cluster
+        writeClusterBam(cluster, barcodesForCluster, bam, outputDir)
+        
+    
+    # #opening the files
+    # allCells = bs.AlignmentFile(bam,"rb")
+    
+    # #reading tsv
 
 
-    #putting both tabs into one list
-    tabsInIDFile.append(cellIDs)
-    tabsInIDFile.append(clusterIDs)
-    print(tabsInIDFile)
+    # #variables
+    # tabsInIDFile = []
+    # clusters = []
+    
+    # #splitting the tsv tabs into two lists to have a better ability to work with them
 
-    cellIDs.pop(0)
-    clusterIDs.pop(0)
-    print(max(clusterIDs))
 
-    for i in range(1,max(clusterIDs)+1):
-            clusters.append(i)
+    # #putting both tabs into one list
+    # tabsInIDFile.append(cellIDs)
+    # tabsInIDFile.append(clusterIDs)
+    # print(tabsInIDFile)
 
-    print(clusters)
+    # cellIDs.pop(0)
+    # clusterIDs.pop(0)
+    # print(max(clusterIDs))
 
-    #for i, read in enumerate(allCells):
-     # if(i >= 3):
-      #  break
-      #print(read)
+    # for i in range(1,max(clusterIDs)+1):
+    #         clusters.append(i)
 
-    #for i, ID in enumerate(clusterIDs):
-     # if(i >= 3):
-      #  break
-     # print(ID)
+    # print(clusters)
 
-    allCells.close()
+    # #for i, read in enumerate(allCells):
+    #  # if(i >= 3):
+    #   #  break
+    #   #print(read)
+
+    # #for i, ID in enumerate(clusterIDs):
+    #  # if(i >= 3):
+    #   #  break
+    #  # print(ID)
+
+    # allCells.close()
 
 
 if __name__ == "__main__":
