@@ -41,7 +41,6 @@ def writeClusterBam (clusterID,cellIDsForCluster,sourceFilePath,outputDir):
     clusterFile = ps.AlignmentFile(outputDir+"cluster"+str(clusterID)+".bam","wb",template=sourceFile)
     for read in sourceFile.fetch():
         if read.has_tag('CB'):
-            pass
             if read.get_tag('CB') in cellIDsForCluster:
                 #bamnostic writes with "to_bam() instead"
                 clusterFile.write(read)
