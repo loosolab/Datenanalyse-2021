@@ -3,11 +3,11 @@
 """
 Created on Thu Nov 25 16:32:24 2021
 
-@author: moritz, marlin
+@authors: moritz, marlin
 """
 
-import bamnostic as bs
-
+#import bamnostic as bs
+import pysam as ps
 
 
 #methods (will properly make them later on, just testing how to approach the task)
@@ -34,12 +34,15 @@ def getSingleClusterBarcodeList (clusterID,combinedIDs):
 #Method recives a single cluster ID and a list of CellIDs for this cluster. It the writes a singular BAM file
 #containing alls lines that have matching cellIDs
 def writeClusterBam (clusterID,cellIDsForCluster,sourceFilePath,outputDir):
-    sourceFile = bs.AlignmentFile(sourceFilePath,"rb")
-    clusterFile = bs.AlignmentFile(outputDir+"cluster"+str(clusterID)+".bam","wb",template=sourceFile)
+    sourceFile = ps.AlignmentFile(sourceFilePath,"rb")
+    #TODO bamnostic handles some things different to pysam. next line needs correction (template is not known)
+    clusterFile = ps.AlignmentFile(outputDir+"cluster"+str(clusterID)+".bam","wb",template=sourceFile)
     for read in sourceFile.fetch():
-        #TODO not sure if refID is the right value to call needs testing
-        if read.refID in cellIDsForCluster:
-            clusterFile.write()
+        if read.has_tag('CB'):
+            pass
+            if read.get_tag('CB') in cellIDsForCluster:
+                #bamnostic writes with "to_bam() instead"
+                clusterFile.write(read)
     sourceFile.close()
     clusterFile.close()
 
