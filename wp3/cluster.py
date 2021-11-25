@@ -34,6 +34,8 @@ def getSingleClusterBarcodeList (clusterID,combinedIDs):
 #Method recives a single cluster ID and a list of CellIDs for this cluster. It the writes a singular BAM file
 #containing alls lines that have matching cellIDs
 def writeClusterBam (clusterID,cellIDsForCluster,sourceFilePath,outputDir):
+    #debug print
+    print("working on cluster: "+str(clusterID))
     sourceFile = ps.AlignmentFile(sourceFilePath,"rb")
     #TODO bamnostic handles some things different to pysam. next line needs correction (template is not known)
     clusterFile = ps.AlignmentFile(outputDir+"cluster"+str(clusterID)+".bam","wb",template=sourceFile)
@@ -63,7 +65,8 @@ def listifyTSV(tsvPath):
 
             if right[0].isdigit():
                     right = int(right)
-
+            else:
+                continue
             cellIDs.append(left)
             clusterIDs.append(right)
             combinedIDs.append([left,right])
