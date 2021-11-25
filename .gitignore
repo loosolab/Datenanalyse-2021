@@ -40,3 +40,6 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+# specific folders
+tissuedata/
+outputwp1
