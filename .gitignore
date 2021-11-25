@@ -2,6 +2,9 @@
 /wp6/testdaten/*.*
 /wp6/testdaten/*
 
+#WP3
+/home/marlin/pCloudDrive/angewandteDA/Datenanalyse-2021/wp3/inputWP3/*
+/home/marlin/pCloudDrive/angewandteDA/Datenanalyse-2021/wp3/outputWP3/*
 # Setup
 # PyCharm
 .idea
