@@ -27,7 +27,7 @@ def getSingleClusterBarcodeList (clusterID,combinedIDs):
     cellBarcodesForCluster=[]
     for pair in combinedIDs:
         if pair[1] == clusterID:
-            cellBarcodesForCluster.append(pair[1])
+            cellBarcodesForCluster.append(pair[0])
     return cellBarcodesForCluster
 
 
