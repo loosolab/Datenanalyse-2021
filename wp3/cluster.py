@@ -43,7 +43,7 @@ def writeClusterBam (clusterID,cellIDsForCluster,sourceFilePath,outputDir):
     for read in sourceFile.fetch():
         if read.has_tag('CB'):
             if read.get_tag('CB') in cellIDsForCluster:
-                print("Debug, matching read for tag: "+str(read.get_tag('tag')))
+                print("Debug, matching read for tag: "+str(read.get_tag('CD')))
                 clusterFile.write(read)
     sourceFile.close()
     clusterFile.close()
