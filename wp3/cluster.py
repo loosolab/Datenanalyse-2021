@@ -36,13 +36,14 @@ def getSingleClusterBarcodeList (clusterID,combinedIDs):
 def writeClusterBam (clusterID,cellIDsForCluster,sourceFilePath,outputDir):
     #debug print
     print("working on cluster: "+str(clusterID))
+    print("Debug, cellbacodes for this cluster: "+cellIDsForCluster)
     sourceFile = ps.AlignmentFile(sourceFilePath,"rb")
     #TODO bamnostic handles some things different to pysam. next line needs correction (template is not known)
     clusterFile = ps.AlignmentFile(outputDir+"cluster"+str(clusterID)+".bam","wb",template=sourceFile)
     for read in sourceFile.fetch():
         if read.has_tag('CB'):
             if read.get_tag('CB') in cellIDsForCluster:
-                #bamnostic writes with "to_bam() instead"
+                print("Debug, matching read for tag: "+str(read.get_tag('tag')))
                 clusterFile.write(read)
     sourceFile.close()
     clusterFile.close()
