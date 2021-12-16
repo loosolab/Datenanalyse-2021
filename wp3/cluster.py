@@ -8,7 +8,7 @@ Created on Thu Nov 25 16:32:24 2021
 
 #import bamnostic as bs
 import pysam as ps
-
+import argparse
 
 #methods (will properly make them later on, just testing how to approach the task)
 
@@ -73,15 +73,19 @@ def listifyTSV(tsvPath):
     return cellIDs,clusterIDs,combinedIDs
     
 def main():
-    #just for testing how to work with the VMs
-
-    #input files, will change to argsparse later on
-    bam = "inputWP3/testdata.bam"
-    tsv = "inputWP3/clusterIDs.tsv"
-    outputDir="outputWP3/"
-    
+    #Argparser
+    aParser = argparse.ArgumentParser(description='This is a tool for splitting a .bam file into multiple .bam files.')
+    aParser.add_argument('-Bam', '-b',dest='bam', nargs='?', help='Use this to set the input Path for the .bam file.',
+                         default="inputWP3/testdata.bam")
+    aParser.add_argument('-Tsv', '-t',dest='tsv', nargs='?', help='Use this to set the input Path for the .tsv file,'+
+                         'containing the cluster Assingnments and cell barcodes.',
+                         default="inputWP3/clusterIDs.tsv")
+    aParser.add_argument('-Out', '-o',dest='outputDir', nargs='?', help='Use this to set the Path to a directory,'+
+                         'that should be used to save this programs output.',
+                         default="outputWP3/")
+    args=aParser.parse_args()
     #read tsv file and convert it into lists
-    cellIDs,clusterIDs,combinedIDs = listifyTSV(tsv)
+    cellIDs,clusterIDs,combinedIDs = listifyTSV(args.tsv)
     deduplicatedClusterIDs = deduplicateList(clusterIDs)
     
     #clustering starts here
@@ -89,47 +93,9 @@ def main():
         #getting all cellbarcodes for current cluster
         barcodesForCluster = getSingleClusterBarcodeList(cluster, combinedIDs)
         #writing bam file for current cluster
-        writeClusterBam(cluster, barcodesForCluster, bam, outputDir)
+        writeClusterBam(cluster, barcodesForCluster, args.bam, args.outputDir)
         
-    
-    # #opening the files
-    # allCells = bs.AlignmentFile(bam,"rb")
-    
-    # #reading tsv
 
-
-    # #variables
-    # tabsInIDFile = []
-    # clusters = []
-    
-    # #splitting the tsv tabs into two lists to have a better ability to work with them
-
-
-    # #putting both tabs into one list
-    # tabsInIDFile.append(cellIDs)
-    # tabsInIDFile.append(clusterIDs)
-    # print(tabsInIDFile)
-
-    # cellIDs.pop(0)
-    # clusterIDs.pop(0)
-    # print(max(clusterIDs))
-
-    # for i in range(1,max(clusterIDs)+1):
-    #         clusters.append(i)
-
-    # print(clusters)
-
-    # #for i, read in enumerate(allCells):
-    #  # if(i >= 3):
-    #   #  break
-    #   #print(read)
-
-    # #for i, ID in enumerate(clusterIDs):
-    #  # if(i >= 3):
-    #   #  break
-    #  # print(ID)
-
-    # allCells.close()
 
 
 if __name__ == "__main__":
