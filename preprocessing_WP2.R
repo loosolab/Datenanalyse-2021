@@ -79,7 +79,7 @@ x.sp=runCluster(
 
 x.sp@metaData$cluster = x.sp@cluster;
 
-# plot t-sne
+# calculate t-sne
 x.sp = runViz(
   obj=x.sp, 
   tmp.folder=tempdir(),
@@ -90,6 +90,25 @@ x.sp = runViz(
 );
 
 par(mfrow = c(2, 2));
+
+# plot t-sne
+plotViz(
+  obj=x.sp,
+  method="tsne", 
+  main="Right lobe of liver",
+  point.color=x.sp@cluster, 
+  point.size=1, 
+  point.shape=19, 
+  point.alpha=0.8, 
+  text.add=TRUE,
+  text.size=1.5,
+  text.color="black",
+  text.halo.add=TRUE,
+  text.halo.color="white",
+  text.halo.width=0.2,
+  down.sample=10000,
+  legend.add=FALSE
+);
 
 # generate cluster assignment table
 x.sp@barcode
