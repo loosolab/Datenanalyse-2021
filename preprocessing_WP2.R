@@ -65,7 +65,7 @@ plotDimReductPW(
 );
 
 # select first pair that looks like a blob
-v_pair = 6
+v_pair = 12
 
 # continue dimensional reduction with first n eigenvectors
 x.sp = runKNN(
@@ -149,3 +149,24 @@ peak.gr.ls = lapply(peaks.names, function(x){
 })
 peak.gr = reduce(Reduce(c, peak.gr.ls));
 peak.gr
+
+# create a cell-by-peak matrix
+peaks.df = as.data.frame(peak.gr)[,1:3];
+write.table(peaks.df,file = "peaks.combined.bed",append=FALSE,
+              quote= FALSE,sep="\t", eol = "\n", na = "NA", dec = ".", 
+              row.names = FALSE, col.names = FALSE, qmethod = c("escape", "double"),
+              fileEncoding = "")
+
+saveRDS(x.sp, file="right_lobe_of_liver.snap.rds")
+
+# create cell-by-peak matrix and add to the snap file
+# Terminal: snaptools snap-add-pmat \
+# --snap-file /home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap \
+# --peak-file peaks.combined.bed
+
+# add cell-by-peak matrix
+x.sp = readRDS("right_lobe_of_liver.snap.rds");
+x.sp = addPmatToSnap(x.sp);
+x.sp = makeBinary(x.sp, mat="pmat");
+x.sp
+
