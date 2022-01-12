@@ -1,7 +1,7 @@
 library(GenomicRanges)
 library(SnapATAC);
 
-genefile = "/home/rstudio/workspaces/stud4/genefile/gencode.hg38.gene.bed"
+genefile = "/home/rstudio/workspaces/stud4/genefile/gencode.filtered.bed"
 
 # use  one .snap file only...
 s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap"
@@ -121,6 +121,16 @@ genes.gr = GRanges(genes[,1],
                      IRanges(genes[,2], genes[,3]), name=genes[,4]
 );
 
+x.sp = addBmatToSnap(x.sp);
+# TODO: Select highest "expressed" genes of each cluster
+x.sp = createGmatFromMat(
+  obj=x.sp, 
+  input.mat="bmat",
+  genes=genes.gr,
+  do.par=TRUE,
+  num.cores=6
+);
+
 # generate cluster assignment table
 ca_table = do.call(rbind, Map(data.frame, cell_name=x.sp@barcode, cluster=x.sp@cluster))
 write.table(ca_table,"cluster_assignment_table.txt", sep = "\t", quote = FALSE, row.names = FALSE)
@@ -170,3 +180,6 @@ x.sp = addPmatToSnap(x.sp);
 x.sp = makeBinary(x.sp, mat="pmat");
 x.sp
 
+
+covs = Matrix::rowSums(x.sp@pmat);
+vals = Matrix::rowSums(x.sp@pmat[,idy]) / covs
