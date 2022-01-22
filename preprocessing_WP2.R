@@ -2,6 +2,7 @@ library(GenomicRanges)
 library(SnapATAC);
 
 genefile = "/home/rstudio/workspaces/stud4/genefile/gencode.filtered.bed"
+blacklist_regions = "/home/rstudio/workspaces/stud4/SnaptoolsTest/blacklists/hg38-blacklist.v2_parsed.bed"
 
 # use  one .snap file only...
 s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap"
@@ -23,6 +24,22 @@ x.sp
 # showBinSizes(s_file);
 x.sp = addBmatToSnap(x.sp, bin.size=5000, num.cores=6);
 x.sp = makeBinary(x.sp, mat="bmat");
+x.sp
+
+# bin filtering
+black_list = read.table(blacklist_regions);
+black_list.gr = GRanges(
+  black_list[,1], 
+  IRanges(black_list[,2], black_list[,3])
+);
+idy = queryHits(findOverlaps(x.sp@feature, black_list.gr));
+if(length(idy) > 0){x.sp = x.sp[,-idy, mat="bmat"]};
+x.sp
+
+# remove unwanted chromosomes
+chr.exclude = seqlevels(x.sp@feature)[grep("random|chrM", seqlevels(x.sp@feature))];
+idy = grep(paste(chr.exclude, collapse="|"), x.sp@feature);
+if(length(idy) > 0){x.sp = x.sp[,-idy, mat="bmat"]};
 x.sp
 
 # calc log10(bin coverage)
@@ -180,6 +197,8 @@ x.sp = addPmatToSnap(x.sp);
 x.sp = makeBinary(x.sp, mat="pmat");
 x.sp
 
+write.table(x.sp@gmat,"gmat.txt", sep = "\t", quote = FALSE, row.names = FALSE)
 
-covs = Matrix::rowSums(x.sp@pmat);
-vals = Matrix::rowSums(x.sp@pmat[,idy]) / covs
+x.sp@gmat@Dimnames
+b = as.data.frame(x.sp@gmat)
+
