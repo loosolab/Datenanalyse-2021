@@ -4,27 +4,17 @@ library(SnapATAC);
 genefile = "/home/rstudio/workspaces/stud4/genefile/gencode.filtered.bed"
 blacklist_regions = "/home/rstudio/workspaces/stud4/SnaptoolsTest/blacklists/hg38-blacklist.v2_parsed.bed"
 
-# use  one .snap file only...
+# load .snap file
 s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap"
 x.sp = createSnap(
   file=s_file,
   sample="ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver",
   num.cores=6
 );
-x.sp
-
-# ...or merge .snap files first
-file.list = c("/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap", 
-              "/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1JKYN-020-SM-C1PX3_snATAC_thoracic_aorta.snap");
-sample.list = c("liver", "aorta");
-x.sp = createSnap(file=file.list, sample=sample.list);
-x.sp
 
 # add bin matrix
-# showBinSizes(s_file);
 x.sp = addBmatToSnap(x.sp, bin.size=5000, num.cores=6);
 x.sp = makeBinary(x.sp, mat="bmat");
-x.sp
 
 # bin filtering
 black_list = read.table(blacklist_regions);
@@ -40,7 +30,6 @@ x.sp
 chr.exclude = seqlevels(x.sp@feature)[grep("random|chrM", seqlevels(x.sp@feature))];
 idy = grep(paste(chr.exclude, collapse="|"), x.sp@feature);
 if(length(idy) > 0){x.sp = x.sp[,-idy, mat="bmat"]};
-x.sp
 
 # calc log10(bin coverage)
 bin.cov = log10(Matrix::colSums(x.sp@bmat)+1);
@@ -58,7 +47,6 @@ hist(
 bin.cutoff = quantile(bin.cov[bin.cov > 0], 0.95);
 idy = which(bin.cov <= bin.cutoff & bin.cov > 0);
 x.sp = x.sp[, idy, mat="bmat"];
-x.sp
 
 # dimensional reduction
 x.sp = runDiffusionMaps(
@@ -82,7 +70,7 @@ plotDimReductPW(
 );
 
 # select first pair that looks like a blob
-v_pair = 12
+v_pair = 6
 
 # continue dimensional reduction with first n eigenvectors
 x.sp = runKNN(
@@ -110,8 +98,6 @@ x.sp = runViz(
   method="Rtsne",
   seed.use=10
 );
-
-par(mfrow = c(2, 2));
 
 # plot t-sne
 plotViz(
@@ -152,7 +138,7 @@ x.sp = createGmatFromMat(
 ca_table = do.call(rbind, Map(data.frame, cell_name=x.sp@barcode, cluster=x.sp@cluster))
 write.table(ca_table,"cluster_assignment_table.txt", sep = "\t", quote = FALSE, row.names = FALSE)
 
-# call peaks for all cluster with more than 100 cells
+# call peaks for all cluster with more than 200 cells
 clusters.sel = names(table(x.sp@cluster))[which(table(x.sp@cluster) > 200)];
 peaks.ls = mclapply(seq(clusters.sel), function(i){
   print(clusters.sel[i]);
@@ -186,19 +172,13 @@ write.table(peaks.df,file = "peaks.combined.bed",append=FALSE,
 
 saveRDS(x.sp, file="right_lobe_of_liver.snap.rds")
 
+# TODO: don't think that the commented steps are necessary for our pipeline?
 # create cell-by-peak matrix and add to the snap file
 # Terminal: snaptools snap-add-pmat \
 # --snap-file /home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap \
 # --peak-file peaks.combined.bed
 
 # add cell-by-peak matrix
-x.sp = readRDS("right_lobe_of_liver.snap.rds");
-x.sp = addPmatToSnap(x.sp);
-x.sp = makeBinary(x.sp, mat="pmat");
-x.sp
-
-write.table(x.sp@gmat,"gmat.txt", sep = "\t", quote = FALSE, row.names = FALSE)
-
-x.sp@gmat@Dimnames
-b = as.data.frame(x.sp@gmat)
-
+# x.sp = readRDS("right_lobe_of_liver.snap.rds");
+# x.sp = addPmatToSnap(x.sp);
+# x.sp = makeBinary(x.sp, mat="pmat");
