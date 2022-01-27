@@ -6,11 +6,8 @@ Created on Thu Nov 25 16:32:24 2021
 @authors: moritz, marlin
 """
 
-#import bamnostic as bs
 import pysam as ps
 import argparse
-
-#methods (will properly make them later on, just testing how to approach the task)
 
 #for deduplicating lists, will be used to calculate number of distinct clusters and output files
 def deduplicateList (listWithDuplicates):
@@ -75,7 +72,7 @@ def listifyTSV(tsvPath):
 def generateSnakemakeInput(outputDir, clusterIDs):
     f = open(outputDir+"snakemakeIn.txt","a")
     for ID in clusterIDs:
-        f.write(" "+ID+": ["+outputDir+ID+".bam"+"]")
+        f.write(" cluster"+str(ID)+": ["+outputDir+"cluster"+str(ID)+".bam"+"]")
     f.close()
     
 def main():
