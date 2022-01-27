@@ -72,7 +72,7 @@ def listifyTSV(tsvPath):
 def generateSnakemakeInput(outputDir, clusterIDs):
     f = open(outputDir+"snakemakeIn.txt","a")
     for ID in clusterIDs:
-        f.write(" cluster"+str(ID)+": ["+outputDir+"cluster"+str(ID)+".bam"+"]")
+        f.write(" cluster"+str(ID)+": ["+outputDir+"cluster"+str(ID)+".bam"+"]\n")
     f.close()
     
 def main():
@@ -99,7 +99,7 @@ def main():
         writeClusterBam(cluster, barcodesForCluster, args.bam, args.outputDir)
         
     #generating file for TOBIAS Snakemake pipeline
-    generateSnakemakeInput(args.outputDir, clusterIDs)
+    generateSnakemakeInput(args.outputDir, deduplicatedClusterIDs)
 
 if __name__ == "__main__":
     main()
