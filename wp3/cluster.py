@@ -6,11 +6,8 @@ Created on Thu Nov 25 16:32:24 2021
 @authors: moritz, marlin
 """
 
-#import bamnostic as bs
 import pysam as ps
 import argparse
-
-#methods (will properly make them later on, just testing how to approach the task)
 
 #for deduplicating lists, will be used to calculate number of distinct clusters and output files
 def deduplicateList (listWithDuplicates):
@@ -71,6 +68,12 @@ def listifyTSV(tsvPath):
             combinedIDs.append([left,right])
     IDs.close()
     return cellIDs,clusterIDs,combinedIDs
+
+def generateSnakemakeInput(outputDir, clusterIDs):
+    f = open(outputDir+"snakemakeIn.txt","a")
+    for ID in clusterIDs:
+        f.write(" cluster"+str(ID)+": ["+outputDir+"cluster"+str(ID)+".bam"+"]\n")
+    f.close()
     
 def main():
     #Argparser
@@ -95,8 +98,8 @@ def main():
         #writing bam file for current cluster
         writeClusterBam(cluster, barcodesForCluster, args.bam, args.outputDir)
         
-
-
+    #generating file for TOBIAS Snakemake pipeline
+    generateSnakemakeInput(args.outputDir, deduplicatedClusterIDs)
 
 if __name__ == "__main__":
     main()
