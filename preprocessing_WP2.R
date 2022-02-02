@@ -1,20 +1,25 @@
 library(GenomicRanges)
-library(SnapATAC);
+library(SnapATAC)
+library(viridisLite)
+library(ggplot2)
 
 genefile = "/home/rstudio/workspaces/stud4/genefile/gencode.filtered.bed"
 blacklist_regions = "/home/rstudio/workspaces/stud4/SnaptoolsTest/blacklists/hg38-blacklist.v2_parsed.bed"
+sample_name = "right-lobe-of-liver_29012022"
 
 # load .snap file
 s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap"
+s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1JKYN-020-SM-C1PX3_snATAC_thoracic_aorta.snap"
 x.sp = createSnap(
   file=s_file,
-  sample="ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver",
+  sample=sample_name,
   num.cores=6
 );
 
 # add bin matrix
 x.sp = addBmatToSnap(x.sp, bin.size=5000, num.cores=6);
 x.sp = makeBinary(x.sp, mat="bmat");
+x.sp
 
 # bin filtering
 black_list = read.table(blacklist_regions);
@@ -30,6 +35,7 @@ x.sp
 chr.exclude = seqlevels(x.sp@feature)[grep("random|chrM", seqlevels(x.sp@feature))];
 idy = grep(paste(chr.exclude, collapse="|"), x.sp@feature);
 if(length(idy) > 0){x.sp = x.sp[,-idy, mat="bmat"]};
+x.sp
 
 # calc log10(bin coverage)
 bin.cov = log10(Matrix::colSums(x.sp@bmat)+1);
@@ -47,6 +53,7 @@ hist(
 bin.cutoff = quantile(bin.cov[bin.cov > 0], 0.95);
 idy = which(bin.cov <= bin.cutoff & bin.cov > 0);
 x.sp = x.sp[, idy, mat="bmat"];
+x.sp
 
 # dimensional reduction
 x.sp = runDiffusionMaps(
@@ -70,7 +77,7 @@ plotDimReductPW(
 );
 
 # select first pair that looks like a blob
-v_pair = 6
+v_pair = 5
 
 # continue dimensional reduction with first n eigenvectors
 x.sp = runKNN(
@@ -103,7 +110,7 @@ x.sp = runViz(
 plotViz(
   obj=x.sp,
   method="tsne", 
-  main="Right lobe of liver",
+  main=sample_name,
   point.color=x.sp@cluster, 
   point.size=1, 
   point.shape=19, 
@@ -118,21 +125,23 @@ plotViz(
   legend.add=FALSE
 );
 
-# gene annotation
-genes = read.table(genefile);
-genes.gr = GRanges(genes[,1], 
-                     IRanges(genes[,2], genes[,3]), name=genes[,4]
-);
-
-x.sp = addBmatToSnap(x.sp);
-# TODO: Select highest "expressed" genes of each cluster
-x.sp = createGmatFromMat(
-  obj=x.sp, 
-  input.mat="bmat",
-  genes=genes.gr,
-  do.par=TRUE,
-  num.cores=6
-);
+# new gene annotation
+# TODO
+# # gene annotation
+# genes = read.table(genefile);
+# genes.gr = GRanges(genes[,1], 
+#                      IRanges(genes[,2], genes[,3]), name=genes[,4]
+# );
+# 
+# x.sp = addBmatToSnap(x.sp);
+# # TODO: Select highest "expressed" genes of each cluster
+# x.sp = createGmatFromMat(
+#   obj=x.sp, 
+#   input.mat="bmat",
+#   genes=genes.gr,
+#   do.par=TRUE,
+#   num.cores=6
+# );
 
 # generate cluster assignment table
 ca_table = do.call(rbind, Map(data.frame, cell_name=x.sp@barcode, cluster=x.sp@cluster))
@@ -144,7 +153,7 @@ peaks.ls = mclapply(seq(clusters.sel), function(i){
   print(clusters.sel[i]);
   runMACS(
     obj=x.sp[which(x.sp@cluster==clusters.sel[i]),], 
-    output.prefix=paste0("right-lobe-of-liver.", gsub(" ", "_", clusters.sel)[i]),
+    output.prefix=paste0(paste(sample_name, ".", sep=""), gsub(" ", "_", clusters.sel)[i]),
     path.to.snaptools="/usr/local/bin/snaptools",
     path.to.macs="/usr/local/bin/macs2",
     gsize="hs", # mm, hs, etc
@@ -170,7 +179,7 @@ write.table(peaks.df,file = "peaks.combined.bed",append=FALSE,
               row.names = FALSE, col.names = FALSE, qmethod = c("escape", "double"),
               fileEncoding = "")
 
-saveRDS(x.sp, file="right_lobe_of_liver.snap.rds")
+saveRDS(x.sp, file=paste(sample_name, ".rds", sep=""))
 
 # TODO: don't think that the commented steps are necessary for our pipeline?
 # create cell-by-peak matrix and add to the snap file
@@ -182,3 +191,10 @@ saveRDS(x.sp, file="right_lobe_of_liver.snap.rds")
 # x.sp = readRDS("right_lobe_of_liver.snap.rds");
 # x.sp = addPmatToSnap(x.sp);
 # x.sp = makeBinary(x.sp, mat="pmat");
+
+?paste
+
+ptest = paste(sample_name, ".", sep="")
+ptest
+
+x.sp
