@@ -2,10 +2,11 @@ library(GenomicRanges)
 library(SnapATAC)
 library(viridisLite)
 library(ggplot2)
+library(rtracklayer)
 
 genefile = "/home/rstudio/workspaces/stud4/genefile/gencode.filtered.bed"
 blacklist_regions = "/home/rstudio/workspaces/stud4/SnaptoolsTest/blacklists/hg38-blacklist.v2_parsed.bed"
-sample_name = "right-lobe-of-liver_29012022"
+sample_name = "right-lobe-of-liver_02022022"
 
 # load .snap file
 s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap"
@@ -15,10 +16,26 @@ x.sp = createSnap(
   sample=sample_name,
   num.cores=6
 );
+x.sp
 
 # add bin matrix
 x.sp = addBmatToSnap(x.sp, bin.size=5000, num.cores=6);
 x.sp = makeBinary(x.sp, mat="bmat");
+x.sp
+
+# barcode filtering
+gtf.gr <- rtracklayer::import("/home/rstudio/workspaces/mbentse/homo_sapiens/homo_sapiens.104.mainChr.gtf")
+gene.gr <- gtf.gr[gtf.gr$type == "gene"]
+# extract promoter region for each gene
+promoter.gr <- reduce(promoters(gene.gr, upstream=2000, downstream=0))
+# find promoter overlapping bins 
+idy = queryHits(ov);
+log_cov = log10(SnapATAC::rowSums(x.sp, mat="bmat")+1)
+promoter_ratio = Matrix::rowSums(x.sp@bmat[,idy]) / Matrix::rowSums(x.sp@bmat);
+plot(log_cov, promoter_ratio, cex=0.5, col="grey", xlab="log(count)", ylab="FIP Ratio", ylim=c(0,1 ));
+# chose the cutoff based on the plot 
+idx = which(promoter_ratio > 0.2 & promoter_ratio < 0.8 & log_cov > 3);
+x.sp = x.sp[idx,]
 x.sp
 
 # bin filtering
@@ -77,7 +94,7 @@ plotDimReductPW(
 );
 
 # select first pair that looks like a blob
-v_pair = 5
+v_pair = 7
 
 # continue dimensional reduction with first n eigenvectors
 x.sp = runKNN(
@@ -112,7 +129,7 @@ plotViz(
   method="tsne", 
   main=sample_name,
   point.color=x.sp@cluster, 
-  point.size=1, 
+  point.size=0.5, 
   point.shape=19, 
   point.alpha=0.8, 
   text.add=TRUE,
@@ -145,7 +162,7 @@ plotViz(
 
 # generate cluster assignment table
 ca_table = do.call(rbind, Map(data.frame, cell_name=x.sp@barcode, cluster=x.sp@cluster))
-write.table(ca_table,"cluster_assignment_table.txt", sep = "\t", quote = FALSE, row.names = FALSE)
+write.table(ca_table,"cluster_assignment_table.txt", sep = "\t", quote = FALSE, row.nacdmes = FALSE)
 
 # call peaks for all cluster with more than 200 cells
 clusters.sel = names(table(x.sp@cluster))[which(table(x.sp@cluster) > 200)];
@@ -192,6 +209,7 @@ saveRDS(x.sp, file=paste(sample_name, ".rds", sep=""))
 # x.sp = addPmatToSnap(x.sp);
 # x.sp = makeBinary(x.sp, mat="pmat");
 
+# ignore this:
 ?paste
 
 ptest = paste(sample_name, ".", sep="")
