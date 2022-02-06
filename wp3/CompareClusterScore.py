@@ -16,10 +16,11 @@ def cliParser():
     parser.add_argument('Files', nargs="*", help='input files')
     parser.add_argument('-n', '--normalize', dest='Norm', default='Sum', help='Method of normalization of the data.')
     parser.add_argument('-o', '--outputName', dest='Custom_filename', default="ClusterComparison", help='Sets a custom name for saving the output files')
-    parser.add_argument('-z', '--zscore', dest='Z', default=True, action='store_false', help='If used, the output will contain the absolute values (or those normlaized) and no z-Scores')
+    parser.add_argument('-z', '--ZScore', dest='Z', default=True, action='store_false', help='if used, skips Z Scores calculation for each TF')
+    parser.add_argument('-s', '--shortNames', dest='shortNames', default=False, action='store_true', help='If used, saves the short Name of each TF instead of the output_prefix')
     args = parser.parse_args()
     
-    return args.Files, args.Norm, args.Custom_filename, args.Z
+    return args.Files, args.Norm, args.Custom_filename, args.Z, args.shortNames
 
 #normalizing the scores to the same sum
 def normalizeToSum(scores, fileNames):
@@ -74,17 +75,23 @@ def toZScore(dfNorm, fileNames):
     
     #print(dfZ)
     return dfZ
+    
 
 def main():
     possibleNormMethods = ["Sum","None"]
     
-    inputFiles, normMethod, outputName, Z = cliParser()
+    inputFiles, normMethod, outputName, Z, shortNames = cliParser()
     #outfile = open("ClusterComparison.tsv","a")
     
     #preparing a list of lists with columns for the TFs and each cluster with the scores for them
     scores = {"TF": []}
     transcriptionFactors = {}
     fileNames = []
+    
+    if shortNames:
+        nameCol = 1
+    else:
+        nameCol = 0
     
     for element in inputFiles:
         file = open(element,"r")
@@ -117,14 +124,13 @@ def main():
                     except:
                         pass
                 
-                
-                if columns[1] in transcriptionFactors.keys():
-                    transcriptionFactors[columns[1]][index] = columns[5]
+                if columns[nameCol] in transcriptionFactors.keys():
+                    transcriptionFactors[columns[nameCol]][index] = columns[5]
                 else:
-                    transcriptionFactors[columns[1]] = []
+                    transcriptionFactors[columns[nameCol]] = []
                     for file in inputFiles:
-                        transcriptionFactors[columns[1]].append(0)
-                transcriptionFactors[columns[1]][index] = columns[5]
+                        transcriptionFactors[columns[nameCol]].append(0)
+                transcriptionFactors[columns[nameCol]][index] = columns[5]
            
         currentFile.close()
                 
