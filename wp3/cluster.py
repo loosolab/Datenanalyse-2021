@@ -20,6 +20,7 @@ def deduplicateList (listWithDuplicates):
     return deduplicated
 
 #for getting a list of all cell Barcodes, that belong to the provided cluster.
+#no longer in use may be removed
 def getSingleClusterBarcodeList (clusterID,combinedIDs):
     cellBarcodesForCluster=[]
     for pair in combinedIDs:
@@ -30,6 +31,7 @@ def getSingleClusterBarcodeList (clusterID,combinedIDs):
 
 #Method recives a single cluster ID and a list of CellIDs for this cluster. It the writes a singular BAM file
 #containing alls lines that have matching cellIDs
+#No longer in use may be removed
 def writeClusterBam (clusterID,cellIDsForCluster,sourceFilePath,outputDir):
     #debug print
     print("working on cluster: "+str(clusterID))
@@ -44,13 +46,38 @@ def writeClusterBam (clusterID,cellIDsForCluster,sourceFilePath,outputDir):
     sourceFile.close()
     clusterFile.close()
 
+#hopefully faster way to write single cluster bam files
+def writeClusters (deduplicatedClusterIDs,cellClusterDict,sourceFilePath,outputDir):
+    #creating files
+    sourceFile = ps.AlignmentFile(sourceFilePath,"rb")
+    clusterFileDict = {}
+    #creating new files
+    for cluster in deduplicatedClusterIDs:
+        singleClusterFile = ps.AlignmentFile(outputDir+"cluster"+str(cluster)+".bam","wb",template=sourceFile)
+        clusterFileDict.update({cluster:singleClusterFile})
+    #scanning source for lines and writing to single cluster files
+    for read in sourceFile.fetch():
+        if read.has_tag('CB:Z'):
+            try:
+                clusterID = cellClusterDict[read.get_tag('CB:Z')]
+            except:
+                #uncomment next line if you wish to be made aware of Reads that don't have a cluster assigned to them.
+                #print("Line with CB:Z: "+read.get_tag('CB:Z')+" does not have a cluster assignment and will be ignored.")
+                continue
+            clusterFileDict[clusterID].write(read)
+    for file in clusterFileDict.values():
+        file.close()
+    sourceFile.close()
+
 #uses tsv file path as input and returns three lists
 #cellIDs and clusterIDs contains all IDs in the order they appear, combined IDs is a list of lists with
 #two elements containing a pair of IDs that belong together
+#No longer in use may be removed
 def listifyTSV(tsvPath):
     cellIDs = []
     clusterIDs = []
-    combinedIDs=[]
+    combinedIDs = []
+    cellClusterDict = {} #{CellID:ClusterID}
     IDs = open(tsvPath, "r")
     for line in IDs:
 
@@ -66,9 +93,24 @@ def listifyTSV(tsvPath):
             cellIDs.append(left)
             clusterIDs.append(right)
             combinedIDs.append([left,right])
+            cellClusterDict.update({left:right})
     IDs.close()
-    return cellIDs,clusterIDs,combinedIDs
+    return cellIDs,clusterIDs,combinedIDs,cellClusterDict
+    
+#returns a dictionary that contains {Cellbarcode:ClusterID}
+def tsvToDict(tsvPath):
+    assignmentDict = {}
+    clusterList = []
+    tsv = open(tsvPath, "r")
+    for line in tsv:
+        barcode, clusterID = line.split("\t")
+        assignmentDict.update({barcode.strip():clusterID.strip()})
+        clusterList.append(clusterID.strip())
+    tsv.close()
+    return assignmentDict, clusterList
 
+
+#generates a text file that can be pasted into the TOBIAS snakemake pipline config file
 def generateSnakemakeInput(outputDir, clusterIDs):
     f = open(outputDir+"snakemakeIn.txt","a")
     for ID in clusterIDs:
@@ -88,15 +130,20 @@ def main():
                          default="outputWP3/")
     args=aParser.parse_args()
     #read tsv file and convert it into lists
-    cellIDs,clusterIDs,combinedIDs = listifyTSV(args.tsv)
+    #cellIDs,clusterIDs,combinedIDs,cellClusterDict = listifyTSV(args.tsv)
+
+    clusterDict, clusterIDs = tsvToDict(args.tsv)
     deduplicatedClusterIDs = deduplicateList(clusterIDs)
     
+    writeClusters(deduplicatedClusterIDs, clusterDict, args.bam, args.outputDir)
+    
     #clustering starts here
-    for cluster in deduplicatedClusterIDs:
-        #getting all cellbarcodes for current cluster
-        barcodesForCluster = getSingleClusterBarcodeList(cluster, combinedIDs)
-        #writing bam file for current cluster
-        writeClusterBam(cluster, barcodesForCluster, args.bam, args.outputDir)
+    # for cluster in deduplicatedClusterIDs:
+    #     #getting all cellbarcodes for current cluster
+    #     barcodesForCluster = getSingleClusterBarcodeList(cluster, combinedIDs)
+    #     #writing bam file for current cluster
+    #     writeClusterBam(cluster, barcodesForCluster, args.bam, args.outputDir)
+    
         
     #generating file for TOBIAS Snakemake pipeline
     generateSnakemakeInput(args.outputDir, deduplicatedClusterIDs)
