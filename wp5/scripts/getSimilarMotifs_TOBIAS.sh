@@ -15,4 +15,4 @@ TOBIAS FormatMotifs --input MOTIF_DIR --task join --output $joined
 
 # apply TOBIAS Clustering
 # TODO adjust hyper parameters
-TOBIAS ClusterMotifs --motifs $joined --threshold  0.3 --type pdf
+TOBIAS ClusterMotifs --motifs $joined --threshold  0.3 --type pdf -o Similar_Motifs_TOBIAS
