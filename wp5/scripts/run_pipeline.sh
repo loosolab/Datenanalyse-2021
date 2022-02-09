@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 # TODO
 # check if conda evironment is active
-if ["$CONDA_DEFAULT_ENV" != "snakemake"]; then
+if  [ ! "$CONDA_DEFAULT_ENV" == "snakemake" ]; then
     echo "Please activate snakemake environment first"
     echo "Abort..."
     exit 1
@@ -19,7 +19,7 @@ for CONFIG in $DIR/config_*.yml; do
     dt=$(date '+%d/%m/%Y %H:%M:%S');
         echo "starting ${CONFIG} at ${dt}"
     {   
-        snakemake --configfile $CONFIG --cores 5 --use-conda --conda-frontend mamba 
+       snakemake --configfile $CONFIG --cores 5 --use-conda --conda-frontend mamba 
 
     } || {
         # catch error
