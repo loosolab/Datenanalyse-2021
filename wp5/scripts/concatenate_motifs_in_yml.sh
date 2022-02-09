@@ -4,10 +4,9 @@
 MOTIF_FILE=$1
 YML_FILE=$2
 
-# TODO change to the right paths
 # file paths
-PATH_MOTIF_FILE="/mnt/workspace_stud/stud12/bash_scripts/${MOTIF_FILE}"
-PATH_YML_FILE="/mnt/workspace_stud/stud12/bash_scripts/${YML_FILE}"
+PATH_MOTIF_FILE="/mnt/workspace_stud/stud12/human_real_data_runs/${MOTIF_FILE}"
+PATH_YML_FILE="/mnt/workspace_stud/stud12/human_real_data_runs/${YML_FILE}"
 
 # count the motifs in the motif file
 NUMBER_OF_MOTIFS=$(grep -c ^\> $PATH_MOTIF_FILE)
