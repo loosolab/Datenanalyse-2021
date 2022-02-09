@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# TODO
 # check if conda evironment is active
 if  [ ! "$CONDA_DEFAULT_ENV" == "snakemake" ]; then
     echo "Please activate snakemake environment first"
