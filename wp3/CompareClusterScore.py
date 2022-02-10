@@ -13,14 +13,14 @@ import numpy as np
 #parser for using the tool via command-line interface
 def cliParser():
     parser = argparse.ArgumentParser(description='Graphic Cluster Footprint Score Comparison')
-    parser.add_argument('Files', nargs="*", help='input files')
+    parser.add_argument('File', nargs=1, help='input file, bindetect_results.txt')
     parser.add_argument('-n', '--normalize', dest='Norm', default='Sum', help='Method of normalization of the data.')
     parser.add_argument('-o', '--outputName', dest='Custom_filename', default="ClusterComparison", help='Sets a custom name for saving the output files')
     parser.add_argument('-z', '--ZScore', dest='Z', default=True, action='store_false', help='if used, skips Z Scores calculation for each TF')
     parser.add_argument('-s', '--shortNames', dest='shortNames', default=False, action='store_true', help='If used, saves the short Name of each TF instead of the output_prefix')
     args = parser.parse_args()
     
-    return args.Files, args.Norm, args.Custom_filename, args.Z, args.shortNames
+    return args.File, args.Norm, args.Custom_filename, args.Z, args.shortNames
 
 #normalizing the scores to the same sum
 def normalizeToSum(scores, fileNames):
@@ -45,11 +45,11 @@ def normalizeToSum(scores, fileNames):
     df.set_index('TF', inplace=True)
     
     df = df.astype(float)
-    
+    #print(df)
     for i, element in enumerate(fileNames):
         df[element] =  df[element]*(100/normalizationFactors[i])
     
-   # print(df)
+    #print(df)
     
     return df
        
@@ -73,75 +73,91 @@ def toZScore(dfNorm, fileNames):
     
     dfZ = dfZ_transposed.transpose()
     
-    #print(dfZ)
+    print(dfZ)
     return dfZ
     
 
 def main():
     possibleNormMethods = ["Sum","None"]
     
-    inputFiles, normMethod, outputName, Z, shortNames = cliParser()
+    inputFile, normMethod, outputName, Z, shortNames = cliParser()
     #outfile = open("ClusterComparison.tsv","a")
     
     #preparing a list of lists with columns for the TFs and each cluster with the scores for them
     scores = {"TF": []}
     transcriptionFactors = {}
-    fileNames = []
+    clusterNames = []
+    clusterCol = []
     
     if shortNames:
         nameCol = 1
     else:
         nameCol = 0
     
-    for element in inputFiles:
-        file = open(element,"r")
-        filename = os.path.basename(file.name)
-        #print(filename)
-        firstPartOfFilename, garbage = filename.split(".",1)
-        columnName = firstPartOfFilename+"_Score"
-        fileNames.append(columnName)
-        scores[columnName] = []
-        file.close()
+    
+    #inputData = pd.read_table(inputFile[0], sep="\t")
+    file = open(inputFile[0], "r")
+    
+    for index, line in enumerate(file):
+        if index == 0:
+            noN, garbage = line.split("\n")
+            #print(noN)
+            elements = noN.split("\t")
+            #print(elements)
+            
+            for i, col in enumerate(elements):
+                if col.endswith("_mean_score"):
+                    name = col.split("_mean_score")
+                    clusterNames.append(name[0])
+                    clusterCol.append(i)
+                    scores[name[0]] = []
+                    
 
     #print(scores)
     
     #getting the scores for each TF from each cluster, saving them in the list that was created beforehand
-    for index,file in enumerate(inputFiles):
+    #for index,file in enumerate(inputFiles):
 
-        currentFile = open(file, "r")
-        columnName = fileNames[index]
-        
-        for currentIndex,line in enumerate(currentFile):
-            #print(currentIndex,line)
-            if line.startswith("output_prefix"):
-                pass
-            else:
-                columns = line.split("\t")
-                
-                for element in columns:
-                    try:
-                        columns.remove("")
-                    except:
-                        pass
-                
+        #currentFile = open(file, "r")
+        #columnName = fileNames[index]
+    file.seek(0)   
+    for index ,line in enumerate(file):
+        #print(currentIndex,line)
+        if line.startswith("output_prefix"):
+            pass
+        else:
+            noN = line.split("\n")
+            columns = noN[0].split("\t")
+            print(columns)   
+                # for element in columns:
+                #     try:
+                #         columns.remove("")
+                #     except:
+                #         pass
+            
+            for i, value in enumerate(clusterCol):
+                print(clusterCol)
                 if columns[nameCol] in transcriptionFactors.keys():
-                    transcriptionFactors[columns[nameCol]][index] = columns[5]
+                    transcriptionFactors[columns[nameCol]][i] = columns[value]
                 else:
                     transcriptionFactors[columns[nameCol]] = []
-                    for file in inputFiles:
+                    for cluster in clusterNames:
                         transcriptionFactors[columns[nameCol]].append(0)
-                transcriptionFactors[columns[nameCol]][index] = columns[5]
-           
-        currentFile.close()
+                    print(transcriptionFactors)
+                    transcriptionFactors[columns[nameCol]][i] = columns[value]
+               
+    file.close()
                 
     for key in transcriptionFactors.keys():
         scores["TF"].append(key)
         
-        for index, cluster in enumerate(fileNames):
+        for index, cluster in enumerate(clusterNames):
             scores[cluster].append(transcriptionFactors[key][index])
-
     
-    #print(scores)    
+    
+    #print(clusterNames)
+    
+    print(scores)    
     #print(transcriptionFactors)
     #checks whether normalization is wanted and which method is supposed to be used
     #normalizes the scores 
@@ -149,16 +165,16 @@ def main():
     
     if normMethod not in possibleNormMethods:
         print("Normalization method not available, defaulting to 'Sum'")
-        dfNormScores = normalizeToSum(scores, fileNames)
+        dfNormScores = normalizeToSum(scores, clusterNames)
     else:    
         if normMethod == "Sum":
-            dfNormScores = normalizeToSum(scores, fileNames)
+            dfNormScores = normalizeToSum(scores, clusterNames)
         elif normMethod == "None":
             dfNormScores = pd.DataFrame(scores)
             dfNormScores.set_index("TF")
 
     if Z:        
-        dfZScores = toZScore(dfNormScores, fileNames)  
+        dfZScores = toZScore(dfNormScores, clusterNames)  
     else:
         dfZScores = dfNormScores
             
