@@ -6,10 +6,11 @@ library(rtracklayer)
 
 genefile = "/home/rstudio/workspaces/stud4/genefile/gencode.filtered.bed"
 blacklist_regions = "/home/rstudio/workspaces/stud4/SnaptoolsTest/blacklists/hg38-blacklist.v2_parsed.bed"
+gtf.gr = rtracklayer::import("/home/rstudio/workspaces/mbentse/homo_sapiens/homo_sapiens.104.mainChr.gtf")
 
 # load .snap file
 s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap"
-sample_name = "right-lobe-of-liver"
+sample_name = "right-lobe-of-liver2"
 s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1JKYN-020-SM-C1PX3_snATAC_thoracic_aorta.snap"
 sample_name = "thoracic-aorta"
 
@@ -22,69 +23,69 @@ x.sp = createSnap(
   file=s_file,
   sample=sample_name,
   num.cores=6
-);
+)
 x.sp
 
 # add bin matrix
-x.sp = addBmatToSnap(x.sp, bin.size=5000, num.cores=6);
-x.sp = makeBinary(x.sp, mat="bmat");
+x.sp = addBmatToSnap(x.sp, bin.size=5000, num.cores=6)
+x.sp = makeBinary(x.sp, mat="bmat")
 x.sp
 
 # barcode filtering
-gtf.gr <- rtracklayer::import("/home/rstudio/workspaces/mbentse/homo_sapiens/homo_sapiens.104.mainChr.gtf")
-gene.gr <- gtf.gr[gtf.gr$type == "gene"]
+gene.gr = gtf.gr[gtf.gr$type == "gene"]
 # extract promoter region for each gene
-promoter.gr <- reduce(promoters(gene.gr, upstream=2000, downstream=0))
+promoter.gr = reduce(promoters(gene.gr, upstream=2000, downstream=0))
 # find promoter overlapping bins 
-ov = findOverlaps(x.sp@feature, promoter.gr);
-idy = queryHits(ov);
+ov = findOverlaps(x.sp@feature, promoter.gr)
+idy = queryHits(ov)
 log_cov = log10(SnapATAC::rowSums(x.sp, mat="bmat")+1)
-promoter_ratio = Matrix::rowSums(x.sp@bmat[,idy]) / Matrix::rowSums(x.sp@bmat);
+promoter_ratio = Matrix::rowSums(x.sp@bmat[,idy]) / Matrix::rowSums(x.sp@bmat)
 png(filename="barcodes.png", width=6, height=4, units="in", res=300)
-plot(log_cov, promoter_ratio, cex=0.5, col="grey", xlab="log(count(bins))", ylab="Promoter ratio", ylim=c(0,1 ));
+plot(log_cov, promoter_ratio, cex=0.5, col="grey", xlab="log(count(bins))", ylab="Promoter ratio", ylim=c(0,1 ))
 dev.off()
 
 # chose the cutoff based on the plot 
 # liver 0.3 0.6 2.5
-idx = which(promoter_ratio > 0.3 & promoter_ratio < 0.6 & log_cov > 2.5);
+# aorta 0.15 0.7 2.5
+idx = which(promoter_ratio > 0.15 & promoter_ratio < 0.7 & log_cov > 2.5)
 
 x.sp = x.sp[idx,]
 x.sp
 
 # bin filtering
-black_list = read.table(blacklist_regions);
+black_list = read.table(blacklist_regions)
 black_list.gr = GRanges(
   black_list[,1], 
   IRanges(black_list[,2], black_list[,3])
-);
-idy = queryHits(findOverlaps(x.sp@feature, black_list.gr));
-if(length(idy) > 0){x.sp = x.sp[,-idy, mat="bmat"]};
+)
+idy = queryHits(findOverlaps(x.sp@feature, black_list.gr))
+if(length(idy) > 0){x.sp = x.sp[,-idy, mat="bmat"]}
 x.sp
 
 # remove unwanted chromosomes
-chr.exclude = seqlevels(x.sp@feature)[grep("random|chrM", seqlevels(x.sp@feature))];
-idy = grep(paste(chr.exclude, collapse="|"), x.sp@feature);
-if(length(idy) > 0){x.sp = x.sp[,-idy, mat="bmat"]};
+chr.exclude = seqlevels(x.sp@feature)[grep("random|chrM|chrX|chrY", seqlevels(x.sp@feature))]
+idy = grep(paste(chr.exclude, collapse="|"), x.sp@feature)
+if(length(idy) > 0){x.sp = x.sp[,-idy, mat="bmat"]}
 x.sp
 
 # calc log10(bin coverage)
-bin.cov = log10(Matrix::colSums(x.sp@bmat)+1);
+bin.cov = log10(Matrix::colSums(x.sp@bmat)+1)
 
 # plot histogram of bin coverage
 png(filename="hist.png", width=6, height=4, units="in", res=300)
 hist(
   bin.cov[bin.cov > 0], 
   xlab="log10(bin cov)", 
-  main="log10(Bin Cov)", 
+  main="log10(bin Cov)", 
   col="lightblue", 
   xlim=c(0, 5)
-);
+)
 dev.off()
 
 
 # filter bins with low coverage
-bin.cutoff = quantile(bin.cov[bin.cov > 0], 0.95);
-idy = which(bin.cov <= bin.cutoff & bin.cov > 0);
+bin.cutoff = quantile(bin.cov[bin.cov > 0], 0.95)
+idy = which(bin.cov <= bin.cutoff & bin.cov > 0)
 x.sp = x.sp[, idy, mat="bmat"];
 x.sp
 
@@ -93,7 +94,7 @@ x.sp = runDiffusionMaps(
   obj=x.sp,
   input.mat="bmat", 
   num.eigs=50
-);
+)
 
 # show first 25 pairs of eigenvectors
 png(filename="eigenvectors.png", width=6, height=4, units="in", res=300)
@@ -108,19 +109,19 @@ plotDimReductPW(
   pdf.file.name=NULL, 
   pdf.height=7, 
   pdf.width=7
-);
+)
 dev.off()
 # select first pair that looks like a blob
 # liver: 7
-# aorta:
-v_pair = 7
+# aorta: 8
+v_pair = 12
 
 # continue dimensional reduction with first n eigenvectors
 x.sp = runKNN(
   obj=x.sp,
   eigs.dims=1:v_pair, # choose first plot with "blob"
   k=15
-);
+)
 
 # perform clustering
 x.sp=runCluster(
@@ -128,9 +129,9 @@ x.sp=runCluster(
   tmp.folder=tempdir(),
   louvain.lib="R-igraph",
   seed.use=10
-);
+)
 
-x.sp@metaData$cluster = x.sp@cluster;
+x.sp@metaData$cluster = x.sp@cluster
 
 # calculate t-sne
 x.sp = runViz(
@@ -140,7 +141,7 @@ x.sp = runViz(
   eigs.dims=1:v_pair, 
   method="Rtsne",
   seed.use=10
-);
+)
 
 # plot t-sne
 png(filename="t-sne.png", width=6, height=6, units="in", res=300)
@@ -160,35 +161,31 @@ plotViz(
   text.halo.width=0.2,
   #down.sample=10000,
   legend.add=FALSE
-);
+)
 dev.off()
 
-# new gene annotation
-# TODO
-# # gene annotation
-# genes = read.table(genefile);
-# genes.gr = GRanges(genes[,1], 
-#                      IRanges(genes[,2], genes[,3]), name=genes[,4]
-# );
-# 
-# x.sp = addBmatToSnap(x.sp);
-# # TODO: Select highest "expressed" genes of each cluster
-# x.sp = createGmatFromMat(
-#   obj=x.sp, 
-#   input.mat="bmat",
-#   genes=genes.gr,
-#   do.par=TRUE,
-#   num.cores=6
-# );
+# gene annotation
+genes = read.table(genefile)
+genes.gr = GRanges(genes[,1],
+                     IRanges(genes[,2], genes[,3]), name=genes[,4]
+)
+
+x.sp = createGmatFromMat(
+  obj=x.sp,
+  input.mat="bmat",
+  genes=genes.gr,
+  do.par=TRUE,
+  num.cores=6
+)
 
 # generate cluster assignment table
 ca_table = do.call(rbind, Map(data.frame, cell_name=x.sp@barcode, cluster=x.sp@cluster))
 write.table(ca_table,"cluster_assignment_table.txt", sep = "\t", quote = FALSE, row.names = FALSE)
 
 # call peaks for all cluster with more than 100 cells
-clusters.sel = names(table(x.sp@cluster))[which(table(x.sp@cluster) > 100)];
+clusters.sel = names(table(x.sp@cluster))[which(table(x.sp@cluster) > 100)]
 peaks.ls = mclapply(seq(clusters.sel), function(i){
-  print(clusters.sel[i]);
+  print(clusters.sel[i])
   runMACS(
     obj=x.sp[which(x.sp@cluster==clusters.sel[i]),], 
     output.prefix=paste0(paste(sample_name, ".", sep=""), gsub(" ", "_", clusters.sel)[i]),
@@ -199,19 +196,19 @@ peaks.ls = mclapply(seq(clusters.sel), function(i){
     num.cores=6,
     macs.options="--nomodel --shift 100 --ext 200 --qval 5e-2 -B --SPMR",
     tmp.folder=tempdir()
-  );
+  )
 }, mc.cores=6);
 # assuming all .narrowPeak files in the current folder are generated from the clusters
-peaks.names = system("ls | grep narrowPeak", intern=TRUE);
+peaks.names = system("ls | grep narrowPeak", intern=TRUE)
 peak.gr.ls = lapply(peaks.names, function(x){
   peak.df = read.table(x)
   GRanges(peak.df[,1], IRanges(peak.df[,2], peak.df[,3]))
 })
-peak.gr = reduce(Reduce(c, peak.gr.ls));
+peak.gr = reduce(Reduce(c, peak.gr.ls))
 peak.gr
 
 # create a cell-by-peak matrix
-peaks.df = as.data.frame(peak.gr)[,1:3];
+peaks.df = as.data.frame(peak.gr)[,1:3]
 write.table(peaks.df,file = "peaks.combined.bed",append=FALSE,
               quote= FALSE,sep="\t", eol = "\n", na = "NA", dec = ".", 
               row.names = FALSE, col.names = FALSE, qmethod = c("escape", "double"),
@@ -227,5 +224,9 @@ saveRDS(x.sp, file=paste(sample_name, ".rds", sep=""))
 
 # add cell-by-peak matrix
 # x.sp = readRDS("right_lobe_of_liver.snap.rds");
-# x.sp = addPmatToSnap(x.sp);
-# x.sp = makeBinary(x.sp, mat="pmat");
+
+x.sp
+x.sp = addPmatToSnap(x.sp)
+x.sp = makeBinary(x.sp, mat="pmat")
+
+saveRDS(x.sp, file="right_lobe_of_liver_test.rds")
