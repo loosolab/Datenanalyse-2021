@@ -25,7 +25,7 @@ FILE="/mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}.yml"
 GENOME_FASTA="/mnt/workspace_stud/allstud/homo_sapiens.104.mainChr.fa"
 SCORE_BIGWIG="/mnt/workspace_stud/allstud/wp3/tissues/$TISSUE/snakemakeout/footprinting/${CELL_TYPE}_footprints.bw"
 PEAK_BED="/mnt/workspace_stud/allstud/wp3/tissues/$TISSUE/snakemakeout/peak_calling/${CELL_TYPE}_union.bed"
-MOTIF_FILE="/mnt/workspace_stud/allstud/wp3/tissues/$TISSUE/snakemakeout/all_motifs.txt"
+MOTIF_FILE="/mnt/workspace_stud/allstud/wp3/tissues/$TISSUE/snakemakeout/motifs/all_motifs.txt"
 
 # file manipulations
 sed -i 's,^.*output:.*$,'"  output: \'$OUTPUT_DIRECTORY\'"',' $FILE
