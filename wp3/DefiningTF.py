@@ -17,12 +17,12 @@ def cliParser():
     parser.add_argument('-f', '--families', dest='families', default=False, action='store_true', help='If used, output will group TFs by families')
     args = parser.parse_args()
     
-    return args.families
+    return args.File, args.families
 
 def main():
     
-    Families = cliParser()
-    inputFile = "ClusterComparison.tsv"
+    File, Families = cliParser()
+    inputFile = File[0]
     #inputFile = "comp.tsv"
 
     with open(inputFile, "r") as file:
@@ -90,7 +90,7 @@ def main():
     important_TFs = pd.DataFrame(clusters)
     print(important_TFs)
     
-    important_TFs.to_csv("importantTFsPerCluster.tsv" + '.tsv', sep="\t")
+    important_TFs.to_csv("importantTFsPerCluster" + '.tsv', sep="\t")
 
 if __name__ == '__main__':
     main()
