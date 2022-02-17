@@ -154,7 +154,7 @@ def clusterFamilies(filename):
            
 def main():
         filename = cliParser()
-        clusterFamilies(filename)
+        clusterFamilies(filename[0])
 
 if __name__ == '__main__':
     main()
