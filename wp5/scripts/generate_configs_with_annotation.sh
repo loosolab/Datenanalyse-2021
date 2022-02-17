@@ -8,7 +8,12 @@ CELL_TYPE=$2
 ./create_folders.sh "$TISSUE" "$CELL_TYPE"
 
 # create new config file
-cp /mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}.yml /mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml
+if [ -f "/mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml" ] ; then
+    echo "The file config_${TISSUE}_${CELL_TYPE}_with_annotation.yml already exists. The file wasn't created."
+    exit 0
+else
+    cp /mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}.yml /mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml
+fi
 
 # choose gtf file
 GTF="/mnt/workspace_stud/allstud/homo_sapiens.104.mainChr.gtf"

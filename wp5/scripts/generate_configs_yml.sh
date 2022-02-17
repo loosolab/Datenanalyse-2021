@@ -11,7 +11,12 @@ CELL_TYPE=$2
 OUTPUT_DIRECTORY="/mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline"
 
 # create new config file
-cp /mnt/workspace_stud/allstud/wp5/source_files/config.yml /mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}.yml
+if [ -f "/mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}.yml" ] ; then
+    echo "The file config_${TISSUE}_${CELL_TYPE}.yml already exists. The file wasn't created."
+    exit 0
+else
+    cp /mnt/workspace_stud/allstud/wp5/source_files/config.yml /mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}.yml
+fi
 
 # used file for manipulation
 FILE="/mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}.yml"
