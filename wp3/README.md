@@ -8,7 +8,7 @@ WP3 Contains a script to speperate one .bam file into seperate files using a clu
 
 Installation
 ------------
-Simply clone this repository. Before running the clustering script you will need to also install pysam(ref) in your python environment. Aslo for processing the data the use of SAM-Tools is recommended.
+Simply clone this repository. Before running the clustering script you will need to also install [pysam](https://pypi.org/project/pysam/) in your python environment. Aslo for processing the data the use of [SAM-Tools](https://www.htslib.org/download/) is recommended.
 
 You also need to download the [TOBIAS snakemake repository](https://github.molgen.mpg.de/loosolab/TOBIAS_snakemake) and set up the anaconda environment with the yml file provided in it like this:
 
