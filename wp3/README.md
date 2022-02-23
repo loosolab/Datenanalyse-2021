@@ -19,7 +19,12 @@ conda env create -f environments/snakemake.yaml
 Workflow description
 --------------------
 
-Converting the .sam file from WP2 to a .bam file and sorting it with samtools:
+Converting the .sam file from WP2 to a .bam file and sorting it with samtools. You can use the utility script "preprocessingSam.sh" like this:
+```bash
+./preprocessingSam.sh sample.sam
+```
+
+Alternatively you can do it yourself using these commands:
 ```bash
 samtools view -S -b sample.sam > sample.bam
 samtools sort sample.bam -o sample_sorted.bam
