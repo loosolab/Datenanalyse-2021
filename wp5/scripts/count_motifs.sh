@@ -11,7 +11,7 @@ if ! [ -f $FILE ]; then
     cd $FILE_PATH
     touch $FILE_NAME
     echo "$FILE_NAME was created."
-    echo -e "tissue\tcell_type\tmotif\t" >> $FILE
+    echo -e "tissue\tcell_type\tmotifs\t" >> $FILE
 fi
 
 # count motifs per tissue per cell type and write them into the output file
