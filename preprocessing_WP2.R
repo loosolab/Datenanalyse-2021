@@ -10,7 +10,7 @@ gtf.gr = rtracklayer::import("/home/rstudio/workspaces/mbentse/homo_sapiens/homo
 
 # load .snap file
 s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap"
-sample_name = "right-lobe-of-liver2"
+sample_name = "right-lobe-of-liver_test"
 s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1JKYN-020-SM-C1PX3_snATAC_thoracic_aorta.snap"
 sample_name = "thoracic-aorta"
 
@@ -47,7 +47,7 @@ dev.off()
 # chose the cutoff based on the plot 
 # liver 0.3 0.6 2.5
 # aorta 0.15 0.7 2.5
-idx = which(promoter_ratio > 0.15 & promoter_ratio < 0.7 & log_cov > 2.5)
+idx = which(promoter_ratio > 0.3 & promoter_ratio < 0.6 & log_cov > 2.5)
 
 x.sp = x.sp[idx,]
 x.sp
@@ -114,7 +114,7 @@ dev.off()
 # select first pair that looks like a blob
 # liver: 7
 # aorta: 8
-v_pair = 12
+v_pair = 20
 
 # continue dimensional reduction with first n eigenvectors
 x.sp = runKNN(
@@ -164,23 +164,27 @@ plotViz(
 )
 dev.off()
 
-# gene annotation
-genes = read.table(genefile)
-genes.gr = GRanges(genes[,1],
-                     IRanges(genes[,2], genes[,3]), name=genes[,4]
-)
-
-x.sp = createGmatFromMat(
-  obj=x.sp,
-  input.mat="bmat",
-  genes=genes.gr,
-  do.par=TRUE,
-  num.cores=6
-)
+# # gene annotation
+# genes = read.table(genefile)
+# genes.gr = GRanges(genes[,1],
+#                      IRanges(genes[,2], genes[,3]), name=genes[,4]
+# )
+# 
+# x.sp = createGmatFromMat(
+#   obj=x.sp,
+#   input.mat="bmat",
+#   genes=genes.gr,
+#   do.par=TRUE,
+#   num.cores=6
+# )
 
 # generate cluster assignment table
 ca_table = do.call(rbind, Map(data.frame, cell_name=x.sp@barcode, cluster=x.sp@cluster))
 write.table(ca_table,"cluster_assignment_table.txt", sep = "\t", quote = FALSE, row.names = FALSE)
+
+# set/getwd and create folder
+dir.create(file.path(getwd(), "peaks"))
+setwd(file.path(getwd(), "peaks"))
 
 # call peaks for all cluster with more than 100 cells
 clusters.sel = names(table(x.sp@cluster))[which(table(x.sp@cluster) > 100)]
@@ -214,7 +218,21 @@ write.table(peaks.df,file = "peaks.combined.bed",append=FALSE,
               row.names = FALSE, col.names = FALSE, qmethod = c("escape", "double"),
               fileEncoding = "")
 
+# set/getwd
+setwd("/home/rstudio/workspaces/stud3/rstudio_workspace/Datenanalyse_2/Datenanalyse-2021")
+setwd(file.path(getwd(), sample_name))
+
+# save rds
 saveRDS(x.sp, file=paste(sample_name, ".rds", sep=""))
+
+# bash:
+# snaptools snap-add-pmat \
+# --snap-file atac_v1_adult_brain_fresh_5k.snap \
+# --peak-file peaks.combined.bed
+
+# x.sp = addPmatToSnap(x.sp)
+# x.sp = makeBinary(x.sp, mat="pmat")
+
 
 # TODO: don't think that the commented steps are necessary for our pipeline?
 # create cell-by-peak matrix and add to the snap file
@@ -225,8 +243,5 @@ saveRDS(x.sp, file=paste(sample_name, ".rds", sep=""))
 # add cell-by-peak matrix
 # x.sp = readRDS("right_lobe_of_liver.snap.rds");
 
-x.sp
-x.sp = addPmatToSnap(x.sp)
-x.sp = makeBinary(x.sp, mat="pmat")
-
-saveRDS(x.sp, file="right_lobe_of_liver_test.rds")
+# p_mat <- Matrix::as.matrix(x.sp@pmat)
+# head(p_mat)
