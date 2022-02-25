@@ -1,0 +1,30 @@
+#-------------------------------------------------------------------------#
+#-------------------------- TOBIAS input data ----------------------------#
+#-------------------------------------------------------------------------#
+
+data:                                   #insert list of cluser .bam Files from snakemakeIn.txt below
+
+run_info:                                   #modify appropriate paths if necessary
+  organism: human                           #mouse/human
+  fasta: /mnt/workspace_stud/stud11/snakeData/homo_sapiens.104.mainChr.fa                       #.fasta-file containing organism genome
+  blacklist: /mnt/workspace_stud/stud11/snakeData/hg38-blacklist.bed        #.bed-file containing blacklisted regions
+  gtf: /mnt/workspace_stud/stud11/snakeData/homo_sapiens.104.mainChr.gtf     #.gtf-file
+  motifs: /mnt/workspace_stud/stud11/snakeData/jasparCoreVert/*                    #motifs (directory with files or individual files in MEME/JASPAR/PFM format)
+  output: output                            #output directory 
+
+#Flags for parts of pipeline to include/exclude (all are True by default)
+flags:
+  plot_comparison: False #True/False
+  plot_correction: False
+  plot_venn: False
+  coverage: False
+  wilson: True
+
+#-------------------------------------------------------------------------#
+#----------------------- Default module parameters -----------------------#
+#-------------------------------------------------------------------------#
+
+macs: "--nomodel --shift -100 --extsize 200 --broad"
+atacorrect: ""
+footprinting: ""
+bindetect: "--time-series"
