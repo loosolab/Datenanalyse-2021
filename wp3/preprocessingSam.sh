@@ -12,6 +12,8 @@ then
     samtools view -S -b $inputname > $filenameBam
     samtools sort $filenameBam -o $filenameSortedBam
     samtools index $filenameSortedBam
+    rm $filenameBam
+    rm $inputname
 else
     echo Error: The script expects the filname as argument.
 fi
