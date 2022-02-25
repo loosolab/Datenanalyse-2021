@@ -18,7 +18,7 @@ def cliParser():
     parser.add_argument('-o', '--outputName', dest='Custom_filename', default="ClusterComparison", help='Sets a custom name for saving the output files')
     parser.add_argument('-z', '--ZScore', dest='Z', default=True, action='store_false', help='if used, skips Z Scores calculation for each TF')
     parser.add_argument('-s', '--shortNames', dest='shortNames', default=False, action='store_true', help='If used, saves the short Name of each TF instead of the output_prefix')
-    parser.add_argument('-f', '--families', dest='families', nargs=1, default="thisisnotafile", help='Family cluster file to group TF families together')
+    parser.add_argument('-f', '--families', dest='families', nargs=1, default=[""], help='Family cluster file to group TF families together')
     args = parser.parse_args()
     
     return args.File, args.Norm, args.Custom_filename, args.Z, args.shortNames, args.families
@@ -78,7 +78,7 @@ def toZScore(dfNorm, fileNames):
     return dfZ
     
 def groupFamilies(familyFile, df):
-    
+   
     with open(familyFile, "r") as file:
         
         colnames = []
@@ -89,29 +89,32 @@ def groupFamilies(familyFile, df):
         dfT = df.transpose()
         
         families = {}
-        
+
         for line in file:
             #print(line)
             familyName, familyMembers = line.split("\t")
             familyMembers= familyMembers.split("\n")
             familyMembers = familyMembers[0].split(",")
+            
+            for index, member in enumerate(familyMembers):
+                familyMembers[index] = member.upper()
+            
             families[familyName] = familyMembers
         
-        
-        #print(families)
+
         familyScores = {}
         
         for familyName in families.keys():
             #print(familyName)
-            tmpScores = 0
+            tmpScores = []
             memberCounter = 0
             
             
             for col in dfT:
                 #print(col)
                 #print(families[familyName])
-                if col in families[familyName]:
-                    if tmpScores == 0:
+                if col.upper() in families[familyName]:
+                    if tmpScores == []:
                         tmpScores = dfT[col].tolist()
                         memberCounter += 1
                     else:
@@ -130,15 +133,32 @@ def groupFamilies(familyFile, df):
                 meanScores.append(score/memberCounter)
             
             familyScores[familyName] = meanScores
-    
         
-        df_families = pd.DataFrame(familyScores)
+        
+        # for element in familyScores:
+        #     if len(familyScores[element]) == 0:
+        #         print(element,": ",familyScores[element],": ", df[element].tolist())
+
+        #TODO so soll das nicht, warum muss ich welche rauswerfen, weil sie leer sind????
+        finale = {}
+        
+        for element in familyScores:
+            if len(familyScores[element]) != 0:
+                finale[element] = familyScores[element]
+            else:
+                finale[element] = []
+                
+                for space in colnames:
+                    finale[element].append("HELP")
+        
+        df_families = pd.DataFrame(finale)
         df_families = df_families.T
         df_families.columns = colnames
        
         return df_families
             
 def extractScores(infile, shortNames, normMethod, Z, outputName, familyFile):
+    
     #preparing a list of lists with columns for the TFs and each cluster with the scores for them
     scores = {"TF": []}
     transcriptionFactors = {}
@@ -151,7 +171,6 @@ def extractScores(infile, shortNames, normMethod, Z, outputName, familyFile):
         nameCol = 0
     
     
-    #inputData = pd.read_table(inputFile[0], sep="\t")
     file = open(infile, "r")
     
     for index, line in enumerate(file):
@@ -169,13 +188,9 @@ def extractScores(infile, shortNames, normMethod, Z, outputName, familyFile):
                     scores[name[0]] = []
                     
 
-    #print(scores)
     
     #getting the scores for each TF from each cluster, saving them in the list that was created beforehand
-    #for index,file in enumerate(inputFiles):
 
-        #currentFile = open(file, "r")
-        #columnName = fileNames[index]
     file.seek(0)   
     for index ,line in enumerate(file):
         #print(currentIndex,line)
@@ -213,7 +228,7 @@ def extractScores(infile, shortNames, normMethod, Z, outputName, familyFile):
     
     #print(clusterNames)
     
-    print(scores)    
+    #print(scores)    
     #print(transcriptionFactors)
     #checks whether normalization is wanted and which method is supposed to be used
     #normalizes the scores 
@@ -236,7 +251,7 @@ def extractScores(infile, shortNames, normMethod, Z, outputName, familyFile):
     else:
         dfZScores = dfNormScores
     
-    if familyFile != "thisisnotafile":
+    if familyFile == [""]:
         dfFinal = dfZScores
     else:
         dfFinal = groupFamilies(familyFile, dfZScores)        
@@ -267,7 +282,7 @@ def main():
     
     inputFile, normMethod, outputName, Z, shortNames, familyFile = cliParser()
     #outfile = open("ClusterComparison.tsv","a")
-    
+    print(familyFile)
 
     extractScores(inputFile[0], shortNames, normMethod, Z, outputName, familyFile[0])
 

@@ -18,7 +18,7 @@ def cliParser():
     args = parser.parse_args()
     
     return args.File, args.families
-
+#TODO ohne den ganzen family Mist, der passiert schon vorher und wird dann halt als file übergeben
 def main():
     
     File, Families = cliParser()
@@ -39,6 +39,7 @@ def main():
                
     
     df = pd.read_csv(inputFile, sep="\t", header = headerCount)
+    #print(df)
     df.set_index('TF', inplace=True)
 
     clusters = {}
@@ -49,30 +50,31 @@ def main():
     collapseCols = {}
     
     dfT = df.transpose()
-    
+    print(dfT)
     if Families: 
-        with open("TF_families.txt", "r") as file:
+        with open("TF_families.tsv", "r") as file:
             for col in dfT:
                 #print(dfT)
                 for line in file:
                     family, tfactors = line.split("\t")
                     tfactorList = tfactors.split(",")
                     if col in tfactorList:
-                            print(1)
+                            #print(1)
                             collapseCols[col] = family
          
         dfFamilies = dfT
-        print(dfFamilies)
+        #print(dfFamilies)
         dfFamilies = dfFamilies.groupby(collapseCols, axis = 1).mean()
-        print(dfFamilies)
+        #print(dfFamilies)
         dfFamilies = dfFamilies.transpose()
-        print(dfFamilies)
+        #print(dfFamilies)
         
         
         df = dfFamilies
             
-    print(collapseCols)    
-    print(df)   
+    #print(collapseCols)
+    #print(1)    
+   # print(df)   
     #Quantilebestimmung und Extraktion der relevanten TF 
     quants = df.quantile(.95)
     
