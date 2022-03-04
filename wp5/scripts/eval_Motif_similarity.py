@@ -3,7 +3,6 @@
 import pandas as pd
 import plotly.express as px
 import argparse
-import re
 
 parser = argparse.ArgumentParser(description='Evaluate differntial binding')
 parser.add_argument('--motifs', metavar='MOTIF_CLUSER.yml', help='Output of the motif clustering with TOBIAS', required=True)
@@ -30,9 +29,9 @@ with open(args.motifs) as file:
             continue
         clusters.append(cur_cluster)
         motif_names.append(cur_motif_name)
-        tissue, cell_type = cur_motif_name.split('_')
+        tissue, cell_type, _ = cur_motif_name.split('_')
         tissues.append(tissue)
-        cell_types.append(re.sub('\d+$', '', cell_type))
+        cell_types.append(cell_type)
 
 # parse to dataframe
 df_motifs = pd.DataFrame({
