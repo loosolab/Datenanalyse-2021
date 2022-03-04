@@ -15,11 +15,4 @@ TOBIAS FormatMotifs --input $MOTIF_FILES --task join --output $joined --format m
 # apply TOBIAS Clustering
 TOBIAS ClusterMotifs --motifs $joined  --clust_method "complete" --dist_method "pcc" --threshold  0.3 --type pdf -o "${NAME}_Cluster"
 
-# changing environments
-echo "Switching environment to MEME_ENV"
-source /opt/miniconda/bin/activate MEME_ENV
-
-# apply TOMTOM clustering of meme suite
-tomtom -o "${NAME}_TOMTOM" -thresh 0.3 -dist pearson -png $joined $joined
-
 conda deactivate
