@@ -49,7 +49,7 @@ del motif_names
 
 ### Plotting###
 ## create Dotplot
-fig = px.scatter(df_motifs, x="Cell_type", y="Tissue", color="Cluster", hover_data=['motif_name'], title="Motif Similarity relations./run")
+fig = px.scatter(df_motifs, x="Cell_type", y="Tissue", color="Cluster", hover_data=['motif_name'], title="Motif Similarity relations")
 fig.update_traces(marker=dict(size=15),
                   selector=dict(mode='markers'))
 fig.show()
