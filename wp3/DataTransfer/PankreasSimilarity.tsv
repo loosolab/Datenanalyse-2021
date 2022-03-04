@@ -1,0 +1,201 @@
+TF	celltypes
+0	Unnamed: 0	
+1	Unnamed: 0	
+2	Unnamed: 0	
+3	Unnamed: 0	
+4	Unnamed: 0	
+5	Unnamed: 0	
+6	Unnamed: 0	
+7	Unnamed: 0	
+8	Unnamed: 0	
+9	Unnamed: 0	
+10	Unnamed: 0	
+11	Unnamed: 0	
+12	Unnamed: 0	
+13	Unnamed: 0	
+14	Unnamed: 0	
+15	Unnamed: 0	
+16	Unnamed: 0	
+17	Unnamed: 0	
+18	Unnamed: 0	
+19	Unnamed: 0	
+OVOL family	cluster6	
+RUNX and BCL11B family	cluster6	
+ELK1HOXA1_MA1789.1	cluster6	
+ET, ELK and others family	cluster6	
+SPDEF_MA0686.1	cluster6	
+ELK1SREBF2_MA1781.1	cluster6	
+ZBED2_MA2020.1	cluster6	
+E2F family	cluster6	
+E2F3_MA0469.3	cluster6	
+ZFP42_MA1651.1	cluster6	
+ZNF343_MA1711.1	cluster6	
+GCM2_MA0767.1	cluster6	
+ZBTB7 family	cluster6	
+GLI3_MA1491.2	cluster6	
+GLIS1_MA0735.1	cluster6	
+PLAG1_MA0163.1	cluster6	
+PLAGL2_MA1548.1	cluster6	cluster5	
+ZFP57_MA1583.1	cluster6	
+RREB1_MA0073.1	cluster6	
+KLF17_MA1514.1	cluster6	
+GATA and TRPS1 family	cluster2	cluster7	cluster3	
+GATA1_MA0035.4	cluster2	cluster7	
+MECOM_MA0029.1	cluster2	
+GATA1TAL1_MA0140.2	cluster2	cluster7	cluster3	
+TCF7L1_MA1421.1	cluster2	cluster7	
+MYBL2_MA0777.1	cluster2	
+HMBOX1_MA0895.1	cluster2	
+POU family 2	cluster2	
+ARID5A_MA0602.1	cluster2	cluster7	
+FOXN3_MA1489.1	cluster2	cluster7	cluster3	
+SRY_MA0084.1	cluster2	cluster7	
+FOX family	cluster2	cluster7	
+FOX family 2	cluster2	
+FOX family 3	cluster2	
+FOXD3_MA0041.2	cluster2	cluster7	
+FOXQ1_MA0040.1	cluster2	cluster7	
+PBX1_MA0070.1	cluster2	cluster7	
+DMRT1_MA1603.1	cluster2	
+SIX family	cluster2	cluster7	cluster3	
+TBX family	cluster2	
+GMEB1_MA0615.1	cluster9	
+FOSL1JUND_MA1143.1	cluster9	
+NFY family	cluster9	cluster10	
+NFYB_MA0502.2	cluster9	cluster10	
+THAP11_MA1573.2	cluster9	
+ZBTB33_MA0527.1	cluster9	
+ARNT, MLX and others family	cluster9	
+CREB3L2_MA0608.1	cluster9	cluster10	
+ZNF574_MA1865.1	cluster9	
+ZNF682_MA1599.1	cluster9	cluster10	
+E2F6 and TFDP1 family	cluster9	
+EGR family	cluster9	
+MAZ, PATZ1 and others family	cluster9	cluster10	
+ZNF281_MA1630.2	cluster9	cluster10	
+SP and KLF1 family	cluster9	cluster10	
+KLF and SP family	cluster9	cluster10	
+KLF15_MA1513.1	cluster9	cluster10	
+KLF3_MA1516.1	cluster9	cluster10	
+KLF13_MA0657.1	cluster9	cluster10	
+ZNF530_MA1873.1	cluster9	cluster10	
+ROR family	cluster11	
+RORB_MA1150.1	cluster11	
+FOS, BA and others family	cluster11	
+MAF and NFE2L2 family	cluster11	
+MAF and BACH1MAFK family	cluster11	
+RELB_MA1117.1	cluster11	cluster5	
+ZNF528_MA1597.1	cluster11	
+HSF family	cluster11	
+ZBTB26_MA1579.1	cluster11	
+STAT family	cluster11	
+STAT5 family	cluster11	
+STAT5A_MA1624.1	cluster11	
+BCL6_MA0463.2	cluster11	
+ZNF341_MA1655.1	cluster11	
+NR3C and AR family	cluster11	
+ZNF675_MA1714.1	cluster11	
+SMAD family 2	cluster11	
+HAND1TCF3_MA0092.1	cluster11	
+EBF family	cluster11	cluster5	
+E2F7_MA0758.1	cluster11	
+RARARXRG_MA1149.1	cluster5	cluster8	
+NR family family 2	cluster5	
+SOX family 2	cluster5	
+SOX12_MA1561.1	cluster5	
+MEIS and PBX2 family	cluster5	
+HNF1 family	cluster5	
+ALX and ARX family	cluster5	
+NFKB family	cluster5	
+REL family	cluster5	
+TEAD family	cluster5	
+ZNF707_MA1715.1	cluster5	
+TFCP2_MA1760.1	cluster5	
+ZNF816_MA1719.1	cluster5	
+GLIS2_MA0736.1	cluster5	
+GLIS3_MA0737.1	cluster5	
+ZNF423_MA0116.1	cluster5	
+INSM1_MA0155.1	cluster5	
+ISL2_MA0914.1	cluster1	
+ISL1_MA1608.1	cluster1	
+VENTX_MA0724.1	cluster1	
+POU6F family	cluster1	
+DLX family	cluster1	
+HOX family 3	cluster1	
+HOXA5_MA0158.2	cluster1	
+GBX, EN2 and others family	cluster1	
+DLX, MSX and others family	cluster1	
+LHX, RAX and others family	cluster1	
+EVX family	cluster1	
+LHX1_MA1518.2	cluster1	
+RFX4_MA0799.2	cluster1	
+RFX6_MA1724.1	cluster1	
+RFX family	cluster1	
+RFX7_MA1554.1	cluster1	
+NEURO, ATOH1 and others family	cluster1	
+TAL1TCF3_MA0091.1	cluster1	
+NEUROG2_MA0669.1	cluster1	
+MSGN1_MA1524.2	cluster1	
+THRB_MA1575.1	cluster10	cluster3	
+MAXMYC and MYCN family	cluster10	
+MTF1_MA0863.1	cluster10	
+CTCFL_MA1102.2	cluster10	
+ZNF449_MA1656.1	cluster10	
+SP5_MA2032.1	cluster10	
+ZNF460_MA1596.1	cluster10	
+ZFX_MA0146.2	cluster10	
+ESRR and NR5A family	cluster7	cluster3	
+NR6A1_MA1541.1	cluster7	cluster3	
+ONECUT and CUX family	cluster7	
+GRHL family	cluster7	
+NFI family 2	cluster7	
+CTCF_MA0139.1	cluster7	
+CTCF_MA2025.1	cluster7	
+CTCF_MA2026.1	cluster7	
+NR1I2_MA1533.1	cluster8	cluster3	
+RXRAVDR_MA0074.1	cluster8	
+ESR1_MA0112.3	cluster8	cluster3	
+ESR2_MA0258.2	cluster8	cluster3	
+NR1D family	cluster8	
+RARARXRA_MA0159.1	cluster8	
+RARG_MA0860.1	cluster8	
+THRA_MA2033.1	cluster8	cluster3	
+RAR and RXR family	cluster8	
+ZNF354C_MA0130.1	cluster8	
+NKX2-2_MA1645.1	cluster8	
+MSANTD3_MA1523.1	cluster8	
+SIX3_MA0631.1	cluster8	
+SPZ1_MA0111.1	cluster8	
+TP53_MA0106.3	cluster8	
+TP73_MA0861.1	cluster8	
+ZNF324_MA1869.1	cluster8	
+ZKSCAN1_MA1585.1	cluster8	
+ZNF135_MA1587.1	cluster8	cluster3	
+BACH2_MA1470.1	cluster4	
+ATF4 and CEBPG family	cluster4	
+CEBP family	cluster4	
+DBP, HLF and others family	cluster4	
+DDIT3CEBPA_MA0019.1	cluster4	
+TBP_MA0108.2	cluster4	
+OSR2_MA1646.1	cluster4	
+GFI1_MA0038.2	cluster4	
+FOX, ETV and others family	cluster4	
+SPI family	cluster4	
+ELF5_MA0136.3	cluster4	
+SPIC_MA0687.1	cluster4	
+IRF family	cluster4	
+STAT1STAT2_MA0517.1	cluster4	
+STAT2_MA1623.1	cluster4	
+IRF3_MA1418.1	cluster4	
+IRF2_MA0051.1	cluster4	
+PRDM1_MA0508.3	cluster4	
+ZNF140_MA1589.1	cluster4	
+TP63_MA0525.2	cluster4	
+PPARGRXRA_MA0065.2	cluster3	
+NR2, RXR and others family	cluster3	
+NR1H2RXRA_MA0115.1	cluster3	
+HNF4A_MA1494.1	cluster3	
+RORA_MA0071.1	cluster3	
+THRB_MA1576.1	cluster3	
+HIC1_MA0739.1	cluster3	
+REST_MA0138.2	cluster3	
