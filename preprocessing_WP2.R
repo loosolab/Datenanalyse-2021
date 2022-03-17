@@ -4,15 +4,30 @@ library(viridisLite)
 library(ggplot2)
 library(rtracklayer)
 
-genefile = "/home/rstudio/workspaces/stud4/genefile/gencode.filtered.bed"
 blacklist_regions = "/home/rstudio/workspaces/stud4/SnaptoolsTest/blacklists/hg38-blacklist.v2_parsed.bed"
 gtf.gr = rtracklayer::import("/home/rstudio/workspaces/mbentse/homo_sapiens/homo_sapiens.104.mainChr.gtf")
 
 # load .snap file
-s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap"
-sample_name = "right-lobe-of-liver_test"
 s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1JKYN-020-SM-C1PX3_snATAC_thoracic_aorta.snap"
 sample_name = "thoracic-aorta"
+s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/JF1O9_gastrocnemius_medialis/JF1O9_gastrocnemius_medialis.snap"
+sample_name = "muscle_new"
+s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap"
+sample_name = "right-lobe-of-liver_new"
+s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/CSSD4_omental_fat_pad/CSSD4_omental_fat_pad.snap"
+sample_name = "fat_new"
+s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/JF1O6_body_of_pancreas/JF1O6_body_of_pancreas.snap"
+sample_name = "pancreas_new"
+s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/IQYCP_lower_leg_skin/IQYCP_lower_leg_skin.snap"
+sample_name = "skin_new"
+s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/A8CPH_esophagus_muscularis_mucosa/A8CPH_esophagus_muscularis_mucosa.snap"
+sample_name = "muscle2_new"
+s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/JF1NP_stomach/JF1NP_stomach.snap"
+sample_name = "stomach_new" # GI tract
+s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/ACCPU_upper_lobe_of_left_lung/ACCPU_upper_lobe_of_left_lung.snap"
+sample_name = "lung_new" # Lungs
+s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/JF1O8_colon_sigmoid/JF1O8_colon_sigmoid.snap"
+sample_name = "colon_new" # GI tract
 
 # set/getwd and create folder
 setwd("/home/rstudio/workspaces/stud3/rstudio_workspace/Datenanalyse_2/Datenanalyse-2021")
@@ -44,10 +59,9 @@ png(filename="barcodes.png", width=6, height=4, units="in", res=300)
 plot(log_cov, promoter_ratio, cex=0.5, col="grey", xlab="log(count(bins))", ylab="Promoter ratio", ylim=c(0,1 ))
 dev.off()
 
-# chose the cutoff based on the plot 
-# liver 0.3 0.6 2.5
-# aorta 0.15 0.7 2.5
-idx = which(promoter_ratio > 0.3 & promoter_ratio < 0.6 & log_cov > 2.5)
+# cutoff values seems to be a proper compromise for each tissue
+# idx = which(promoter_ratio > 0.3 & promoter_ratio < 0.6 & log_cov > 2.5)
+idx = which(promoter_ratio > 0.1 & promoter_ratio < 0.4 & log_cov > 1.75)
 
 x.sp = x.sp[idx,]
 x.sp
@@ -82,7 +96,6 @@ hist(
 )
 dev.off()
 
-
 # filter bins with low coverage
 bin.cutoff = quantile(bin.cov[bin.cov > 0], 0.95)
 idy = which(bin.cov <= bin.cutoff & bin.cov > 0)
@@ -90,37 +103,37 @@ x.sp = x.sp[, idy, mat="bmat"];
 x.sp
 
 # dimensional reduction
+
 x.sp = runDiffusionMaps(
   obj=x.sp,
-  input.mat="bmat", 
+  input.mat="bmat",
   num.eigs=50
 )
 
-# show first 25 pairs of eigenvectors
+show first 25 pairs of eigenvectors
 png(filename="eigenvectors.png", width=6, height=4, units="in", res=300)
 plotDimReductPW(
-  obj=x.sp, 
+  obj=x.sp,
   eigs.dims=1:50,
   point.size=0.3,
   point.color="grey",
   point.shape=19,
   point.alpha=0.6,
   down.sample=5000,
-  pdf.file.name=NULL, 
-  pdf.height=7, 
+  pdf.file.name=NULL,
+  pdf.height=7,
   pdf.width=7
 )
 dev.off()
-# select first pair that looks like a blob
-# liver: 7
-# aorta: 8
-v_pair = 20
+
+# select first pair that looks like a blob, default: 15
+v_pair = 15
 
 # continue dimensional reduction with first n eigenvectors
 x.sp = runKNN(
   obj=x.sp,
-  eigs.dims=1:v_pair, # choose first plot with "blob"
-  k=15
+  eigs.dims=1:v_pair,
+  k=200
 )
 
 # perform clustering
@@ -163,20 +176,6 @@ plotViz(
   legend.add=FALSE
 )
 dev.off()
-
-# # gene annotation
-# genes = read.table(genefile)
-# genes.gr = GRanges(genes[,1],
-#                      IRanges(genes[,2], genes[,3]), name=genes[,4]
-# )
-# 
-# x.sp = createGmatFromMat(
-#   obj=x.sp,
-#   input.mat="bmat",
-#   genes=genes.gr,
-#   do.par=TRUE,
-#   num.cores=6
-# )
 
 # generate cluster assignment table
 ca_table = do.call(rbind, Map(data.frame, cell_name=x.sp@barcode, cluster=x.sp@cluster))
@@ -224,24 +223,3 @@ setwd(file.path(getwd(), sample_name))
 
 # save rds
 saveRDS(x.sp, file=paste(sample_name, ".rds", sep=""))
-
-# bash:
-# snaptools snap-add-pmat \
-# --snap-file atac_v1_adult_brain_fresh_5k.snap \
-# --peak-file peaks.combined.bed
-
-# x.sp = addPmatToSnap(x.sp)
-# x.sp = makeBinary(x.sp, mat="pmat")
-
-
-# TODO: don't think that the commented steps are necessary for our pipeline?
-# create cell-by-peak matrix and add to the snap file
-# Terminal: snaptools snap-add-pmat \
-# --snap-file /home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap \
-# --peak-file peaks.combined.bed
-
-# add cell-by-peak matrix
-# x.sp = readRDS("right_lobe_of_liver.snap.rds");
-
-# p_mat <- Matrix::as.matrix(x.sp@pmat)
-# head(p_mat)
