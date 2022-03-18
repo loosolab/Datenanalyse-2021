@@ -5,7 +5,7 @@
 # Directory where the whole project lies: 
 # It is important that this directory contains the subfolder "runs"
 PROJECT_DIR=$1
-# TODO
+# Temporary Directory to store MEME files in, Input $2 is the prefix the directory should have
 TEMP_DIR="${PROJECT_DIR}/runs/${2}_motifs"
 # TODO; File prefix for output file: TODO check if cluster or file? 
 CLUSTERING_NAME="liver"
@@ -25,7 +25,7 @@ for TISSUE in $PROJECT_DIR/runs/*/; do
 done
 
 # execute clustering
-./getSimilarMotifs.sh $CLUSTERING_NAME $TEMP_DIR/*
+./getSimilarMotifs.sh $PROJECT_DIR $CLUSTERING_NAME $TEMP_DIR/*
 
 # remove temporary file
 rm -r $TEMP_DIR

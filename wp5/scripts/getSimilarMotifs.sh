@@ -8,18 +8,19 @@ if  [ ! "$CONDA_DEFAULT_ENV" == "TOBIAS_ENV" ]; then
     source /opt/miniconda/bin/activate TOBIAS_ENV
 fi
 
-# File prefix for output file: TODO check if cluster or file? 
-NAME=$1
+# Directory where to write the output to
+DIR=$1
+# File prefix for output file:
+NAME=$2
 # All Motif files to cluster
-MOTIF_FILES="${@:2}"
+MOTIF_FILES="${@:3}"
 
 # put all motifs in same File
 dt=$(date '+%d-%m-%Y_%H-%M')
-joined="${NAME}_motifs_all_${dt}.meme"
+joined="${DIR}/${NAME}_motifs_all_${dt}.meme"
 TOBIAS FormatMotifs --input $MOTIF_FILES --task join --output $joined --format meme
 
 # apply TOBIAS Clustering
-TOBIAS ClusterMotifs --motifs $joined  --clust_method "complete" --dist_method "pcc" --threshold  0.3 --type pdf -o "${NAME}_Cluster"
-# TODO delete joinded? 
+TOBIAS ClusterMotifs --motifs $joined  --clust_method "complete" --dist_method "pcc" --threshold  0.3 --type pdf -o "${DIR}/${NAME}_Cluster" 
 
 conda deactivate
