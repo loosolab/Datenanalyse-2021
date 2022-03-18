@@ -1,10 +1,19 @@
 #!/bin/bash
 
+## Script to cluster all motifs of all runs
+
+# Directory where the whole project lies: 
+# It is important that this directory contains the subfolder "runs"
 PROJECT_DIR=$1
+# TODO
 TEMP_DIR="${PROJECT_DIR}/runs/${2}_motifs"
+# TODO; File prefix for output file: TODO check if cluster or file? 
 CLUSTERING_NAME="liver"
 
+# Temporaray directory to which all the meme files with the motifs will be stored
 mkdir $TEMP_DIR
+
+# get all Motifs in meme files of the runs an write them to the temporary directory
 for TISSUE in $PROJECT_DIR/runs/*/; do
 	T_NAME=$(basename $TISSUE)   
     for CT in $TISSUE*/; do
@@ -14,6 +23,9 @@ for TISSUE in $PROJECT_DIR/runs/*/; do
         fi
     done
 done
+
+# execute clustering
 ./getSimilarMotifs.sh $CLUSTERING_NAME $TEMP_DIR/*
 
-#rm -r $TEMP_DIR
+# remove temporary file
+rm -r $TEMP_DIR

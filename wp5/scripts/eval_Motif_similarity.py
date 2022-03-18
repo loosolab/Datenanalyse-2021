@@ -5,6 +5,7 @@ import plotly.express as px
 import argparse
 
 parser = argparse.ArgumentParser(description='Evaluate differntial binding')
+parser.add_argument('--in-dir', metavar="PATH/TO/DIR", help='Path to directory where the motif discovery runs are stored', required=True )
 parser.add_argument('--motifs', metavar='MOTIF_CLUSER.yml', help='Output of the motif clustering with TOBIAS', required=True)
 parser.add_argument('--out', metavar="FILENAME_prefix",help="Prefix of how the output files should be named.", required=True)
 args = parser.parse_args()
@@ -52,9 +53,9 @@ del motif_names
 fig = px.scatter(df_motifs, x="Cell_type", y="Tissue", color="Cluster", hover_data=['motif_name'], title="Motif Similarity relations")
 fig.update_traces(marker=dict(size=15),
                   selector=dict(mode='markers'))
-fig.show()
-# TODO filepath
-fig.write_html(f"/mnt/workspace_stud/allstud/wp5/runs/{args.out}_Dotplot.html")
+
+# save
+fig.write_html(f"{args.in_dir}/{args.out}_Dotplot.html")
 
 ## create count bar plot
 # add count to Data Frame
@@ -63,7 +64,7 @@ df_motifs["count"] = pd.Series([1]*df_motifs.shape[0])
 fig = px.bar(df_motifs, x="Cluster", y="count", color="Tissue", title="Motif Counts for all new Motifs")
 fig.update_layout(barmode='stack', xaxis={'categoryorder':'total descending'})
 fig.update_traces(marker_line_width=0)
-fig.show()
-# TODO filepath
-fig.write_html(f"/mnt/workspace_stud/allstud/wp5/runs/{args.out}_bar.html")
+
+# save
+fig.write_html(f"{args.in_dir}/{args.out}_bar.html")
 
