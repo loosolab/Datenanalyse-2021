@@ -1,7 +1,7 @@
 #!/bin/bash
 # check if conda evironment is active
 if  [ ! "$CONDA_DEFAULT_ENV" == "TOBIAS_ENV" ]; then
-    echo "Activateing TOBIAS_ENV..."
+    echo "Activating TOBIAS_ENV..."
     source /opt/miniconda/bin/activate TOBIAS_ENV
 fi
 
