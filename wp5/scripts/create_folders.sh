@@ -23,8 +23,7 @@ fi
 # create subfolders: motif_discovery_pipeline, annotation, differential_binding, evaluations
 mkdir /mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline
 mkdir /mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/annotation
-mkdir /mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/differential_binding
-mkdir /mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/evaluations
+mkdir /mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/similarity
 
 # check if the new folders were created successfully
 if [ -d "/mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/evaluations" ] ; then
