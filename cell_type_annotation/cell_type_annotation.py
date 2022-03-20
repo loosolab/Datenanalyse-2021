@@ -215,7 +215,7 @@ def perform_cell_type_annotation(sample, tissue, connect=False):
         os.makedirs(opath)
 
     ct_dict = get_cell_types(cpath, tissue, connect=connect)
-    with open("CTI/" + sample + "/celltype_assignment_table", "w") as c_file:
+    with open("CTI/" + sample + "/annotation.txt", "w") as c_file:
         for dic in ct_dict.keys():
             sorted_dict = dict(sorted(ct_dict[dic].items(), key=lambda r: (r[1][0], r[1][1]), reverse=True))
             with open(opath + "cluster_" + dic, "w") as d_file:
