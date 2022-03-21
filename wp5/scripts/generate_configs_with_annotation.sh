@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# script to generate config files with an annotation step
+
 # input parameters
 TISSUE=$1
 CELL_TYPE=$2

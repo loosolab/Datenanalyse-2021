@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# script to generate config files without an annotation step
+
 # input parameters 1 -> file path output directory
 TISSUE=$1
 CELL_TYPE=$2

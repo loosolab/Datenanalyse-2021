@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# script to create the needed folder structure
+
 # input parameters
 TISSUE=$1
 CELL_TYPE=$2
