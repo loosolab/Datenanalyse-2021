@@ -3,11 +3,10 @@ WP6 is searching for transcription factor (TF)-co-occurences in the clustered si
 The ReadMe handles the setup for WP6 and how to use the jupyter-notebooks for investigating WP1/WP2/WP3´s data.  
 
 ## Setup for WP6´s conda environment:
-We use jupyter-notebooks for our analysis. To use our notebooks you have to do the following steps for setting up your environment
+We use jupyter-notebooks for our analysis. To use our notebooks you have to do the following steps for setting up your environment.
+Tfcomb is still under development, because of this you have to install it from source.
 
 1. Install miniconda (https://docs.conda.io/en/latest/miniconda.html#installing)
-
-Tfcomb is still under development, because of this you have to install it from source.
 2. Checkout tf_comb (https://github.com/loosolab/TF-COMB)
 3. cd tfcomb
 4. Create conda environment: ```conda create -n tfcomb_env --file required_packages.txt```
