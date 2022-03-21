@@ -34,6 +34,7 @@ with open(args.motifs) as file:
         tissues.append(tissue)
         cell_types.append(cell_type)
 
+
 # parse to dataframe
 df_motifs = pd.DataFrame({
     'motif_name': motif_names,
@@ -41,6 +42,9 @@ df_motifs = pd.DataFrame({
     'Tissue': tissues,
     'Cell_type': cell_types,
 })
+
+# write to csv
+df_motifs.to_csv(f"{args.out}_clustering.csv")
 
 # remove unneeded helping lists
 del clusters
