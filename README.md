@@ -7,4 +7,4 @@ The  provided scripts were written to manage the following steps:
   * Bin filtering
   * Dimensionality reduction (clustering)
   * Peak calling of each cluster
-* Cell type annotation using python script and [Pannglao DB](https://panglaodb.se)
+* Cell type annotation using python script and [Panglao DB](https://panglaodb.se)
