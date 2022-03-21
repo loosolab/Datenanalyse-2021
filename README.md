@@ -7,7 +7,7 @@ The  provided scripts were written to manage the following steps:
   * Bin filtering
   * Dimensionality reduction (clustering)
   * Peak calling of each cluster
-* Cell type annotation using [python script](https://github.com/loosolab/Datenanalyse-2021/blob/wp2/cell_type_annotation/cell_type_annotation.py), [Uropa](https://github.com/loosolab/UROPA) and [Panglao DB](https://panglaodb.se)
+* Cell type annotation using [python script](cell_type_annotation/cell_type_annotation.py), [Uropa](https://github.com/loosolab/UROPA) and [Panglao DB](https://panglaodb.se)
 
 ## Setup
 Install [SnapTools](https://github.com/r3fang/SnapTools), [SnapATAC](https://github.com/r3fang/SnapATAC) and [Uropa](https://github.com/loosolab/UROPA) as described on the respective homepage.
