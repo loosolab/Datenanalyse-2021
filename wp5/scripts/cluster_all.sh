@@ -24,10 +24,10 @@ for TISSUE in $PROJECT_DIR/runs/*/; do
     done
 done
 
-# Get current path
-CPATH=$(pwd)
+# Get path to this script
+SPATH=$(dirname $0)
 # execute clustering
-${CPATH}/utils/getSimilarMotifs.sh $PROJECT_DIR $CLUSTERING_NAME $TEMP_DIR/*
+${SPATH}/utils/getSimilarMotifs.sh $PROJECT_DIR $CLUSTERING_NAME $TEMP_DIR/*
 
 # remove temporary file
 rm -r $TEMP_DIR
