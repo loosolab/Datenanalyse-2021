@@ -21,18 +21,18 @@ To use the GSEA you have to use one of the supported [data formats](https://soft
 This work package consists of several scripts (found in the *scripts* directory) which can also be concatenated to a pipeline. For more detailed information please refer to the [WP5-Wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
 
 The single steps of the pipeline are:
-1. [create_folders.sh](#1.-create-folders)
-2. [generate configs](#2.-generate-configs)
+1. [create_folders.sh](#1-create-folders)
+2. [generate configs](#2-generate-configs)
 
     a) generate_configs.sh
         
     b) generate_configs_with_annotation.sh
     
-3. [run_pipeline.py](#3.-run-pipeline)
-4. [check_logs.sh](#4.-check-logs) (optional)
-5. [renameAllMotifs.sh](#5.-rename-motifs)
-6. [cluster_all.sh](#6.-cluster-all)
-7. [Eval_Motif_similarity.py](#7.-Evaluate-motif-similarity)
+3. [run_pipeline.py](#3-run-pipeline)
+4. [check_logs.sh](#4-check-logs) (optional)
+5. [renameAllMotifs.sh](#5-rename-motifs)
+6. [cluster_all.sh](#6-cluster-all)
+7. [Eval_Motif_similarity.py](#7-evaluate-motif-similarity)
 
 Steps 1-5 are contain the actual motif-discovery-pipeline run, aswell as the needed pre- and postprocessing.
 Steps 6 and 7 are for the analysis of similarities between the found motifs in different pipeline runs. 
