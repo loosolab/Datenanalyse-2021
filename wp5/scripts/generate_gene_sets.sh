@@ -39,9 +39,9 @@ for TISSUE in $DIR/*; do
                 
                 FILE_PATH_ANNOTATION="${FILE_PATH_CELL_TYPE}/motif_discovery_pipeline/4_annotation/uropa"
                 
-                # check if the cell types are already analyzed
+                # check if the cell type is already analyzed
                 MOTIF_COUNTER=0  # counter for the to be analyzed motifs
-                LINE_CHECKER=$(cat $FILE_1K | wc -l)   # counts the analyzed motifs
+                LINE_CHECKER=$(cat $FILE_1K | grep -c ">")   # counts the analyzed motifs
                 # counts the to be analyzed motifs
                 if [ -d $FILE_PATH_ANNOTATION ]; then
                     for MOTIF in $FILE_PATH_ANNOTATION/*; do
@@ -60,47 +60,19 @@ for TISSUE in $DIR/*; do
                             DT_MOTIF=$(date '+%d/%m/%Y %H:%M:%S')   # start time of the motif
                             echo "Starting ${MOTIF} at ${DT_MOTIF}."
                             
-                            GENE_SET_NAME_1K="$MOTIF_1k"    # column 1 -> 1k
-                            GENE_SET_NAME_2K="$MOTIF_2k"    # column 1 -> 2k
-                            DESCRIPTION="na"                # column 2 -> 1k + 2k
+                            GENE_SET_NAME_1K=">${MOTIF}_1k" # column 1 -> 1k
+                            GENE_SET_NAME_2K=">${MOTIF}_2k" # column 1 -> 2k
                             GENES_1K=()                     # columns after 2 -> 1k
                             GENES_2K=()                     # columns after 2 -> 2k
                                 
                             cd $FILE_PATH_ANNOTATION/$MOTIF
-                            # variable to ignore the first input line
-                            IGNORER=0
                                 
                             # read *allhits.txt
-                            while read line
-                            do
-                                if [ $IGNORER -eq 1 ]; then
-                                    # strip the input line and write the values into an array
-                                    stripped_line=($(echo $line | tr "\t" "\n"))
-                                    # check the distance
-                                    DISTANCE=(${stripped_line[11]})
-                                    # check if the value for distance isn't "NA"
-                                    if [[ $DISTANCE != "NA" ]]; then
-                                        # check if the distance is less equal than 1k
-                                        if [ $DISTANCE -le 1000 ]; then
-                                            # assign the needed values to variables -> 1k
-                                            GEN_1K=$(echo ${stripped_line[17]})
-                                            # append the variable values to the arrays
-                                            GENES_1K+=($GEN_1K)
-                                        fi
-                                        # check if the distance is less equal than 2k
-                                        if [ $DISTANCE -le 2000 ]; then
-                                            # assign the needed values to variables -> 2k
-                                            GEN_2K=$(echo ${stripped_line[17]})
-                                            # append the variable values to the arrays
-                                            GENES_2K+=($GEN_2K)
-                                        fi
-                                    fi
-                                else
-                                    # start loop after the first input line
-                                    let IGNORER++
-                                fi
-                            done < *allhits.txt
-                                
+                            # check the distance $12, add the gene name to array
+                            ALLHITS=($(find . | grep  allhits.txt | sed 's,./,,g'))
+                            GENES_1K=($(cat $ALLHITS | awk -F'\t' '{if ($12 != "NA" && $12 <= 1000 && $18 != "NA") print $18;}'))
+                            GENES_2K=($(cat $ALLHITS | awk -F'\t' '{if ($12 != "NA" && $12 <= 2000 && $18 != "NA") print $18}'))
+                            
                             # only choose the unique genes
                             SORTED_UNIQUE_GENES_1K=($(echo "${GENES_1K[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
                             SORTED_UNIQUE_GENES_2K=($(echo "${GENES_2K[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
@@ -109,25 +81,23 @@ for TISSUE in $DIR/*; do
                             COUNTER_ARR_1K=0
                             # fill the *1k.gmt file with data
                             echo -e "${GENE_SET_NAME_1K}" >> $FILE_1K   # insert the gene set name to the file (1k)
-                            sed -i '/^'$GENE_SET_NAME_1K'/s!$!\t'$DESCRIPTION'!' $FILE_1K   # append the description to the assciated gene set name (1k)
                             # append the genes to the assciated gene set name (1k)
                             for elem in "${SORTED_UNIQUE_GENES_1K[@]}"; do
-                                sed -i '/^'$GENE_SET_NAME_1K'/s!$!\t'${SORTED_UNIQUE_GENES_1K[COUNTER_ARR_1K]}'!' $FILE_1K
+                                echo -e "${SORTED_UNIQUE_GENES_1K[COUNTER_ARR_1K]}" >> $FILE_1K
                                 let COUNTER_ARR_1K++
                             done
-                            sed -i '/^'$GENE_SET_NAME_1K'/s!$!\t!' $FILE_1K # insert a tab at the end of the line
+                            echo -e "\n" >> $FILE_1K    # insert a new line at the end of the motif data
 
                             # counter for indices in arrays (GENES_2K)
                             COUNTER_ARR_2K=0
                             # fill the *2k.gmt file with data
                             echo -e "${GENE_SET_NAME_2K}" >> $FILE_2K   # insert the gene set name to the file (2k)
-                            sed -i '/^'$GENE_SET_NAME_2K'/s!$!\t'$DESCRIPTION'!' $FILE_2K   # append the description to the assciated gene set name (2k)
                             # append the genes to the assciated gene set name (2k)
                             for elem in "${SORTED_UNIQUE_GENES_2K[@]}"; do
-                                sed -i '/^'$GENE_SET_NAME_2K'/s!$!\t'${SORTED_UNIQUE_GENES_2K[COUNTER_ARR_2K]}'!' $FILE_2K
+                                echo -e "${SORTED_UNIQUE_GENES_1K[COUNTER_ARR_2K]}" >> $FILE_2K
                                 let COUNTER_ARR_2K++
                             done
-                            sed -i '/^'$GENE_SET_NAME_2K'/s!$!\t!' $FILE_2K # insert a tab at the end of the line
+                            echo -e "\n" >> $FILE_2K    # insert a new line at the end of the motif data
                         fi
                     done
                 else
