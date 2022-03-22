@@ -4,11 +4,11 @@ Work Package 3
 Introduction 
 ------------
 
-WP3 Contains a script to speperate one .bam file into seperate files using a cluster assignment table as instructions. It also contains a customised .yaml file for the TOBIAS Snakemake Pipeline, that was used to further process the data from these clust .bam files.
+WP3 Contains a script to separate one .bam file of a tissue into seperate files using a cluster assignment table as instructions. It also contains a customised .yaml file for the TOBIAS Snakemake Pipeline, that was used to further process the data from these cluster .bam files.
 
 Installation
 ------------
-Simply clone this repository. Before running the clustering script you will need to also install [pysam](https://pypi.org/project/pysam/) in your python environment. Aslo for processing the data the use of [SAM-Tools](https://www.htslib.org/download/) is recommended.
+Simply clone this repository. Before running the clustering script you will need to also install [pysam](https://pypi.org/project/pysam/) in your python environment. Also for processing the data the use of [SAM-Tools](https://www.htslib.org/download/) is recommended.
 
 You also need to download the [TOBIAS snakemake repository](https://github.molgen.mpg.de/loosolab/TOBIAS_snakemake) and set up the anaconda environment with the yml file provided in it like this:
 
@@ -76,7 +76,7 @@ This file (as well as those of other tissues at the same time, if that is desire
 ```bash
 python ProfileSimilarity.py [DefiningTF file] -f [TF family file]
 ```
-The commands shown here are used run the scripts in their default setting for our analysis. Different option and flags can be found in the [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP3)
+The commands shown here are used run the scripts in their default setting for our analysis. Different options and flags can be found in the [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP3#wp3-scripts)
 
 Known issues and limitations
 ----------------------------
