@@ -1,7 +1,7 @@
 #!/bin/bash
 ## Script to generate config for each celltype of each tissue
 
-# get script path
+# Get path to this script
 SPATH=$(dirname $0)
 # read in config
 CONF="${SPATH}/../test.conf"
