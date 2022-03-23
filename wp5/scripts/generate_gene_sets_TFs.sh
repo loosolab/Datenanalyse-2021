@@ -3,7 +3,7 @@
 # script to generate txt files for the transcription factor (TF) gene set analyzation
 
 # input parameters
-DIR="/mnt/workspace_stud/allstud/wp3/tissues"
+DIR="/mnt/workspace_stud/allstud/wp3/new_tissiues"
 FILE_PATH=$DIR  # same as directory
 FILE_PATH_SAVE="/mnt/workspace_stud/allstud/wp5/runs"   # path to save the files
 

@@ -3,7 +3,7 @@
 
 # TOBIAS output directory
 # Path to tobias directory ; TODO
-TBSDIR="/mnt/workspace_stud/allstud/wp3/tissues"
+TBSDIR="/mnt/workspace_stud/allstud/wp3/new_tissiues"
 # Get path to this script
 SPATH=$(dirname $0)
 
