@@ -5,7 +5,7 @@
 # get script path
 SPATH=$(dirname $0)
 # read in config
-CONF="${SPATH}/../tglobal_vars.cnf"
+CONF="${SPATH}/../global_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
 # Temporary Directory to store MEME files in, Input $2 is the prefix the directory should have

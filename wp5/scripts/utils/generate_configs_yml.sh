@@ -5,7 +5,7 @@
 # get script path
 SPATH=$(dirname $0)
 # read in config
-CONF="${SPATH}/../../tglobal_vars.cnf"
+CONF="${SPATH}/../../global_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
 # input parameters 1 -> file path output directory
@@ -13,7 +13,7 @@ TISSUE=$1
 CELL_TYPE=$2
 
 # create new folders and subfolders
-./create_folders.sh "$TISSUE" "$CELL_TYPE"
+${SPATH}/create_folders.sh "$TISSUE" "$CELL_TYPE"
 
 # output directory
 OUTPUT_DIRECTORY="${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline"
@@ -23,7 +23,7 @@ if [ -f "${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml" ] ; then
     echo "The file config_${TISSUE}_${CELL_TYPE}.yml already exists. The file wasn't created."
     exit 0
 else
-    cp ${PROJECT_DIR}/source_files/config.yml ${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml
+    cp $PROJECT_DIR/source_files/config.yml ${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml
 fi
 
 # used file for manipulation

@@ -5,7 +5,7 @@
 # get script path
 SPATH=$(dirname $0)
 # read in config
-CONF="${SPATH}/../../tglobal_vars.cnf"
+CONF="${SPATH}/../../global_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
 # input parameters
@@ -13,15 +13,18 @@ TISSUE=$1
 CELL_TYPE=$2
 
 # create new folders and subfolders
-./create_folders.sh "$TISSUE" "$CELL_TYPE"
+${SPATH}/create_folders.sh "$TISSUE" "$CELL_TYPE"
 
 if [[ ${ANN_CHECKER} == "yes" ]]; then
+    # output directory
+    OUTPUT_DIRECTORY="${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline"
+    
     # create new config file
     if [ -f "${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml" ] ; then
         echo "The file config_${TISSUE}_${CELL_TYPE}_with_annotation.yml already exists. The file wasn't created."
         exit 0
     else
-        cp ${PROJECT_DIR}/source_files/config.yml ${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml
+        cp $PROJECT_DIR/source_files/config.yml $PROJECT_DIR/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml
     fi
 
     # used file for manipulation
@@ -39,6 +42,16 @@ if [[ ${ANN_CHECKER} == "yes" ]]; then
     sed -i 's,^.*score_bigwig:.*$,'"  score_bigwig: \'$SCORE_BIGWIG\'"',' $FILE
     sed -i 's,^.*peak_bed:.*$,'"  peak_bed: \'$PEAK_BED\'"',' $FILE
     sed -i 's,^.*motif_file:.*$,'"  motif_file: \'$MOTIF_FILE\'"',' $FILE
+    
+    # choose gtf file TODO: change storing place of gtf
+    GTF="${PROJECT_DIR}/../homo_sapiens.104.mainChr.gtf"
+
+    # choose UROPA file
+    UROPA="${PROJECT_DIR}/source_files/uropa_template_${TISSUE}_${CELL_TYPE}.json"
+
+    # file manipulation
+    sed -i 's,^.*gtf:.*$, '"  gtf: \'$GTF\'"',' $FILE
+    sed -i 's,^.*config_template:.*$, '"  config_template: \'$UROPA\'"',' $FILE
     
     # check if new output directory is inserted into file
     OUTPUT_CHECKER=$(grep -c "$OUTPUT_DIRECTORY" $FILE)
@@ -58,7 +71,7 @@ else
         echo "The file config_${TISSUE}_${CELL_TYPE}_with_annotation.yml already exists. The file wasn't created."
         exit 0
     else
-        cp ${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml ${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml
+        cp $PROJECT_DIR/configs/config_${TISSUE}_${CELL_TYPE}.yml ${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml
     fi
 
     # choose gtf file TODO: change storing place of gtf
