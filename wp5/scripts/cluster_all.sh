@@ -1,10 +1,12 @@
 #!/bin/bash
 
 ## Script to cluster all motifs of all runs
+# get script path
+SPATH=$(dirname $0)
+# read in config
+CONF="${SPATH}/../test.conf"
+while read LINE; do declare "$LINE"; done < $CONF
 
-# Directory where the whole project lies: 
-# It is important that this directory contains the subfolder "runs"
-PROJECT_DIR=$1
 # Temporary Directory to store MEME files in, Input $2 is the prefix the directory should have
 TEMP_DIR="${PROJECT_DIR}/runs/${2}_motifs"
 # TODO; File prefix for output file: TODO check if cluster or file? 

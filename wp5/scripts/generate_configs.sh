@@ -1,11 +1,11 @@
 #!/bin/bash
 ## Script to generate config for each celltype of each tissue
 
-# TOBIAS output directory
-# Path to tobias directory ; TODO
-TBSDIR="/mnt/workspace_stud/allstud/wp3/tissues"
-# Get path to this script
+# get script path
 SPATH=$(dirname $0)
+# read in config
+CONF="${SPATH}/../test.conf"
+while read LINE; do declare "$LINE"; done < $CONF
 
 # generate config for each celltype of each tissue
 for TISSUE in $TBSDIR/*/; do

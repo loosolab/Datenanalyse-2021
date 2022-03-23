@@ -1,19 +1,19 @@
 #!/bin/bash
 
 ## Script to start the Motif discovery pipeline for all found config files.
+# get script path
+SPATH=$(dirname $0)
+# read in config
+CONF="${SPATH}/../test.conf"
+while read LINE; do declare "$LINE"; done < $CONF
+
+# DIR = Directory where the configs are stored
+DIR="${PROJECT_DIR}/configs"
 
 # check if conda evironment is active
 if  [ ! "$CONDA_DEFAULT_ENV" == "snakemake" ]; then
   echo "Activating snakemake environment..."
   source /opt/miniconda/bin/activate snakemake
-fi
-
-# remove last slash of directory path if existing
-# DIR = Directory where the configs are stored
-if [[ $1 == */ ]]; then
-  DIR=${1::-1};
-else
-  DIR=$1; 
 fi
 
 # Start pipeline for each config
