@@ -17,7 +17,7 @@ for TISSUE in $DIR/*; do
         echo "Starting ${TISSUE} at ${DT_TISSUE}."
         
         # generate the file for the distance up to 1000 bp with uniq genes
-        FILE_NAME_1K=${TISSUE}_${CELL_TYPE}_1k.txt
+        FILE_NAME_1K=${TISSUE}_TFs_1k.txt
         FILE_PATH_SAVE_1K="$FILE_PATH_SAVE_FILES"   # path to save the file
         FILE_1K="${FILE_PATH_SAVE_1K}/$FILE_NAME_1K"
         if ! [ -f $FILE_1K ]; then  # only generate file if it isn't already existing
@@ -26,7 +26,7 @@ for TISSUE in $DIR/*; do
             echo "$FILE_NAME_1K was created."
         fi
         # generate the file for the distance up to 2000 bp with unique genes
-        FILE_NAME_2K=${TISSUE}_${CELL_TYPE}_2k.txt
+        FILE_NAME_2K=${TISSUE}_TFs_2k.txt
         FILE_PATH_SAVE_2K="$FILE_PATH_SAVE_FILES"   # path to save the file
         FILE_2K="${FILE_PATH_SAVE_2K}/$FILE_NAME_2K"
         if ! [ -f $FILE_2K ]; then  # only generate file if it isn't already existing
@@ -35,7 +35,7 @@ for TISSUE in $DIR/*; do
             echo "$FILE_NAME_2K was created."
         fi
         # generate the file for the distance up to 1000 bp with all genes
-        FILE_NAME_1K_ALL=${TISSUE}_${CELL_TYPE}_1k_all.txt
+        FILE_NAME_1K_ALL=${TISSUE}_TFs_1k_all.txt
         FILE_PATH_SAVE_1K_ALL="$FILE_PATH_SAVE_FILES"   # path to save the file
         FILE_1K_ALL="${FILE_PATH_SAVE_1K_ALL}/$FILE_NAME_1K_ALL"
         if ! [ -f $FILE_1K_ALL ]; then  # only generate file if it isn't already existing
@@ -44,7 +44,7 @@ for TISSUE in $DIR/*; do
             echo "$FILE_NAME_1K_ALL was created."
         fi
         # generate the file for the distance up to 2000 bp with all genes
-        FILE_NAME_2K_ALL=${TISSUE}_${CELL_TYPE}_2k_all.txt
+        FILE_NAME_2K_ALL=${TISSUE}_TFs_2k_all.txt
         FILE_PATH_SAVE_2K_ALL="$FILE_PATH_SAVE_FILES"   # path to save the file
         FILE_2K_ALL="${FILE_PATH_SAVE_2K_ALL}/$FILE_NAME_2K_ALL"
         if ! [ -f $FILE_2K_ALL ]; then  # only generate file if it isn't already existing
@@ -67,10 +67,13 @@ for TISSUE in $DIR/*; do
         # compare the counts
         if [ $TF_COUNTER -gt $PUNCTUATION_CHECKER ]; then
             for TF in $FILE_PATH_ANNOTATION/*; do
+                echo "$TF"
                 TF=$(echo $TF | rev | cut -d'/' -f-1 | rev)    # extract the TF name
+                echo "$TF"
                 # check if the TF has already been analyzed
                 TF_CHECKER=$(cat $FILE_1K | grep -c $TF)   #  check if the TF is in the file
                 if [ $TF_CHECKER -eq 0 ]; then
+                    echo "$TF"
                     DT_TF=$(date '+%d/%m/%Y %H:%M:%S')   # start time of the TF
                     echo "Starting ${TF} at ${DT_TF}."
                                 
@@ -78,14 +81,14 @@ for TISSUE in $DIR/*; do
                     GENE_SET_NAME_2K="#${TF}_2k" # column 1 -> 2k
                     GENES_1K=()                  # columns after 2 -> 1k
                     GENES_2K=()                  # columns after 2 -> 2k
-                                    
+                                   
                     cd $FILE_PATH_ANNOTATION/$TF
                                     
                     # read *overview.txt
                     # check if the feature = gene $11, check the distance $16, add the gene name $20 to array
-                    OVERVIEW=($(find . | grep  overview.txt | sed 's,./,,g'))
-                    GENES_1K=($(cat $ALLHITS | awk -F'\t' '{if ($11 == "gene" && $12 != "NA" && $12 <= 1000 && $18 != "NA") print $18;}'))
-                    GENES_2K=($(cat $ALLHITS | awk -F'\t' '{if ($11 == "gene" && $12 != "NA" && $12 <= 2000 && $18 != "NA") print $18}'))
+                    OVERVIEW=($(find . | grep overview.txt | sed 's,./,,g'))
+                    GENES_1K=($(cat $OVERVIEW | awk -F'\t' '{if ($11 == "gene" && $16 != "NA" && $16 <= 1000 && $20 != "NA") print $20;}'))
+                    GENES_2K=($(cat $OVERVIEW | awk -F'\t' '{if ($11 == "gene" && $16 != "NA" && $16 <= 2000 && $20 != "NA") print $20}'))
                                 
                     # only sort genes -> no unique genes
                     SORTED_GENES_1K=($(echo "${GENES_1K[@]}" | tr ' ' '\n' | sort | tr '\n' ' '))

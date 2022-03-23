@@ -91,7 +91,7 @@ for TISSUE in $DIR/*; do
                                     
                                 # read *allhits.txt
                                 # check if the feature = gene $7, check the distance $12, add the gene name $18 to array
-                                ALLHITS=($(find . | grep  allhits.txt | sed 's,./,,g'))
+                                ALLHITS=($(find . | grep allhits.txt | sed 's,./,,g'))
                                 GENES_1K=($(cat $ALLHITS | awk -F'\t' '{if ($7 == "gene" && $12 != "NA" && $12 <= 1000 && $18 != "NA") print $18;}'))
                                 GENES_2K=($(cat $ALLHITS | awk -F'\t' '{if ($7 == "gene" && $12 != "NA" && $12 <= 2000 && $18 != "NA") print $18}'))
                                 
