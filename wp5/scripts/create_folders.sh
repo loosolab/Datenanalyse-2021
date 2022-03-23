@@ -28,7 +28,7 @@ mkdir /mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/annotation
 mkdir /mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/similarity
 
 # check if the new folders were created successfully
-if [ -d "/mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/evaluations" ] ; then
+if [ -d "/mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/annotation" ] ; then
     echo "Folder structure for output files were created successfully."
 else
     echo "Building folder structure failed."
