@@ -2,6 +2,12 @@
 
 # script to generate config files without an annotation step
 
+# get script path
+SPATH=$(dirname $0)
+# read in config
+CONF="${SPATH}/../test.conf"
+while read LINE; do declare "$LINE"; done < $CONF
+
 # input parameters 1 -> file path output directory
 TISSUE=$1
 CELL_TYPE=$2
@@ -10,24 +16,24 @@ CELL_TYPE=$2
 ./create_folders.sh "$TISSUE" "$CELL_TYPE"
 
 # output directory
-OUTPUT_DIRECTORY="/mnt/workspace_stud/allstud/wp5/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline"
+OUTPUT_DIRECTORY="${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline"
 
 # create new config file
-if [ -f "/mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}.yml" ] ; then
+if [ -f "${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml" ] ; then
     echo "The file config_${TISSUE}_${CELL_TYPE}.yml already exists. The file wasn't created."
     exit 0
 else
-    cp /mnt/workspace_stud/allstud/wp5/source_files/config.yml /mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}.yml
+    cp ${PROJECT_DIR}/source_files/config.yml ${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml
 fi
 
 # used file for manipulation
-FILE="/mnt/workspace_stud/allstud/wp5/configs/config_${TISSUE}_${CELL_TYPE}.yml"
+FILE="${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml"
 
-# file paths
-GENOME_FASTA="/mnt/workspace_stud/allstud/homo_sapiens.104.mainChr.fa"
-SCORE_BIGWIG="/mnt/workspace_stud/allstud/wp3/new_tissiues/$TISSUE/output/footprinting/${CELL_TYPE}_footprints.bw"
-PEAK_BED="/mnt/workspace_stud/allstud/wp3/new_tissiues/$TISSUE/output/peak_calling/${CELL_TYPE}_union.bed"
-MOTIF_FILE="/mnt/workspace_stud/allstud/wp3/new_tissiues/$TISSUE/output/motifs/all_motifs.txt"
+# file paths TODO: change storing place of genome fasta
+GENOME_FASTA="${PROJECT_DIR}/../homo_sapiens.104.mainChr.fa"
+SCORE_BIGWIG="${TBSDIR}/$TISSUE/output/footprinting/${CELL_TYPE}_footprints.bw"
+PEAK_BED="${TBSDIR}/$TISSUE/output/peak_calling/${CELL_TYPE}_union.bed"
+MOTIF_FILE="${TBSDIR}/$TISSUE/output/motifs/all_motifs.txt"
 
 # file manipulations
 sed -i 's,^.*output:.*$,'"  output: \'$OUTPUT_DIRECTORY\'"',' $FILE

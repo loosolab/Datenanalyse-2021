@@ -3,9 +3,15 @@
 # script to check if the expected log files are existing and without errors
 # quick finder for errors with the motif_discovery_pipeline
 
+# get script path
+SPATH=$(dirname $0)
+# read in config
+CONF="${SPATH}/../test.conf"
+while read LINE; do declare "$LINE"; done < $CONF
+
 # input parameters
-DIR="/mnt/workspace_stud/allstud/wp5/runs"
-FILE_PATH="/mnt/workspace_stud/allstud/wp5/runs"  # put into the evaluation folder
+DIR="${PROJECT_DIR}/runs"
+FILE_PATH=$DIR  # put into the evaluation folder
 
 # output file
 FILE_NAME=check_logs.txt

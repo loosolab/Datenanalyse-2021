@@ -2,8 +2,14 @@
 
 # script to generate txt files for the gene set analyzation
 
+# get script path
+SPATH=$(dirname $0)
+# read in config
+CONF="${SPATH}/../test.conf"
+while read LINE; do declare "$LINE"; done < $CONF
+
 # input parameters
-DIR="/mnt/workspace_stud/allstud/wp5/runs"
+DIR="${PROJECT_DIR}/runs"
 FILE_PATH=$DIR  # same as directory
 
 # generate and fill txt files for the gene set analyzation
