@@ -1,2 +1,3 @@
-OUTDIR=/mnt/workspace_stud/allstud/wp5
+PROJECT_DIR=/mnt/workspace_stud/allstud/wp5
 TBSDIR=/mnt/workspace_stud/allstud/wp3/new_tissiues
+MDP_PIPELINE=/mnt/workspace_stud/stud9/motif-discovery-pipeline/
