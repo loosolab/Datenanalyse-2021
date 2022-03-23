@@ -30,23 +30,22 @@ Used input files for this work package are:
 
 3. #### Peak information
       data frame, rows = peaks, columns = peak attributes.\
-      This data frame supplies information about the open chromatin regions.\ 
-      This file is a csv table with the file extension '_var.csv' in the R Code the corresponding variable is called 'peakinfo'.\ 
+      This data frame supplies information about the open chromatin regions.\
+      This file is a csv table with the file extension '_var.csv' in the R Code the corresponding variable is called 'peakinfo'.\
       Provided by WP1, found in directory: `/mnt/workspace_stud/stud2/output/<tissue_of_interest>/wp4/`
 
 4. #### Information about gene attributes
-      The gtf (Gene/General Transfer Format) holds information about gene structure.\
+      The gtf (Gene/General Transfer Format) holds information about gene structure.\ 
       In this workpackage it is used to connect the peaks to known biological structures:\
-      e.g. name of the chromosome, feature type name (e.g. Gene), start postion and end position, strand (+ (forward), - (reverse)), ...\  
+      e.g. name of the chromosome, feature type name (e.g. Gene), start postion and end position, strand (+ (forward), - (reverse)), ...\
       direct path to the file: `/mnt/workspace_stud/allstud/homo_sapiens_104.mainChr.gtf`
 
 5. #### File with chromosome lengths
-      In order to run `Cicero` the information about the chromosome lengths is required.\ 
+      In order to run `Cicero` the information about the chromosome lengths is required.\
       This information is obtained from the `.fai` file.\
-      This data frame holds among others infomration about the name of the sequence (Chromosome) and the total length of if in base pairs, this two       
-      specifications are  required.
+      This data frame holds among others infomration about the name of the sequence (Chromosome) and the total length of if in base pairs, this two specifications are required.
 
-## Output 
+## Output Files
 
 1. In order to connect peaks to a cluster a variable containing a matrix was created called `cl_indata`. This data is the initial input mtx `indata` with rownames of initial peak information file `peakinfo`, but instead of the barcode information of the initial `cellinfo` file this file has the clusters of the cells as column names. 
 A function assigns the clusters to the peaks by counting the 1's in the binary `indata.mtx`. This information is stored in the directory `/mnt/workspace_stud/stud10/cl_indata.mtx`. 
@@ -59,7 +58,5 @@ It's a data frame of pairwise peak comparison with subsequently calculated co-ac
 4. `Cicero` also creates gene activity scroes, which combines the score of the regional accessibility with gene expression. This file `cicero_genes_activitiy.csv` contains genes and the corresponding scores. This information is stored in the directory `/mnt/workspace_stud/stud10/cicero.csv`. 
 
 
-+ The cicero connection plot shows the pairwise scores of a certain window in a chromsome. 
-+ A UMAP plot shows the clusters of the cells. 
-
 ## Example Case 
+coming soon
