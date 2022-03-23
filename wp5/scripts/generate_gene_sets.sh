@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# script to generate txt files for the gene set analyzation
+## script to generate txt files for the gene set analyzation
 
 # get script path
 SPATH=$(dirname $0)
 # read in config
-CONF="${SPATH}/../test.conf"
+CONF="${SPATH}/../tglobal_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
 # input parameters

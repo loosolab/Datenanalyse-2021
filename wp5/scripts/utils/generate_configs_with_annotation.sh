@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# script to generate config files with an annotation step
+## script to generate config files with an annotation step
 
 # get script path
 SPATH=$(dirname $0)
 # read in config
-CONF="${SPATH}/../test.conf"
+CONF="${SPATH}/../tglobal_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
 # input parameters

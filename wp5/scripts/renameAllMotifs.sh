@@ -6,7 +6,7 @@
 # get script path
 SPATH=$(dirname $0)
 # read in config
-CONF="${SPATH}/../test.conf"
+CONF="${SPATH}/../tglobal_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
 # Path to "runs" directory

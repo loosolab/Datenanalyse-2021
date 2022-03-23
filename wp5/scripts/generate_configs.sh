@@ -1,10 +1,11 @@
 #!/bin/bash
+
 ## Script to generate config for each celltype of each tissue
 
-# Get path to this script
+# get script path
 SPATH=$(dirname $0)
 # read in config
-CONF="${SPATH}/../test.conf"
+CONF="${SPATH}/../tglobal_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
 # generate config for each celltype of each tissue

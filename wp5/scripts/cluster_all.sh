@@ -1,10 +1,11 @@
 #!/bin/bash
 
 ## Script to cluster all motifs of all runs
+
 # get script path
 SPATH=$(dirname $0)
 # read in config
-CONF="${SPATH}/../test.conf"
+CONF="${SPATH}/../tglobal_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
 # Temporary Directory to store MEME files in, Input $2 is the prefix the directory should have
