@@ -105,6 +105,13 @@ To perform the clustering, the script is called follows:
 The parameter `<Clustering_Name>` will be the prefix the output folder of the clustering will have. Thus it should be somewhat descriptive of the output. In the pipeline *run_all.sh* the given prefix is "overall".
 
 ### 6. Evaluate motif similarity
+Here the results of the clustering can be evaluated by clustering them. 
+To do so you can call the script as follows 
+```
+./eval_Motif_similarity.py --runs_dir <PATH/TO/RUNS> --motifs <MOTIF_CLUSTER.yml> --out <FILENAME_prefix>
+```
+For further information on the parameters please refer to the wiki or the help. 
+The script will provide several plots to visualize the appearance of similar motifs in different tissues and celltypes. It will also save the names of the found motifs together with their cluster and celltype and tissue in a csv table.
 
 ### 7. Generate gene sets
 

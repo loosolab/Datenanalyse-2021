@@ -5,8 +5,8 @@ import plotly.express as px
 import argparse
 
 parser = argparse.ArgumentParser(description='Evaluate differntial binding')
-parser.add_argument('--in-dir', metavar="PATH/TO/DIR", help='Path to directory where the motif discovery runs are stored', required=True )
-parser.add_argument('--motifs', metavar='MOTIF_CLUSER.yml', help='Output of the motif clustering with TOBIAS', required=True)
+parser.add_argument('--runs-dir', metavar="PATH/TO/RUNS", help='Path to directory where the motif discovery runs are stored', required=True )
+parser.add_argument('--motifs', metavar='MOTIF_CLUSTER.yml', help='Output of the motif clustering with TOBIAS', required=True)
 parser.add_argument('--out', metavar="FILENAME_prefix",help="Prefix of how the output files should be named.", required=True)
 args = parser.parse_args()
 
@@ -44,7 +44,7 @@ df_motifs = pd.DataFrame({
 })
 
 # write to csv
-df_motifs.to_csv(f"{args.out}_clustering.csv")
+df_motifs.to_csv(f"{args.runs_dir}/{args.out}_clustering.csv")
 
 # remove unneeded helping lists
 del clusters
@@ -59,7 +59,7 @@ fig.update_traces(marker=dict(size=15),
                   selector=dict(mode='markers'))
 
 # save
-fig.write_html(f"{args.in_dir}/{args.out}_Dotplot.html")
+fig.write_html(f"{args.runs_dir}/{args.out}_Dotplot.html")
 
 ## create count bar plot
 # add count to Data Frame
@@ -70,5 +70,5 @@ fig.update_layout(barmode='stack', xaxis={'categoryorder':'total descending'})
 fig.update_traces(marker_line_width=0)
 
 # save
-fig.write_html(f"{args.in_dir}/{args.out}_bar.html")
+fig.write_html(f"{args.runs_dir}/{args.out}_bar.html")
 
