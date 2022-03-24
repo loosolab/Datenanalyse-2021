@@ -1,6 +1,6 @@
 # Datenanalyse-2021
 
-Students Project done at [Loosolab](https://github.molgen.mpg.de/pages/loosolab/www/index.html) [(Max Planck Institute for Heart and Lung Research Bad Nauheim)](https://www.mpi-hlr.de/2778/en) as part of the Masters Degree "Bioinformatics and System Biology" at [Justus-Liebig-University Gießen](https://www.uni-giessen.de/welcome) and [University of Applied Sciences Mittelhessen (THM)](https://www.thm.de/site/en/). 
+Students Project done at [Loosolab](https://github.molgen.mpg.de/pages/loosolab/www/index.html) [(Max Planck Institute for Heart and Lung Research Bad Nauheim)](https://www.mpi-hlr.de/2778/en) as part of the Masters Degree "Bioinformatics and Systems Biology" at [Justus-Liebig-University Gießen](https://www.uni-giessen.de/welcome) and [University of Applied Sciences Mittelhessen (THM)](https://www.thm.de/site/en/). 
 
 The goal of the project is an investigation of the landscape of chromatin accessibility in human cells, computation of transcription factor activity and derivation of transcription factor co-binding and regulatory circuits.
 
