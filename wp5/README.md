@@ -22,33 +22,41 @@ For the gene ontology (GO) analysis you have to insert the gene sets from the fi
 For the pathway analysis you have to choose the [Analysis Tools](https://reactome.org/PathwayBrowser/#TOOL=AT). There you have to insert the gene sets from the files you want to analyze (example: "Gene name list"). From the analysis results you have to export the "Pathway analysis results" and the "Not found identifiers". --> TODO: how to rename and store the files
 
 ## Usage
-This work package consists of several scripts (found in the *scripts* directory) which can also be concatenated to a pipeline. For more detailed information please refer to the [WP5-Wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
+This work package consists of several scripts (found in the *scripts* directory) which can be run individually or as a concatenated pipeline. For more detailed information please refer to the [WP5-Wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
 
-The single steps of the pipeline are:
-1. [create_folders.sh](#1-create-folders)
-2. [generate configs](#2-generate-configs)
+The single steps of the pipeline consist of the following scripts:
+1. [generate_configs.sh](#1-generate-configs)    
+2. [run_pipeline.sh](#2-run-pipeline)
+3. [check_logs.sh](#3-check-logs) (optional)
+4. [renameAllMotifs.sh](#4-rename-motifs)
+5. [cluster_all.sh](#5-cluster-all)
+6. [Eval_Motif_similarity.py](#6-evaluate-motif-similarity)
+7. [generate_gene_sets.sh](#7-generate-gene-sets)
+8. [generate_gene_sets_TFs.sh](#8-generate-gene-sets-for-transcription-factors)
+9. [compare_gene_sets.py](#9-compare-the-gene-sets)
+10. [analyze_GO_and_pathway.py](#10-analyze-the-gene-sets)
 
-    a) generate_configs.sh
-        
-    b) generate_configs_with_annotation.sh
-    
-3. [run_pipeline.sh](#3-run-pipeline)
-4. [check_logs.sh](#4-check-logs) (optional)
-5. [renameAllMotifs.sh](#5-rename-motifs)
-6. [cluster_all.sh](#6-cluster-all)
-7. [Eval_Motif_similarity.py](#7-evaluate-motif-similarity)
-8. [generate_gene_sets.sh](#8-generate-gene-sets)
-9. [generate_gene_sets_TFs.sh](#9-generate-gene-sets-for-transcription-factors)
-10. [compare_gene_sets.py](#10-compare-the-gene-sets)
-11. [analyze_GO_and_pathway.py](#11-analyze-the-gene-sets)
-
-Steps 1-5 are contain the actual motif-discovery-pipeline run, aswell as the needed pre- and postprocessing.
-Steps 6 and 7 are for the analysis of similarities between the found motifs in different pipeline runs.
-Steps 8-11 are for the analysis of the found motifs with the aim to hypothesize the important functions of the motifs.
+Steps 1-4 are contain the actual motif-discovery-pipeline run, aswell as the needed preparation and post-processing.
+Steps 5 and 6 are for the analysis of similarities between the found motifs in different pipeline runs.
+Steps 7-10 are for the analysis of the found motifs with the aim to hypothesize the important functions of the motifs.
 In case of the given ATAC-Seq data the motif discovery pipeline is ran for each celltype of each tissue given.
 
-Before Starting the pipeline it is important to adjust the config file (TODO).
+Before starting the pipeline (or the single scripts) it is *important* to adjust the config file or the global variables. 
+For this please open **global_vars.cnf** and adjust the 4 given variables.
+The variables have the following meaning:
 
+* PROJECT_DIR : Path to where all the outputs should be written
+* TBSDIR : Path to output of WP3 (should contain all Tissue folders)
+* MDP_PIPELINE : path to your installation of the motif discovery pipeline
+* ANN_CHECKER=yes : if 'yes' then the motif discovery will be ran with annotation, else annotation will be skipped.
+
+After adjusting the config file for the global variables you can start the pipeline by running the following command:
+
+```
+./run_all.sh
+```
+Please make sure to run this command in the folder where the *run_all.sh* script is stored.
+> **Attention**: If you are working via an ssh connection make sure to start this script in a screen, as it might take a while.
 
 ### 1. Create folders
 The script *create_folders.sh* 
@@ -57,22 +65,20 @@ The script *create_folders.sh*
 The script *generate_configs.sh* is called as follows:
 
 ```
-./generate_configs.sh <DIRECTORY-WP3-OUTPUT>
+./generate_configs.sh
 ```
-The parameter `<DIRECTORY-WP3-OUTPUT>` should contain the path to the output of work package 3. 
-TODO EXAMPLE
 
 ### 3. Run pipeline
 The script *run_pipeline.sh* is called as follows:
 
 ```
-./run_pipeline.sh <CONFIG-DIRECTORY>
+./run_pipeline.sh
 ```
-The parameter `<CONFIG-DIRECTORY>` should contain the path to the directory where the generated configs (of step 2) are stored.
-The script will start the motif discovery pipeline for all configs found in the given directory. 
+The script will start the motif discovery pipeline for all configs found in the *configs* directory insinde the project directory specified in the config. 
 > **Attention**: If you are working via an ssh connection make sure to start this script in a screen, as it might take a while.
 
 ### 4. Check logs
+
 ### 5. Rename motifs
 This script is neccesary, as the motif discovery pipeline will give the motif dummy names. 
 As those might appear in several runs, it is important for further analysis to rename the motifs in a unique manner.
@@ -81,11 +87,8 @@ This will be done automatically by this script for the MEME file generated by th
 The script can be called as follows:
 
 ```
-./renameAllMotifs.sh <motif-discovery-runs-directory>
+./renameAllMotifs.sh
 ```
-The parameter `<motif-discovery-runs-directory>` should contain the path to the *runs* directory,
-in which all motif discovery runs are stored.
-
 ### 6. Cluster all
 To establish if any of the found motifs appear in different tissues or celltypes in a similar way, the scripts *cluster_all.sh* and 
 *eval_Motif_similarity.py* are provided. 
@@ -94,12 +97,10 @@ For each cluster a consensus sequence is calculated, and may be used for further
 
 To perform the clustering, the script is called follows:
 ```
-./cluster_all.sh <motif-discovery-runs-directory> <TODO> 
+./cluster_all.sh <TODO> 
 ```
-The parameter `<motif-discovery-runs-directory>` should contain the path to the *runs* directory,
-in which all motif discovery runs are stored. 
-
 TODO
+
 ### 7. Evaluate motif similarity
 
 ### 8. Generate gene sets
