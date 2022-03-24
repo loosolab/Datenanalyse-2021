@@ -14,11 +14,13 @@ This is done with single cell ATAC-Seq data provided by the [CATlas](http://catl
 
 [Work package 3](https://github.com/loosolab/Datenanalyse-2021/tree/wp3/wp3):
 
-WP3 takes a look at ***cell-type-specific transcription factor activity***. 
+WP3 regards ***cell-type-specific transcription factor activity***. 
 The data provided by WP2 is used to analyze the transcription factor activity of different tissues and their clusters.
 Comparisons are drawn between different cell types and tissues to gain insight into the transcription factors responsible for their identity. 
 
 [Work package 4](https://github.com/loosolab/Datenanalyse-2021/tree/wp4/wp4/):
+
+WP 4 takes a closer look at chromatin peak co-accessibilities. Peaks describe areas of open chromatin. The Cicero algorithm calculates if there are distal peaks to a peak that show the same pattern of open or closed chromatin. Open promoter peaks and corresponding distal peaks are displayed, indicating whether there are open chromatin sites in the distal genome for transcriptional regulation by enhancers or transcription factors.
 
 
 [Work package 5](https://github.com/loosolab/Datenanalyse-2021/tree/wp5/wp5/):
