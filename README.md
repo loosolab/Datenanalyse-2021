@@ -14,7 +14,7 @@ This is done with single cell ATACSeq data provided by the [CATlas](http://catla
 
 [Work package 3](https://github.com/loosolab/Datenanalyse-2021/tree/wp3/wp3):
 
-WP3 takes a look at ***cluster-specific transcription factor activity***. 
+WP3 takes a look at ***cell-type-specific transcription factor activity***. 
 The data provided by WP2 is used to analyze the transcription factor activity of different tissues and their clusters.
 Comparisons are drawn between different cell types and tissues to gain insight into the transcription factors responsible for their identity. 
 
