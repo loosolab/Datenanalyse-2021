@@ -6,6 +6,8 @@ The ReadMe handles the setup for WP6 and how to use the jupyter-notebooks for in
 We use jupyter-notebooks for our analysis. To use our notebooks you have to do the following steps for setting up your environment.
 Tfcomb is still under development, because of this you have to install it from source.
 
+Used version of python: ```Python 3.7.12```   
+
 1. Install miniconda (https://docs.conda.io/en/latest/miniconda.html#installing)
 2. Checkout tf_comb (https://github.com/loosolab/TF-COMB)
 3. cd tfcomb
