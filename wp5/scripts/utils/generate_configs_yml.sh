@@ -12,9 +12,6 @@ while read LINE; do declare "$LINE"; done < $CONF
 TISSUE=$1
 CELL_TYPE=$2
 
-# create new folders and subfolders
-${SPATH}/create_folders.sh "$TISSUE" "$CELL_TYPE"
-
 # output directory
 OUTPUT_DIRECTORY="${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline"
 

@@ -12,9 +12,6 @@ while read LINE; do declare "$LINE"; done < $CONF
 TISSUE=$1
 CELL_TYPE=$2
 
-# create new folders and subfolders
-${SPATH}/create_folders.sh "$TISSUE" "$CELL_TYPE"
-
 if [[ ${ANN_CHECKER} == "yes" ]]; then
     # output directory
     OUTPUT_DIRECTORY="${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline"
@@ -47,7 +44,7 @@ if [[ ${ANN_CHECKER} == "yes" ]]; then
     GTF="${PROJECT_DIR}/../homo_sapiens.104.mainChr.gtf"
 
     # choose UROPA file
-    UROPA="${PROJECT_DIR}/source_files/uropa_template_${TISSUE}_${CELL_TYPE}.json"
+    UROPA="${PROJECT_DIR}/source_files/uropa_template.json"
 
     # file manipulation
     sed -i 's,^.*gtf:.*$, '"  gtf: \'$GTF\'"',' $FILE
@@ -81,7 +78,7 @@ else
     FILE="${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml"
 
     # choose UROPA file
-    UROPA="${PROJECT_DIR}/source_files/uropa_template_${TISSUE}_${CELL_TYPE}.json"
+    UROPA="${PROJECT_DIR}/source_files/uropa_template.json"
 
     # output directory
     OUTPUT_DIRECTORY="${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/annotation"
