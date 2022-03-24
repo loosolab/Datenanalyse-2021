@@ -16,9 +16,10 @@ You also need to download the [TOBIAS snakemake repository](https://github.molge
 ```bash
 conda env create -f environments/snakemake.yaml
 ```
+For visualization purposes, you can use [WIlsON](https://academic.oup.com/bioinformatics/article/35/6/1055/5078467). A docker container as well as instructions how to use it is provided [here](https://hub.docker.com/r/loosolab/wilson/).
 
-Workflow description
---------------------
+Workflow description and example
+--------------------------------
 
 Converting the .sam file from WP2 to a .bam file and sorting it with samtools. You can use the utility script "preprocessingSam.sh" like this:
 ```bash
@@ -65,8 +66,9 @@ The binding scores are extracted and brought into a format that allows futher pr
 ```bash
 python CompareClusterScore.py bindetect_results.txt -f [TF family file]
 ```
-It takes the binding scores for each cluster of the tissue and each transcription factor and writes them down in CLARION file format, which is necessary for heatmap visualization using WIlsON. A docker container containing WIlsON as well as instructions how to use it can be found [here](https://hub.docker.com/r/loosolab/wilson/).
-The heatmap gives a visual overview over the data, depicting a scoring profile for each cluster, and shows which transcription factors scored remarkably in some clusters in comparison to the others.
+It takes the binding scores for each cluster of the tissue and each transcription factor and writes them down in CLARION file format, which is necessary for heatmap visualization using WIlsON. 
+The heatmap gives a visual overview over the data, depicting a scoring profile for each cluster, and shows which transcription factors scored remarkably in some clusters in comparison to the others. 
+# ***INSTRUCTIONS HOW TO USE IT****
 
 To gain a better understanding of the transcriptions factors that were remarkably over-represented in certain clusters, the script "DefiningTF.py" extracts the top transcription factors by z score and writes them done in a .tsv file. 
 ```bash
@@ -88,3 +90,5 @@ The output of the comparison of the clusters in one tissue can also be utilized 
 Known issues and limitations
 ----------------------------
 pysam does only work correctly under Linux operating systems, as it is a requirement for the clustering script it will probably not work on windows.
+
+# ***TODO*** Bilder einfügen für Beispieldaten
