@@ -30,7 +30,7 @@ with open(args.motifs) as file:
             continue
         clusters.append(cur_cluster)
         motif_names.append(cur_motif_name)
-        tissue, cell_type, _ = cur_motif_name.split('_')
+        tissue, cell_type, _ = cur_motif_name.split('-')
         tissues.append(tissue)
         cell_types.append(cell_type)
 
