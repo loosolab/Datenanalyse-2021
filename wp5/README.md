@@ -68,6 +68,8 @@ The script *generate_configs.sh* is called as follows:
 ```
 ./generate_configs.sh
 ```
+This script will create config files from WP3 output. for each run of WP3 one config will be created. Those configs will be useed to start the motif discovery pipeline for the different conditions of the different runs.
+Furthermore this script will crate all needed directories for further analysis.
 
 ### 2. Run pipeline
 The script *run_pipeline.sh* is called as follows:
