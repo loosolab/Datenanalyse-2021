@@ -54,7 +54,7 @@ Then you can run the snakemake pipeline:
 conda activate tobias_snakemake_env
 snakemake --configfile config.yaml --use-conda --cores [NUMBER_OF_CORES] --conda-prefix /tmp --keep-going
 ```
-After running the snakemake pipeline, further analysis is done with the bindetect_results.txt file for each cluster as well as the bindetect_distances file. The latter is used to cluster transcription factors into families based on binding motif similarity. This is done via the "TFClustering.py" script. 
+After running the snakemake pipeline, further analysis is done with the bindetect_results.txt file for each cluster as well as the bindetect_distances file. These are found in /output/TFBS/. The latter is used to cluster transcription factors into families based on binding motif similarity. This is done via the "TFClustering.py" script. 
 ```bash
 python TFClustering.py bindetect_distances.txt
 ```
