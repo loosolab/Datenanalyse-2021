@@ -76,7 +76,13 @@ This file (as well as those of other tissues at the same time, if that is desire
 ```bash
 python ProfileSimilarity.py [DefiningTF file] -f [TF family file]
 ```
-The commands shown here are used run the scripts in their default setting for our analysis. Different options and flags can be found in the [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP3#wp3-scripts)
+The commands shown here are used run the scripts in their default setting for our analysis. They can also all be executed in one command by executing the script "oneTissueAnalysis.sh" while in the diretory of the tissue that contain the snakemake pipeline output (it needs to see the /output/ directory). Giving a name to name the files uniquely according to the tissue that was analyzed is optional, but highly recommended to avoid confusion when working with multiple tissues (escpecially if a comparison between different tissues will be done afterwards).
+```bash
+bash PATH/TO/FILE/oneTissueAnalysis.sh [TISSUENAME]
+```
+Different options and flags can be found in the [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP3#wp3-scripts).
+
+The output of the comparison of the clusters in one tissue can also be utilized with these scripts again to compare different tissues to each other.
 
 Known issues and limitations
 ----------------------------
