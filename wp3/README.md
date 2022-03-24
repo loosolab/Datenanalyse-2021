@@ -8,9 +8,10 @@ WP3 Contains a script to separate one .bam file of a tissue into seperate files 
 
 Installation
 ------------
-Simply clone this repository. Before running the clustering script you will need to also install [pysam](https://pypi.org/project/pysam/) in your python environment. Also for processing the data the use of [SAM-Tools](https://www.htslib.org/download/) is recommended.
+Simply clone this repository. Before running the clustering script you will need to also install [pysam](https://pypi.org/project/pysam/) in your python environment. Also, for processing the data, the use of [SAM-Tools](https://www.htslib.org/download/) is recommended.
+The post TOBIAS scripts require the python modules argparse, numpy, pandas, scipy, os and matplotlib to function. 
 
-You also need to download the [TOBIAS snakemake repository](https://github.molgen.mpg.de/loosolab/TOBIAS_snakemake) and set up the anaconda environment with the yml file provided in it like this:
+You also need to download the [TOBIAS snakemake repository](https://github.molgen.mpg.de/loosolab/TOBIAS_snakemake) and set up the anaconda environment with the yaml file provided in it like this:
 
 ```bash
 conda env create -f environments/snakemake.yaml
