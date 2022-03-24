@@ -4,7 +4,7 @@ Students Project done at [Loosolab](https://github.molgen.mpg.de/pages/loosolab/
 
 The goal of the project is an investigation of the landscape of chromatin accessibility in human cells, computation of transcription factor activity and derivation of transcription factor co-binding and regulatory circuits.
 
-This is done with single cell ATACSeq data provided by the [CATlas](http://catlas.org/humanenhancer/#!/) database that is processed in multiple steps by various work packages. 
+This is done with single cell ATAC-Seq data provided by the [CATlas](http://catlas.org/humanenhancer/#!/) database that is processed in multiple steps by various work packages. 
 
 [Work package 1](https://github.com/loosolab/Datenanalyse-2021/tree/wp1/wp1/):
 
