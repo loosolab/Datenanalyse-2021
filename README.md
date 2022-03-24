@@ -20,7 +20,7 @@ Comparisons are drawn between different cell types and tissues to gain insight i
 
 [Work package 4](https://github.com/loosolab/Datenanalyse-2021/tree/wp4/wp4/):
 
-WP 4 takes a closer look at chromatin peak co-accessibilities. Peaks describe areas of open chromatin. The Cicero algorithm calculates if there are distal peaks to a peak that show the same pattern of open or closed chromatin. Open promoter peaks and corresponding distal peaks are displayed, indicating whether there are open chromatin sites in the distal genome for transcriptional regulation by enhancers or transcription factors.
+WP 4 takes a closer look at ***chromatin peak co-accessibilities***. Peaks describe areas of open chromatin. The Cicero algorithm calculates if there are distal peaks to a peak that show the same pattern of open or closed chromatin. Open promoter peaks and corresponding distal peaks are displayed, indicating whether there are open chromatin sites in the distal genome for transcriptional regulation by enhancers or transcription factors.
 
 
 [Work package 5](https://github.com/loosolab/Datenanalyse-2021/tree/wp5/wp5/):
