@@ -10,7 +10,7 @@ while read LINE; do declare "$LINE"; done < $CONF
 
 # Temporary Directory to store MEME files in, Input $2 is the prefix the directory should have
 TEMP_DIR="${PROJECT_DIR}/runs/tmp_motifs_dir"
-# TODO; File prefix for output file: TODO check if cluster or file? 
+# File prefix for output file
 CLUSTERING_NAME=$1
 
 # Create temporaray directory to which all the MEME files with the motifs will be stored
