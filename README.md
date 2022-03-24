@@ -48,14 +48,14 @@ Used input files for this work package are:
 ## Output Files
 
 1. In order to connect peaks to a cluster a variable containing a matrix was created called `cl_indata`. This data is the initial input mtx `indata` with rownames of initial peak information file `peakinfo`, but instead of the barcode information of the initial `cellinfo` file this file has the clusters of the cells as column names. 
-A function assigns the clusters to the peaks by counting the 1's in the binary `indata.mtx`. This information is stored in the directory `/mnt/workspace_stud/stud10/cl_indata.mtx`. 
+A function assigns the clusters to the peaks by counting the 1's in the binary `indata.mtx`. This information is stored in the directory `/mnt/workspace_stud/stud10/output/<tissue_of_interest>/cl_indata.mtx`. 
 
 2. `Cicero` provides information about the co-accessibility of chromatin regions. This pairwise comparison is found in the co-accessibility score in the variable  `conns`.  
 It's a data frame of pairwise peak comparison with subsequently calculated co-accessibility scores, in a range from -1 to 1. This information is stored in the directory `/mnt/workspace_stud/stud10/output/<tissue_of_interest>/conns.csv`. 
 
-3. The variable `site` stores peaks that are assigned to a promoter. To do so, the initial generated `cds_object` is extended by the information obtained from the .gtf file. The file `cds_sites.csv` is stored in the directory `/mnt/workspace_stud/stud10//<tissue_of_interest>/cds_sites.csv`. 
+3. The variable `site` stores peaks that are assigned to a promoter. To do so, the initial generated `cds_object` is extended by the information obtained from the .gtf file. The file `cds_sites.csv` is stored in the directory `/mnt/workspace_stud/stud10/output/<tissue_of_interest>/cds_sites.csv`. 
 
-4. `Cicero` also creates gene activity scroes, which combines the score of the regional accessibility with gene expression. This file `cicero_genes_activitiy.mtx` contains genes and the corresponding scores. This information is stored in the directory `/mnt/workspace_stud/stud10//<tissue_of_interest>/cicero_gene_activity.mtx`. 
+4. `Cicero` also creates gene activity scroes, which combines the score of the regional accessibility with gene expression. This file `cicero_genes_activitiy.mtx` contains genes and the corresponding scores. This information is stored in the directory `/mnt/workspace_stud/stud10/output/<tissue_of_interest>/cicero_gene_activity.mtx`. 
 
 
 ## Example Case 
