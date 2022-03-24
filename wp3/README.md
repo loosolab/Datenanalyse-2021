@@ -76,7 +76,7 @@ This file (as well as those of other tissues at the same time, if that is desire
 ```bash
 python ProfileSimilarity.py [DefiningTF file] -f [TF family file]
 ```
-The commands shown here are used run the scripts in their default setting for our analysis. They can also all be executed in one command by executing the script "oneTissueAnalysis.sh" while in the diretory of the tissue that contain the snakemake pipeline output (it needs to see the /output/ directory). Giving a name to name the files uniquely according to the tissue that was analyzed is optional, but highly recommended to avoid confusion when working with multiple tissues (escpecially if a comparison between different tissues will be done afterwards).
+The commands shown here are used run the scripts in their default setting for our analysis. They can also all be executed in one command by executing the script "oneTissueAnalysis.sh" while in the diretory of the tissue that contains the snakemake pipeline output (it needs to see the /output/ directory). Giving a name to name the files uniquely according to the tissue that was analyzed is optional, but highly recommended to avoid confusion when working with multiple tissues (escpecially if a comparison between different tissues will be done afterwards).
 ```bash
 bash PATH/TO/FILE/oneTissueAnalysis.sh [TISSUENAME]
 ```
