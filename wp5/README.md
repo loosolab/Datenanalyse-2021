@@ -100,9 +100,9 @@ For each cluster a consensus sequence is calculated, and may be used for further
 
 To perform the clustering, the script is called follows:
 ```
-./cluster_all.sh <TODO> 
+./cluster_all.sh <Clustering_Name> 
 ```
-TODO
+The parameter `<Clustering_Name>` will be the prefix the output folder of the clustering will have. Thus it should be somewhat descriptive of the output. In the pipeline *run_all.sh* the given prefix is "overall".
 
 ### 6. Evaluate motif similarity
 

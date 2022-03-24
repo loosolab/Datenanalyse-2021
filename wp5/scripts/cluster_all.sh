@@ -9,11 +9,11 @@ CONF="${SPATH}/../global_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
 # Temporary Directory to store MEME files in, Input $2 is the prefix the directory should have
-TEMP_DIR="${PROJECT_DIR}/runs/${2}_motifs"
+TEMP_DIR="${PROJECT_DIR}/runs/tmp_motifs_dir"
 # TODO; File prefix for output file: TODO check if cluster or file? 
-CLUSTERING_NAME="liver"
+CLUSTERING_NAME=$1
 
-# Temporaray directory to which all the meme files with the motifs will be stored
+# Create temporaray directory to which all the MEME files with the motifs will be stored
 mkdir $TEMP_DIR
 
 # get all Motifs in meme files of the runs an write them to the temporary directory
@@ -27,8 +27,6 @@ for TISSUE in $PROJECT_DIR/runs/*/; do
     done
 done
 
-# Get path to this script
-SPATH=$(dirname $0)
 # execute clustering
 ${SPATH}/utils/getSimilarMotifs.sh $PROJECT_DIR $CLUSTERING_NAME $TEMP_DIR/*
 

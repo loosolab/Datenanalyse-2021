@@ -17,7 +17,7 @@ ${SPATH}/scripts/generate_configs.sh
 ${SPATH}/scripts/run_pipeline.sh
 ${SPATH}/scripts/check_logs.sh
 ${SPATH}/scripts/renameAllMotifs.sh
-${SPATH}/scripts/cluster_all.sh # TODO
+${SPATH}/scripts/cluster_all.sh "overall"
 ${SPATH}/scripts/Eval_Motif_similarity.py # TODO
 ${SPATH}/scripts/generate_gene_sets.sh
 ${SPATH}/scripts/generate_gene_sets_TFs.sh
