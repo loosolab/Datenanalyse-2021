@@ -32,13 +32,14 @@ samtools view -S -b sample.sam > sample.bam
 samtools sort sample.bam -o sample_sorted.bam
 samtools index sample_sorted.bam
 ```
+For unsorted .bam files you can alternatively use "preprocessingBam.sh" or leave out the first of the 3 commands above.
 
 Running the clustering script:
 ```bash
 ./cluster.py -b ./sample_sorted.bam -t ./cluster_assignment_table.tsv -o ./clusterBams/
 ```
 
-The clustering script produces a seperate .bam file for each cluster in the assignment table. It also generates a "snakemakeIn.txt" text file containing the paths and names of the cluster .bam files.
+The clustering script produces a seperate .bam file for each cluster in the assignment table. It also generates a "snakemakeIn.txt" text file containing the paths and names of the newly created cluster .bam files.
 
 You can use the config file provided in this repository (config.yaml).
 Paste the text from snakemakeIn.txt into the appropriate section inside the config.yaml and make sure all paths in it lead to the correct files.
