@@ -20,12 +20,19 @@ Additionally, it is neccesary to create the conda evironment from the given YAML
 conda env create -f plotting_env.yml
 ```
 
+After installation please call the script *create_needed_structure.sh* with the following command:
+
+```
+./create_needed_structure.sh
+```
+You need this structure for the following analysis.
+
 To use the annotation analysis you have to use two online tools:
 * [GO analysis](http://www.pantherdb.org)
 * [pathway analysis](https://reactome.org)
 
-For the gene ontology (GO) analysis you have to insert the gene sets from the files you want to analyze. From the analysis results you have to export the "Table". --> TODO: how to rename and store the files
-For the pathway analysis you have to choose the [Analysis Tools](https://reactome.org/PathwayBrowser/#TOOL=AT). There you have to insert the gene sets from the files you want to analyze (example: "Gene name list"). From the analysis results you have to export the "Pathway analysis results" and the "Not found identifiers". --> TODO: how to rename and store the files
+For the gene ontology (GO) analysis you have to insert the gene sets from the files (motif gene sets are stored in *annotation/gene_sets_motifs*) you want to analyze. From the analysis results you have to export the "Table". The output file is named *analysis.txt* automatically. Please rename the file (add motif name) like *motifName_analysis.txt* and save the files in the folder *annotation/GO_analysis*.
+For the pathway analysis you have to choose the [Analysis Tools](https://reactome.org/PathwayBrowser/#TOOL=AT). There you have to insert the gene sets from the files (motif gene sets are stored in *annotation/gene_sets_motifs*) you want to analyze. From the analysis results you have to export the "Pathway analysis results" and the "Not found identifiers". The output files are named *result.csv* ("Pathway analysis results") and *not_found.csv* ("Not found identifiers") automatically. Please rename the files (add motif name) like *motifName_results.csv* or *motifName_not_found.csv* and save the files in the folder *annotation/GO_analysis*.
 
 ## Usage
 This work package consists of several scripts (found in the *scripts* directory) which can be run individually or as a concatenated pipeline. For more detailed information please refer to the [WP5-Wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).

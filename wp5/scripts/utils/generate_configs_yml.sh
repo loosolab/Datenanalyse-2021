@@ -11,6 +11,7 @@ while read LINE; do declare "$LINE"; done < $CONF
 # input parameters 1 -> file path output directory
 TISSUE=$1
 CELL_TYPE=$2
+FASTA_FILE=$3
 
 # output directory
 OUTPUT_DIRECTORY="${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline"
@@ -26,8 +27,8 @@ fi
 # used file for manipulation
 FILE="${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml"
 
-# file paths TODO: change storing place of genome fasta
-GENOME_FASTA="${PROJECT_DIR}/../homo_sapiens.104.mainChr.fa"
+# file paths
+GENOME_FASTA="$FASTA_FILE"
 SCORE_BIGWIG="${TBSDIR}/$TISSUE/output/footprinting/${CELL_TYPE}_footprints.bw"
 PEAK_BED="${TBSDIR}/$TISSUE/output/peak_calling/${CELL_TYPE}_union.bed"
 MOTIF_FILE="${TBSDIR}/$TISSUE/output/motifs/all_motifs.txt"

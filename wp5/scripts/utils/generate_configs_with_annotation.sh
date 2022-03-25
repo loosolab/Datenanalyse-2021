@@ -11,6 +11,8 @@ while read LINE; do declare "$LINE"; done < $CONF
 # input parameters
 TISSUE=$1
 CELL_TYPE=$2
+FASTA_FILE=$3
+GTF_FILE=$4
 
 if [[ ${ANN_CHECKER} == "yes" ]]; then
     # output directory
@@ -27,8 +29,8 @@ if [[ ${ANN_CHECKER} == "yes" ]]; then
     # used file for manipulation
     FILE="${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml"
 
-    # file paths TODO: change storing place of genome fasta
-    GENOME_FASTA="${PROJECT_DIR}/../homo_sapiens.104.mainChr.fa"
+    # file paths
+    GENOME_FASTA="$FASTA_FILE"
     SCORE_BIGWIG="${TBSDIR}/$TISSUE/output/footprinting/${CELL_TYPE}_footprints.bw"
     PEAK_BED="${TBSDIR}/$TISSUE/output/peak_calling/${CELL_TYPE}_union.bed"
     MOTIF_FILE="${TBSDIR}/$TISSUE/output/motifs/all_motifs.txt"
@@ -40,8 +42,8 @@ if [[ ${ANN_CHECKER} == "yes" ]]; then
     sed -i 's,^.*peak_bed:.*$,'"  peak_bed: \'$PEAK_BED\'"',' $FILE
     sed -i 's,^.*motif_file:.*$,'"  motif_file: \'$MOTIF_FILE\'"',' $FILE
     
-    # choose gtf file TODO: change storing place of gtf
-    GTF="${PROJECT_DIR}/../homo_sapiens.104.mainChr.gtf"
+    # choose gtf file
+    GTF="$GTF_FILE"
 
     # choose UROPA file
     UROPA="${PROJECT_DIR}/source_files/uropa_template.json"
@@ -74,8 +76,8 @@ else
     # choose config file
     FILE="${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml"
     
-    # choose gtf file TODO: change storing place of gtf
-    GTF="${PROJECT_DIR}/../homo_sapiens.104.mainChr.gtf"
+    # choose gtf file
+    GTF="$GTF_FILE"
 
     # choose UROPA file
     UROPA="${PROJECT_DIR}/source_files/uropa_template.json"
