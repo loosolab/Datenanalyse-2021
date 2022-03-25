@@ -14,9 +14,11 @@ To use this work package it is important that you have two further tools install
 Please follow the installation instructions of those projects and make sure you have the according conda environments installed. It is neccecary that the TOBIAS environment is called "TOBIAS_ENV". 
 Furthermore, you need an environment for snakemake wich should also be called "snakemake".
 
-Additionally 
-To install the WP5-Package please ... # TODO
---> TODO: environment with Plotly
+Additionally, it is neccesary to create the conda evironment from the given YAML file. This can be done with the following command.
+
+```
+conda env create -f environment.yml
+```
 
 To use the annotation analysis you have to use two online tools:
 * [GO analysis](http://www.pantherdb.org)
