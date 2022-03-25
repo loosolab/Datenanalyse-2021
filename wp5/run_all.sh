@@ -17,8 +17,14 @@ ${SPATH}/scripts/generate_configs.sh
 ${SPATH}/scripts/run_pipeline.sh
 ${SPATH}/scripts/check_logs.sh
 ${SPATH}/scripts/renameAllMotifs.sh
+# similarity analysis
 ${SPATH}/scripts/cluster_all.sh "overall"
-${SPATH}/scripts/Eval_Motif_similarity.py # TODO
+echo "Activating plotting environment..."
+source /opt/miniconda/bin/activate plotting
+${SPATH}/scripts/Eval_Motif_similarity.py --runs-dir $PROJECT_DIR --out "similarity_overall" --motifs "${PROJECT_DIR}/overall_Cluster/motif_comparison_clusters.yml"
+echo "Deactivating plotting environment..."
+conda deactivate
+
 ${SPATH}/scripts/generate_gene_sets.sh
 ${SPATH}/scripts/generate_gene_sets_TFs.sh
 ${SPATH}/scripts/compare_gene_sets.py
