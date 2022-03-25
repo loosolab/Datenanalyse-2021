@@ -70,7 +70,7 @@ def generatePlot(colorMapping, TFs, familySizes, title, outputName):
         plotFileName = "SimilarityBubblePlot.png"
     else:
         withoutFiletype, Filetype = outputName.split(".")
-        plotFileName = "withoutFiletype"+"BubblePlot.png"
+        plotFileName = withoutFiletype+"BubblePlot.png"
     
     tfx = []
     clustery = []
@@ -91,7 +91,7 @@ def generatePlot(colorMapping, TFs, familySizes, title, outputName):
                 bubbleSizes.append(familySizes[tf])
                 
     
-    plt.scatter(tfx, clustery, c=colorsz, cmap = "Set1", s=bubbleSizes)
+    plt.scatter(tfx, clustery, c=colorsz, cmap = "tab10", s=bubbleSizes)
     
     plt.xlabel("Transcription Factors")
     plt.ylabel("Clusters")
