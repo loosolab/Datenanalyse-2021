@@ -33,6 +33,7 @@ It also offers some scripts to further analyse the newly found motifs and give f
 
 WP6 is searching for and comparing transcription factor co-occurrences based on the data of WP1, WP2, WP3 and WP5 using the python package TF-COMB. WP6 offers jupyter notebooks for finding transcription factor co-occurrences, a notebook for looking into the correlation of the binding orientation and the binding distance between transcription factors and a notebook for a closer look at the difference in the binding distance of same transcription factor co-occurrences in different clusters.
 
+![workflow](https://user-images.githubusercontent.com/81377794/160153768-db0006b2-85a2-41dc-baca-fce3c1250334.png)
 
 More information about the individual work packages can be gathered by following the links provided above or taking a look at the [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki).
 
