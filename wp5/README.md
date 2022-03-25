@@ -24,7 +24,7 @@ To use the annotation analysis you have to use two online tools:
 * [GO analysis](http://www.pantherdb.org)
 * [pathway analysis](https://reactome.org)
 
-For the gene ontology (GO) analysis you have to insert the gene sets from the files (motif gene sets are stored in *annotation/gene_sets_motifs*) you want to analyze. From the analysis results you have to export the "Table". The output file is named *analysis.txt* automatically. Please rename the file (add motif name) like *motifName_analysis.txt* and save the files in the folder *annotation/GO_analysis*.
+For the gene ontology (GO) analysis you have to insert the gene sets from the files (motif gene sets are stored in *annotation/gene_sets_motifs*) you want to analyze. Please choose *Statistical overrepresentation test* and then *GO biologialprocess complete* in step 3 *3. Select Analysis.*. From the analysis results you have to export the "Table". The output file is named *analysis.txt* automatically. Please rename the file (add motif name) like *motifName_analysis.txt* and save the files in the folder *annotation/GO_analysis*.
 For the pathway analysis you have to choose the [Analysis Tools](https://reactome.org/PathwayBrowser/#TOOL=AT). There you have to insert the gene sets from the files (motif gene sets are stored in *annotation/gene_sets_motifs*) you want to analyze. From the analysis results you have to export the "Pathway analysis results" and the "Not found identifiers". The output files are named *result.csv* ("Pathway analysis results") and *not_found.csv* ("Not found identifiers") automatically. Please rename the files (add motif name) like *motifName_results.csv* or *motifName_not_found.csv* and save the files in the folder *annotation/GO_analysis*.
 
 ## Usage
@@ -143,42 +143,48 @@ conda activate plotting
 ```
 
 ### 7. Generate gene sets
+To evaluate the annotation of the motifs it is neccecary to collect the information which genes belongs to the motif at first.
 The script *generate_gene_sets.sh* is called as follows:
 
 ```
 ./generate_gene_sets.sh
 ```
 
-The script will...TODO!!!
+The script will collect this information from the **allhits.txt* of the different motifs and creates both txt files for all motifs and txt files for the cell type (all belonging motifs saved in this file).
 > **Attention**: If you are working via an ssh connection make sure to start this script in a screen, as it might take a while.
 
 ### 8. Generate gene sets for transcription factors
+To evaluate the annotation of the motifs it is neccecary to collect the information which genes belongs to the known TFs at second.
 The script *generate_gene_sets_TFs.sh* is called as follows:
 
 ```
 ./generate_gene_sets_TFs.sh
 ```
 
-The script will...TODO!!!
+The script will collect this information from the **overview.txt* of the different TFs (from the wp3 output data) per tissue and creates txt files for all tissues (all belonging TFs saved in this file).
 > **Attention**: If you are working via an ssh connection make sure to start this script in a screen, as it might take a while.
 
 ### 9. Compare the gene sets
+To compare the gene sets of the motifs and TFs this script does some analysis.
 The script *compare_gene_sets.py* is called as follows:
 
 ```
-./compare_gene_sets.py --params TODO!!!
+./compare_gene_sets.py --runs_dir <PATH/TO/RUNS>
 ```
 
-The script will... TODO!!!
+The parameter `<PATH/TO/RUNS>` is the path to the *working_directory/runs*.
+The script will calculate the most correlating TFs from the known TFs to the new motifs (= new TFs). Also the new motifs will be compared over the tissues and cell types. The aim is to identify equal motifs on the one hand and correlating motifs on the other hand. Additionally special genes of the motifs will be identified.
 
 ### 10. Analyze the gene sets
+To analyze the gene sets of the motifs this script does some analysis on GO and pathway based on the output of the two databases [pantherdb](http://www.pantherdb.org) and [reactome](https://reactome.org).
 The script *analyze_GO_and_pathway.py* is called as follows:
 
 ```
-./analyze_GO_and_pathway.py --params TODO!!!
+./analyze_GO_and_pathway.py --runs_dir <PATH/TO/RUNS>
 ```
 
-The script will... TODO!!!
+The parameter `<PATH/TO/RUNS>` is the path to the *working_directory/runs*.
+The script will extract the most significant GO name from the GO output and the most significant pathway from the pathway output and generates a ranked table as csv. The analyzation criteriom is the p-value.
 
 ## Example
 TODO
