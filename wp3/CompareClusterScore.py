@@ -68,7 +68,7 @@ def toZScore(dfNorm, fileNames):
 #compressing the TFs into clusters    
 def groupFamilies(familyFile, df):
    
-    with open(familyFile, "r") as file:
+    with open(familyFile[0], "r") as file:
         
         colnames = []
         
