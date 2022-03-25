@@ -17,7 +17,7 @@ Furthermore, you need an environment for snakemake wich should also be called "s
 Additionally, it is neccesary to create the conda evironment from the given YAML file. This can be done with the following command.
 
 ```
-conda env create -f environment.yml
+conda env create -f plotting_env.yml
 ```
 
 To use the annotation analysis you have to use two online tools:
@@ -124,11 +124,16 @@ Here the results of the clustering can be evaluated by clustering them.
 To do so you can call the script as follows:
 
 ```
-./eval_Motif_similarity.py --runs_dir <PATH/TO/RUNS> --motifs <MOTIF_CLUSTER.yml> --out <FILENAME_prefix>
+./eval_Motif_similarity.py --runs_dir <PATH/TO/RUNS> --motifs <motif_comparison_clusters.yml> --out <FILENAME_prefix>
 ```
 
 For further information on the parameters please refer to the wiki or the help. 
 The script will provide several plots to visualize the appearance of similar motifs in different tissues and celltypes. It will also save the names of the found motifs together with their cluster and celltype and tissue in a csv table.
+
+If you want to run this script by itself please activate the plotting environment beforhand:
+```
+conda activate plotting
+```
 
 ### 7. Generate gene sets
 The script *generate_gene_sets.sh* is called as follows:
