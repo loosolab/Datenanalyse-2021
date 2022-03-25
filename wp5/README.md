@@ -61,6 +61,7 @@ After adjusting the config file for the global variables you can start the pipel
 ```
 ./run_all.sh
 ```
+
 Please make sure to run this command in the folder where the *run_all.sh* script is stored.
 > **Attention**: If you are working via an ssh connection make sure to start this script in a screen, as it might take a while.
 
@@ -70,8 +71,9 @@ The script *generate_configs.sh* is called as follows:
 ```
 ./generate_configs.sh
 ```
-This script will create config files from WP3 output. for each run of WP3 one config will be created. Those configs will be useed to start the motif discovery pipeline for the different conditions of the different runs.
-Furthermore this script will crate all needed directories for further analysis.
+
+This script will create config files from WP3 output. For each run of WP3 one config will be created. Those configs will be used to start the motif discovery pipeline for the different conditions of the different runs.
+Furthermore this script will create all needed directories for further analysis.
 
 ### 2. Run pipeline
 The script *run_pipeline.sh* is called as follows:
@@ -79,10 +81,19 @@ The script *run_pipeline.sh* is called as follows:
 ```
 ./run_pipeline.sh
 ```
+
 The script will start the motif discovery pipeline for all configs found in the *configs* directory insinde the project directory specified in the config. 
 > **Attention**: If you are working via an ssh connection make sure to start this script in a screen, as it might take a while.
 
 ### 3. Check logs
+This script is an optional script to get a fast overview if all pipeline runs worked as suspected.
+The script *check_logs.sh* is called as follows:
+
+```
+./check_logs.sh
+```
+
+The script will check the *log files* of the analyzed tissues and the belonging cell types to evaluate if the pipeline runs were successful (without annotation ---> TODO). 
 
 ### 4. Rename motifs
 This script is neccesary, as the motif discovery pipeline will give the motif dummy names. 
@@ -101,27 +112,61 @@ The idea is to cluster all found motifs with a relatively low threshold (=0.3) u
 For each cluster a consensus sequence is calculated, and may be used for further analysis. Though, manual inspection is advised before using the consensus sequence.
 
 To perform the clustering, the script is called follows:
+
 ```
 ./cluster_all.sh <Clustering_Name> 
 ```
+
 The parameter `<Clustering_Name>` will be the prefix the output folder of the clustering will have. Thus it should be somewhat descriptive of the output. In the pipeline *run_all.sh* the given prefix is "overall".
 
 ### 6. Evaluate motif similarity
 Here the results of the clustering can be evaluated by clustering them. 
-To do so you can call the script as follows 
+To do so you can call the script as follows:
+
 ```
 ./eval_Motif_similarity.py --runs_dir <PATH/TO/RUNS> --motifs <MOTIF_CLUSTER.yml> --out <FILENAME_prefix>
 ```
+
 For further information on the parameters please refer to the wiki or the help. 
 The script will provide several plots to visualize the appearance of similar motifs in different tissues and celltypes. It will also save the names of the found motifs together with their cluster and celltype and tissue in a csv table.
 
 ### 7. Generate gene sets
+The script *generate_gene_sets.sh* is called as follows:
+
+```
+./generate_gene_sets.sh
+```
+
+The script will...TODO!!!
+> **Attention**: If you are working via an ssh connection make sure to start this script in a screen, as it might take a while.
 
 ### 8. Generate gene sets for transcription factors
+The script *generate_gene_sets_TFs.sh* is called as follows:
+
+```
+./generate_gene_sets_TFs.sh
+```
+
+The script will...TODO!!!
+> **Attention**: If you are working via an ssh connection make sure to start this script in a screen, as it might take a while.
 
 ### 9. Compare the gene sets
+The script *compare_gene_sets.py* is called as follows:
+
+```
+./compare_gene_sets.py --params TODO!!!
+```
+
+The script will... TODO!!!
 
 ### 10. Analyze the gene sets
+The script *analyze_GO_and_pathway.py* is called as follows:
+
+```
+./analyze_GO_and_pathway.py --params TODO!!!
+```
+
+The script will... TODO!!!
 
 ## Example
 TODO
