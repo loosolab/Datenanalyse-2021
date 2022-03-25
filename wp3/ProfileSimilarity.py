@@ -69,8 +69,11 @@ def generatePlot(colorMapping, TFs, familySizes, title, outputName):
     if outputName == "similarity.tsv":
         plotFileName = "SimilarityBubblePlot.png"
     else:
-        withoutFiletype, Filetype = outputName.split(".")
-        plotFileName = withoutFiletype+"BubblePlot.png"
+        try:
+            withoutFiletype, Filetype = outputName.split(".")
+            plotFileName = withoutFiletype+"BubblePlot.png"
+        except:
+            plotFileName = outputName+"BubblePlot.png"
     
     tfx = []
     clustery = []
