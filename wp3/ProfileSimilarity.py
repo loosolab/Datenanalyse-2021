@@ -64,7 +64,13 @@ def bubbleSize(TFs, familyFile):
 
 #plots the data
 #tfs on x axis, clusters on y axis, colors according to overlaps between cluster profiles, bubble size according to family size
-def generatePlot(colorMapping, TFs, familySizes, title): 
+def generatePlot(colorMapping, TFs, familySizes, title, outputName): 
+    
+    if outputName == "similarity.tsv":
+        plotFileName = "SimilarityBubblePlot.png"
+    else:
+        withoutFiletype, Filetype = outputName.split(".")
+        plotFileName = "withoutFiletype"+"BubblePlot.png"
     
     tfx = []
     clustery = []
@@ -92,6 +98,10 @@ def generatePlot(colorMapping, TFs, familySizes, title):
     plt.title(title)
     plt.xticks(rotation=30,ha='right', size=5)
     plt.colorbar()
+    
+    fig = plt.gcf()
+    
+    fig.savefig(plotFileName)
     plt.show()
  
 #creates a file that contains each TF in the left column and all clusters that show this TF in their top TFs in the right column    
@@ -127,7 +137,7 @@ def main():
     else:
         familySizes = bubbleSize(TFs, familyFile)
     
-    generatePlot(colorMapping, TFs, familySizes, title)
+    generatePlot(colorMapping, TFs, familySizes, title, outputName)
     
     createTSV(TFs, outputName)
 
