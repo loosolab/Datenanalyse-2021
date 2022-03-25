@@ -10,7 +10,7 @@ import pandas as pd
 
 #parser for using the tool via command-line interface
 def cliParser():
-    parser = argparse.ArgumentParser(description='Graphic Cluster Footprint Score Comparison')
+    parser = argparse.ArgumentParser(description='Cluster Footprint Score Comparison')
     parser.add_argument('Files', nargs="*", help='input file, bindetect_results.txt. If supplying the script with multiple files, rename the cluster names according to tissue to avoid conflicts (i.e. with sed)')
     parser.add_argument('-n', '--normalize', dest='Norm', default='Sum', help='Method of normalization of the data.')
     parser.add_argument('-o', '--outputName', dest='Custom_filename', default="ClusterComparison", help='Sets a custom name for saving the output files')
