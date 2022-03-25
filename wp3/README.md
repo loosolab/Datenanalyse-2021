@@ -92,4 +92,14 @@ Known issues and limitations
 ----------------------------
 pysam does only work correctly under Linux operating systems, as it is a requirement for the clustering script it will probably not work on windows.
 
-# ***TODO*** Bilder einfügen für Beispieldaten
+# Example plots
+
+![compareallheatmap](https://user-images.githubusercontent.com/81377794/160215631-d9ecdded-77f4-4875-a37c-547f7958f721.png)
+
+![all](https://user-images.githubusercontent.com/81377794/160215644-570d3df9-996e-4d94-bca0-eb858ecd3274.png)
+
+
+![liver_heatmap](https://user-images.githubusercontent.com/81377794/160215657-d3d3a5dc-921d-430f-88eb-400076766f46.png)
+
+
+![liver](https://user-images.githubusercontent.com/81377794/160215663-d39dafaa-e149-4046-b04f-e0f4c13ca299.png)
