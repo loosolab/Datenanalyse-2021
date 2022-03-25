@@ -1,0 +1,14 @@
+{
+    "queries": [
+        {
+            "feature": "gene",
+            "feature.anchor": ["start", "end"],
+            "distance": 0,
+            "internals": "True",
+            "show.attributes": "all"
+        }
+    ],
+    "priority": "False",
+    "gtf": "",
+    "bed": ""
+}
