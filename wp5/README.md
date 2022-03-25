@@ -20,6 +20,7 @@ Additionally, it is necessary to create the conda environment from the provided 
 conda env create -f plotting_env.yml
 ```
 
+## Online Tools
 To use the annotation analysis you have to use two online tools:
 * [GO analysis](http://www.pantherdb.org)
 * [pathway analysis](https://reactome.org)
@@ -146,9 +147,8 @@ conda activate plotting
 ```
 
 ### 7. Generate gene sets
-In order to evaluate the annotation of the motifs, it is required to first collect the information on which genes belong to the motif.
-The script provided here collects this information from the **allhits.txt* of the different motifs and creates txt files for all motifs as 
-well as txt files for the cell type (all associated motifs are stored in this file).
+In order to be able to evaluate the annotation of the motifs, the information must first be collected which genes belong to the motif.
+The script provided here collects this information from the **allhits.txt* of the different motifs. From this, txt files are created for each individual motif on the one hand, and txt files for each cell type on the other. The files of the cell types contain all associated motifs (not only one motif, as in the txt files of the individual motifs).
 
 The script *generate_gene_sets.sh* is called as follows:
 
@@ -176,25 +176,20 @@ In order to compare the gene sets of the motifs and TFs, this script performs so
 The script *compare_gene_sets.py* is called as follows:
 
 ```
-./compare_gene_sets.py --runs_dir <PATH/TO/RUNS>
+./compare_gene_sets.py
 ```
 
-The parameter `<PATH/TO/RUNS>` is the path to the *working_directory/runs*.
-
 The script calculates which known TFs are correlated the most with the new motifs (= new TFs). 
-The new motifs are also compared across tissues and cell types. The aim is to identify identical motifs on the one 
-hand and correlated motifs on the other. In addition, the aim is to identify motif-specific genes.
+The new motifs are also compared across tissues and cell types. The aim is to identify identical motifs on the one hand and correlated motifs on the other. In addition, the aim is to identify motif-specific genes.
 
 ### 10. Analyze the gene sets
-To analyse the gene sets of the motifs, this script performs a GO and pathway analysis based on the outputs of the two databases [pantherdb] (http://www.pantherdb.org) and [reactome] (https://reactome.org).
+To analyse the gene sets of the motifs, this script performs a GO and pathway analysis based on the outputs of the two databases [pantherdb](http://www.pantherdb.org) and [reactome](https://reactome.org).
 
 The script *analyze_GO_and_pathway.py* is called as follows:
 
 ```
-./analyze_GO_and_pathway.py --runs_dir <PATH/TO/RUNS>
+./analyze_GO_and_pathway.py
 ```
-
-The parameter `<PATH/TO/RUNS>` is the path to the *working_directory/runs*.
 
 The script extracts the most significant GO name from the GO output and the most significant pathway from the pathway output and generates a ranking table in csv format. The analysis criterion is the p-value.
 

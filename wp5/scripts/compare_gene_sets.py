@@ -1,11 +1,53 @@
 #!/usr/bin/env python3
 
 import pandas as pd
-import plotly.express as px
-import argparse 
+import csv
+import os
 
-parser = argparse.ArgumentParser(description='Comparison of the cell types (new found motifs) gene sets with the known transcription factors (TF) gene sets')
-parser.add_argument('--in-dir', metavar="PATH/TO/DIR", help='Path to directory where the TF gene set files are stored', required=True )
-parser.add_argument('--motifs', metavar='MOTIF_CLUSER.yml', help='Output of the motif clustering with TOBIAS', required=True)
-parser.add_argument('--out', metavar="FILENAME_prefix", help="Prefix of how the output files should be named.", required=True)
-args = parser.parse_args()
+## prepare Dataframe 
+# initialize helping lists
+cur_cluster = ''
+motif_names = []
+clusters = []
+tissues = []
+cell_types = []
+
+# iterate over files
+files = os.listdir("Desktop/myFolder")
+myfile = 'filename.txt'
+
+for filename in files:
+    if filename == myfile:
+        continue
+
+
+# read file
+with open(args.motifs) as file:
+    for line in file:
+        if "Cluster" in line:
+            cur_cluster = line.strip()[:-1]
+            continue
+        cur_motif_name = line.strip().split(' ')[1]
+        # drop known motifs
+        if '.' in cur_motif_name:
+            continue
+        clusters.append(cur_cluster)
+        motif_names.append(cur_motif_name)
+        tissue, cell_type, _ = cur_motif_name.split('-')
+        tissues.append(tissue)
+        cell_types.append(cell_type)
+
+
+# parse to dataframe
+df_motifs = pd.DataFrame({
+    'motif_name': motif_names,
+    'Cluster': clusters,
+    'Tissue': tissues,
+    'Cell_type': cell_types,
+})
+
+# remove unneeded helping lists
+del clusters
+del tissues
+del cell_types
+del motif_names
