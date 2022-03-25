@@ -71,22 +71,22 @@ else
         cp $PROJECT_DIR/configs/config_${TISSUE}_${CELL_TYPE}.yml ${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml
     fi
 
-    # choose gtf file TODO: change storing place of gtf
-    GTF="${PROJECT_DIR}/../homo_sapiens.104.mainChr.gtf"
-
     # choose config file
     FILE="${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml"
+    
+    # choose gtf file TODO: change storing place of gtf
+    GTF="${PROJECT_DIR}/../homo_sapiens.104.mainChr.gtf"
 
     # choose UROPA file
     UROPA="${PROJECT_DIR}/source_files/uropa_template.json"
 
     # output directory
-    OUTPUT_DIRECTORY="${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/annotation"
+    OUTPUT_DIRECTORY="${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline"
 
     # file manipulation
     sed -i 's,^.*output:.*$,'"  output: \'$OUTPUT_DIRECTORY\'"',' $FILE
-    sed -i 's,^.*gtf:.*$, '"  gtf: \'$GTF\'"',' $FILE
-    sed -i 's,^.*config_template:.*$, '"  config_template: \'$UROPA\'"',' $FILE
+    sed -i 's,^.*gtf:.*$,'"  gtf: \'$GTF\'"',' $FILE
+    sed -i 's,^.*config_template:.*$,'"  config_template: \'$UROPA\'"',' $FILE
     
     # check if new output directory is inserted into file
     OUTPUT_CHECKER=$(grep -c "$OUTPUT_DIRECTORY" $FILE)
