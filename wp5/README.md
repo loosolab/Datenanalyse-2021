@@ -100,7 +100,7 @@ The script *check_logs.sh* is called as follows:
 ./check_logs.sh
 ```
 
-The script will check the *log files* of the analyzed tissues and the belonging cell types to evaluate if the pipeline runs were successful (without annotation ---> TODO). 
+The script will check the *log files* of the analyzed tissues and the belonging cell types to evaluate if the pipeline runs were successful (also the annotation runs). 
 
 ### 4. Rename motifs
 This script is neccesary, as the motif discovery pipeline will give the motif dummy names. 
