@@ -12,8 +12,8 @@ from scipy.spatial.distance import squareform
 from os.path import commonprefix
 
 def cliParser():
-    parser = argparse.ArgumentParser(description='Graphic Cluster Footprint Score Comparison')
-    parser.add_argument('File', nargs=1, help='input file, bindetect_results.txt')
+    parser = argparse.ArgumentParser(description='Clustering transcription factors into families based on motif similarity')
+    parser.add_argument('File', nargs=1, help='input file, bindetect_distances.txt')
     args = parser.parse_args()
     
     return args.File
@@ -21,31 +21,26 @@ def cliParser():
 def clusterFamilies(filename):
     data = pd.read_csv(filename, sep="\t")
     
-    
+    #clustering, done with scipy
     linkMat = linkage(squareform(data), method="average")
     familyIDs = fcluster(linkMat, 0.5, criterion="distance")	
     
-    #print(len(familyIDs))
-    
+    #grouping the TFs based on their families into a dicitonary
     familyCount = np.unique(familyIDs)
-    #print(len(familyCount))
     
     fillFamilies = {}
     
     for ID in familyCount:
         fillFamilies[ID] = []
     
-    #print(len(fillFamilies))
-    
     
     for index, col in enumerate(data):
         fillFamilies[familyIDs[index]].append(col)    
     
     
-    #print(fillFamilies)
-    
     familyNames = {}
     
+    #naming the clusters/families
     for family in fillFamilies:
         
         for index,TF in enumerate(fillFamilies[family]):
@@ -75,7 +70,6 @@ def clusterFamilies(filename):
             tmpNames = []
             etAl = " and others"
             fam = " family"
-            conSeqWhole = ""
             
             for index, tester in enumerate(fillFamilies[family]):
                 tmpList = []
@@ -85,7 +79,6 @@ def clusterFamilies(filename):
                        
                 tmpNames.append(commonprefix(tmpList))
           
-            #print(tmpNames)
             nameCounter = {}
             for index, TF in enumerate(tmpNames):
                 try:
@@ -136,6 +129,8 @@ def clusterFamilies(filename):
                     else:
                        counter +=1 
     
+    #creating the output file
+    #tsv with first column - family name and second column - TFs in the family
     with open("TF_families.tsv","w") as outfile:
         for index, element in enumerate(familyNames):
             if index == 0:
@@ -147,11 +142,8 @@ def clusterFamilies(filename):
                     outfile.write(TF)
                 else:
                     outfile.write(","+TF)
-            #print(name)
-            #print(nameCounter)
-            #print(tmpNames)
-    #print(familyNames.keys())  
-           
+                    
+
 def main():
         filename = cliParser()
         clusterFamilies(filename[0])

@@ -9,22 +9,17 @@ import argparse
 
 #parser for using the tool via command-line interface
 def cliParser():
-    parser = argparse.ArgumentParser(description='Graphic Cluster Footprint Score Comparison')
+    parser = argparse.ArgumentParser(description='Script to extract the transcription factors that define a cluster (by z score of TOBIAS footprinting score')
     parser.add_argument('File', nargs=1, help='input file, tsv of binding scores')
-    parser.add_argument('-n', '--normalize', dest='Norm', default='Sum', help='Method of normalization of the data.')
-    parser.add_argument('-o', '--outputName', dest='Custom_filename', default="ClusterComparison", help='Sets a custom name for saving the output files')
-    parser.add_argument('-z', '--zscore', dest='Z', default=True, action='store_false', help='If used, the output will contain the absolute values (or those normlaized) and no z-Scores')
-    parser.add_argument('-f', '--families', dest='families', default=False, action='store_true', help='If used, output will group TFs by families')
+    parser.add_argument('-o', '--outputName', dest='Custom_filename', default="importantTFsPerCluster.tsv", help='Sets a custom name for saving the output files')
+    parser.add_argument('-q', '--quantile', dest='Quantile', default=.95, help='Sets quantile of what the defining TFs are. Default is .95 (give out the top 5% of TFs by z score)')
     args = parser.parse_args()
     
-    return args.File, args.families
-#TODO ohne den ganzen family Mist, der passiert schon vorher und wird dann halt als file übergeben
-def main():
-    
-    File, Families = cliParser()
-    inputFile = File[0]
-    #inputFile = "comp.tsv"
+    return args.File, args.Quantile, args.Custom_filename
 
+def getDefiningTF(inputFile, quantile, outname):
+    
+    #counting the header lines to ignore them in data extraction later
     with open(inputFile, "r") as file:
         
         headerCount = 0
@@ -37,62 +32,35 @@ def main():
                break
             headerCount += 1
                
-    
+    #reading the input file whole ignoring the perviously established header
     df = pd.read_csv(inputFile, sep="\t", header = headerCount)
-    #print(df)
     df.set_index('TF', inplace=True)
 
     clusters = {}
     
-    
-    #print(clusters)
-    
-    collapseCols = {}
-    
-    dfT = df.transpose()
-    print(dfT)
-    if Families: 
-        with open("TF_families.tsv", "r") as file:
-            for col in dfT:
-                #print(dfT)
-                for line in file:
-                    family, tfactors = line.split("\t")
-                    tfactorList = tfactors.split(",")
-                    if col in tfactorList:
-                            #print(1)
-                            collapseCols[col] = family
-         
-        dfFamilies = dfT
-        #print(dfFamilies)
-        dfFamilies = dfFamilies.groupby(collapseCols, axis = 1).mean()
-        #print(dfFamilies)
-        dfFamilies = dfFamilies.transpose()
-        #print(dfFamilies)
-        
-        
-        df = dfFamilies
-            
-    #print(collapseCols)
-    #print(1)    
-   # print(df)   
-    #Quantilebestimmung und Extraktion der relevanten TF 
-    quants = df.quantile(.95)
-    
+    #extracting the top TFs by z score according to the set quantile
+    quants = df.quantile(quantile)
     
     for col in df:
         clusters[col] = []
-    #print(quants["cluster9_Score"])
+
     
     for col in df:
         for index in df.index:
            if df.at[index, col] >= quants[col]:
                clusters[col].append(index)
     
-    #print(clusters)
+    #creating the output
     important_TFs = pd.DataFrame(clusters)
-    print(important_TFs)
     
-    important_TFs.to_csv("importantTFsPerCluster" + '.tsv', sep="\t")
+    important_TFs.to_csv(outname, sep="\t")
+    
+def main():
+    
+    File, quantile, outname = cliParser()
+    inputFile = File[0]
+
+    getDefiningTF(inputFile, quantile, outname)
 
 if __name__ == '__main__':
     main()
