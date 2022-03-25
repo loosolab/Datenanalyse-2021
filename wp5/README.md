@@ -20,13 +20,6 @@ Additionally, it is neccesary to create the conda evironment from the given YAML
 conda env create -f plotting_env.yml
 ```
 
-After installation please call the script *create_needed_structure.sh* with the following command:
-
-```
-./create_needed_structure.sh
-```
-You need this structure for the following analysis.
-
 To use the annotation analysis you have to use two online tools:
 * [GO analysis](http://www.pantherdb.org)
 * [pathway analysis](https://reactome.org)
@@ -36,6 +29,31 @@ For the pathway analysis you have to choose the [Analysis Tools](https://reactom
 
 ## Usage
 This work package consists of several scripts (found in the *scripts* directory) which can be run individually or as a concatenated pipeline. For more detailed information please refer to the [WP5-Wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
+
+Before starting the pipeline (or the single scripts) it is *important* to adjust the config file or the global variables. 
+For this please open **global_vars.cnf** and adjust the 4 given variables.
+The variables have the following meaning:
+
+* PROJECT_DIR : Path to where all the outputs should be written
+* TBSDIR : Path to output of WP3 (should contain all Tissue folders)
+* MDP_PIPELINE : path to your installation of the motif discovery pipeline
+* ANN_CHECKER=yes : if 'yes' then the motif discovery will be ran with annotation, else annotation will be skipped.
+
+After adjusting the config file for the global variables please call the script *create_needed_structure.sh* once with the following command:
+
+```
+./create_needed_structure.sh
+```
+This is neccesary as a specific folder structure is expected by the scripts.
+
+After those preparations are done you can start the pipeline by running the following command:
+
+```
+./run_all.sh
+```
+
+Please make sure to run this command in the folder where the *run_all.sh* script is stored.
+> **Attention**: If you are working via an ssh connection make sure to start this script in a screen, as it might take a while.
 
 The single steps of the pipeline consist of the following scripts:
 1. [generate_configs.sh](#1-generate-configs)    
@@ -53,24 +71,6 @@ Steps 1-4 are contain the actual motif-discovery-pipeline run, aswell as the nee
 Steps 5 and 6 are for the analysis of similarities between the found motifs in different pipeline runs.
 Steps 7-10 are for the analysis of the found motifs with the aim to hypothesize the important functions of the motifs.
 In case of the given ATAC-Seq data the motif discovery pipeline is ran for each celltype of each tissue given.
-
-Before starting the pipeline (or the single scripts) it is *important* to adjust the config file or the global variables. 
-For this please open **global_vars.cnf** and adjust the 4 given variables.
-The variables have the following meaning:
-
-* PROJECT_DIR : Path to where all the outputs should be written
-* TBSDIR : Path to output of WP3 (should contain all Tissue folders)
-* MDP_PIPELINE : path to your installation of the motif discovery pipeline
-* ANN_CHECKER=yes : if 'yes' then the motif discovery will be ran with annotation, else annotation will be skipped.
-
-After adjusting the config file for the global variables you can start the pipeline by running the following command:
-
-```
-./run_all.sh
-```
-
-Please make sure to run this command in the folder where the *run_all.sh* script is stored.
-> **Attention**: If you are working via an ssh connection make sure to start this script in a screen, as it might take a while.
 
 ### 1. Generate configs
 The script *generate_configs.sh* is called as follows:
