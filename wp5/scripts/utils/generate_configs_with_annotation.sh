@@ -23,7 +23,7 @@ if [[ ${ANN_CHECKER} == "yes" ]]; then
         echo "The file config_${TISSUE}_${CELL_TYPE}_with_annotation.yml already exists. The file wasn't created."
         exit 0
     else
-        cp $PROJECT_DIR/source_files/config.yml $PROJECT_DIR/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml
+        cp $PROJECT_DIR/templates/config.yml $PROJECT_DIR/configs/config_${TISSUE}_${CELL_TYPE}_with_annotation.yml
     fi
 
     # used file for manipulation
@@ -46,7 +46,7 @@ if [[ ${ANN_CHECKER} == "yes" ]]; then
     GTF="$GTF_FILE"
 
     # choose UROPA file
-    UROPA="${PROJECT_DIR}/source_files/uropa_template.json"
+    UROPA="${PROJECT_DIR}/templates/uropa_template.json"
 
     # file manipulation
     sed -i 's,^.*gtf:.*$, '"  gtf: \'$GTF\'"',' $FILE
@@ -80,7 +80,7 @@ else
     GTF="$GTF_FILE"
 
     # choose UROPA file
-    UROPA="${PROJECT_DIR}/source_files/uropa_template.json"
+    UROPA="${PROJECT_DIR}/templates/uropa_template.json"
 
     # output directory
     OUTPUT_DIRECTORY="${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline"

@@ -21,7 +21,7 @@ if [ -f "${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml" ] ; then
     echo "The file config_${TISSUE}_${CELL_TYPE}.yml already exists. The file wasn't created."
     exit 0
 else
-    cp $PROJECT_DIR/source_files/config.yml ${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml
+    cp $PROJECT_DIR/templates/config.yml ${PROJECT_DIR}/configs/config_${TISSUE}_${CELL_TYPE}.yml
 fi
 
 # used file for manipulation
