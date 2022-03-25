@@ -3,11 +3,13 @@
 import pandas as pd
 import plotly.express as px
 import argparse
+import csv
 
 parser = argparse.ArgumentParser(description='Evaluate differntial binding')
 parser.add_argument('--runs-dir', metavar="PATH/TO/RUNS", help='Path to directory where the motif discovery runs are stored', required=True )
 parser.add_argument('--motifs', metavar='MOTIF_CLUSTER.yml', help='Output of the motif clustering with TOBIAS', required=True)
 parser.add_argument('--out', metavar="FILENAME_prefix",help="Prefix of how the output files should be named.", required=True)
+parser.add_argument('--annotation_dir', metavar="PATH/TO/WP2", help='Path to where the preproceesed original data lies. Should contain an annotation.txt for all tissues with the assignment of cluster to tissue.')
 args = parser.parse_args()
 
 ## prepare Dataframe 
@@ -43,14 +45,29 @@ df_motifs = pd.DataFrame({
     'Cell_type': cell_types,
 })
 
-# write to csv
-df_motifs.to_csv(f"{args.runs_dir}/{args.out}_clustering.csv")
-
 # remove unneeded helping lists
 del clusters
 del tissues
 del cell_types
 del motif_names
+
+# if available transalte cluster numbers to names
+if args.annotation_dir :
+    anno_dict = dict()
+    for tissue in pd.unique(df_motifs['Tissue']):
+        FILE=f"{args.annotation_dir}/{tissue}/annotation/annotation.txt"
+        t_dict = dict()
+        with open(FILE) as file:
+            for line in csv.reader(file,delimiter='\t'):
+                t_dict[f'cluster{line[0]}'] = line[1]
+        anno_dict[tissue] = t_dict
+    
+    df_motifs['Cell_type'] = df_motifs.apply(lambda x: anno_dict[x['Tissue'][x['Cell_type']]]  ,axis=1) # TODO test
+    
+# write to csv
+df_motifs.to_csv(f"{args.runs_dir}/{args.out}_clustering.csv")
+
+
 
 ### Plotting###
 ## create Dotplot
