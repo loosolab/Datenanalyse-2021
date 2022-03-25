@@ -80,11 +80,49 @@ for TISSUE in $DIR/*; do
                     DT_CELL_TYPE=$(date '+%d/%m/%Y %H:%M:%S')   # start time of the cell type
                     echo "Starting ${CELL_TYPE} at ${DT_CELL_TYPE}."
                     for MOTIF in $FILE_PATH_ANNOTATION/*; do
-                        MOTIF=$(echo $MOTIF | rev | cut -d'/' -f-1 | rev)    # extract the motif name
+                        MOTIF=$(echo $MOTIF | rev | cut -d'/' -f-1 | rev)    # extract the motif name                        
                         # check if the TF has already been analyzed
                         MOTIF_CHECKER=$(cat $FILE_1K | grep -c $MOTIF)   #  check if the TF is in the file
                         if [ $MOTIF_CHECKER -eq 0 ]; then
                             if [[ $MOTIF != "config" ]]; then
+                                # generate files for every motif
+                                # generate the file for the distance up to 1000 bp with uniq genes
+                                FILE_NAME_MOTIF_1K=${MOTIF}_1k.txt
+                                FILE_PATH_SAVE_MOTIF_1K="${FILE_PATH_CELL_TYPE}/annotation/gene_sets_motifs"   # path to save the file
+                                FILE_MOTIF_1K="${FILE_PATH_SAVE_MOTIF_1K}/$FILE_NAME_MOTIF_1K"
+                                if ! [ -f $FILE_MOTIF_1K ]; then  # only generate file if it isn't already existing
+                                    cd $FILE_PATH_SAVE_MOTIF_1K
+                                    touch $FILE_NAME_MOTIF_1K
+                                    echo "$FILE_NAME_MOTIF_1K was created."
+                                fi
+                                # generate the file for the distance up to 2000 bp with unique genes
+                                FILE_NAME_MOTIF_2K=${MOTIF}_2k.txt
+                                FILE_PATH_SAVE_MOTIF_2K="${FILE_PATH_CELL_TYPE}/annotation/gene_sets_motifs"   # path to save the file
+                                FILE_MOTIF_2K="${FILE_PATH_SAVE_MOTIF_2K}/$FILE_NAME_MOTIF_2K"
+                                if ! [ -f $FILE_MOTIF_2K ]; then  # only generate file if it isn't already existing
+                                    cd $FILE_PATH_SAVE_MOTIF_2K
+                                    touch $FILE_NAME_MOTIF_2K
+                                    echo "$FILE_NAME_MOTIF_2K was created."
+                                fi
+                                # generate the file for the distance up to 1000 bp with all genes
+                                FILE_NAME_MOTIF_1K_ALL=${MOTIF}_1k_all.txt
+                                FILE_PATH_SAVE_MOTIF_1K_ALL="${FILE_PATH_CELL_TYPE}/annotation/gene_sets_motifs"   # path to save the file
+                                FILE_MOTIF_1K_ALL="${FILE_PATH_SAVE_MOTIF_1K_ALL}/$FILE_NAME_MOTIF_1K_ALL"
+                                if ! [ -f $FILE_MOTIF_1K_ALL ]; then  # only generate file if it isn't already existing
+                                    cd $FILE_PATH_SAVE_MOTIF_1K_ALL
+                                    touch $FILE_NAME_MOTIF_1K_ALL
+                                    echo "$FILE_NAME_MOTIF_1K_ALL was created."
+                                fi
+                                # generate the file for the distance up to 2000 bp with all genes
+                                FILE_NAME_MOTIF_2K_ALL=${MOTIF}_2k_all.txt
+                                FILE_PATH_SAVE_MOTIF_2K_ALL="${FILE_PATH_CELL_TYPE}/annotation/gene_sets_motifs"   # path to save the file
+                                FILE_MOTIF_2K_ALL="${FILE_PATH_SAVE_MOTIF_2K_ALL}/$FILE_NAME_MOTIF_2K_ALL"
+                                if ! [ -f $FILE_MOTIF_2K_ALL ]; then  # only generate file if it isn't already existing
+                                    cd $FILE_PATH_SAVE_MOTIF_2K_ALL
+                                    touch $FILE_NAME_MOTIF_2K_ALL
+                                    echo "$FILE_NAME_MOTIF_2K_ALL was created."
+                                fi
+                            
                                 DT_MOTIF=$(date '+%d/%m/%Y %H:%M:%S')   # start time of the motif
                                 echo "Starting ${MOTIF} at ${DT_MOTIF}."
                                 
@@ -116,9 +154,11 @@ for TISSUE in $DIR/*; do
                                 # append the genes to the assciated gene set name (1k)
                                 for elem in "${SORTED_UNIQUE_GENES_1K[@]}"; do
                                     echo -e "${SORTED_UNIQUE_GENES_1K[COUNTER_ARR_1K]}" >> $FILE_1K
+                                    echo -e "${SORTED_UNIQUE_GENES_1K[COUNTER_ARR_1K]}" >> $FILE_MOTIF_1K
                                     let COUNTER_ARR_1K++
                                 done
                                 echo -e "" >> $FILE_1K    # insert a new line at the end of the motif data
+                                echo -e "" >> $FILE_MOTIF_1K    # insert a new line at the end of the motif data
 
                                 # counter for indices in arrays (SORTED_UNIQUE_GENES_2K)
                                 COUNTER_ARR_2K=0
@@ -127,9 +167,11 @@ for TISSUE in $DIR/*; do
                                 # append the genes to the assciated gene set name (2k)
                                 for elem in "${SORTED_UNIQUE_GENES_2K[@]}"; do
                                     echo -e "${SORTED_UNIQUE_GENES_2K[COUNTER_ARR_2K]}" >> $FILE_2K
+                                    echo -e "${SORTED_UNIQUE_GENES_2K[COUNTER_ARR_2K]}" >> $FILE_MOTIF_2K
                                     let COUNTER_ARR_2K++
                                 done
                                 echo -e "" >> $FILE_2K    # insert a new line at the end of the motif data
+                                echo -e "" >> $FILE_MOTIF_2K    # insert a new line at the end of the motif data
                                 
                                 # counter for indices in arrays (SORTED_GENES_1K)
                                 COUNTER_ARR_1K_ALL=0
@@ -138,9 +180,11 @@ for TISSUE in $DIR/*; do
                                 # append the genes to the assciated gene set name (1k_all)
                                 for elem in "${SORTED_GENES_1K[@]}"; do
                                     echo -e "${SORTED_GENES_1K[COUNTER_ARR_1K_ALL]}" >> $FILE_1K_ALL
+                                    echo -e "${SORTED_GENES_1K[COUNTER_ARR_1K_ALL]}" >> $FILE_MOTIF_1K_ALL
                                     let COUNTER_ARR_1K_ALL++
                                 done
                                 echo -e "" >> $FILE_1K_ALL    # insert a new line at the end of the motif data
+                                echo -e "" >> $FILE_MOTIF_1K_ALL    # insert a new line at the end of the motif data
 
                                 # counter for indices in arrays (SORTED_GENES_2K)
                                 COUNTER_ARR_2K_ALL=0
@@ -149,9 +193,11 @@ for TISSUE in $DIR/*; do
                                 # append the genes to the assciated gene set name (2k_all)
                                 for elem in "${SORTED_GENES_2K[@]}"; do
                                     echo -e "${SORTED_GENES_1K[COUNTER_ARR_2K_ALL]}" >> $FILE_2K_ALL
+                                    echo -e "${SORTED_GENES_1K[COUNTER_ARR_2K_ALL]}" >> $FILE_MOTIF_2K_ALL
                                     let COUNTER_ARR_2K_ALL++
                                 done
                                 echo -e "" >> $FILE_2K_ALL    # insert a new line at the end of the motif data
+                                echo -e "" >> $FILE_MOTIF_2K_ALL    # insert a new line at the end of the motif data
                             fi
                         else
                             echo "The motif $MOTIF of the cell type $CELL_TYPE of the tissue $TISSUE was already analyzed."

@@ -31,11 +31,14 @@ fi
 # create subfolders: motif_discovery_pipeline, annotation, differential_binding, evaluations
 mkdir $PROJECT_DIR/runs/$TISSUE/$CELL_TYPE/motif_discovery_pipeline
 mkdir $PROJECT_DIR/runs/$TISSUE/$CELL_TYPE/annotation
+mkdir $PROJECT_DIR/runs/$TISSUE/$CELL_TYPE/annotation/gene_sets_motifs
+mkdir $PROJECT_DIR/runs/$TISSUE/$CELL_TYPE/annotation/gene_set_analysis
+mkdir $PROJECT_DIR/runs/$TISSUE/$CELL_TYPE/annotation/GO_analysis
 mkdir $PROJECT_DIR/runs/$TISSUE/$CELL_TYPE/similarity
 
 # check if the new folders were created successfully
 if [ -d "${PROJECT_DIR}/runs/$TISSUE/$CELL_TYPE/annotation" ] ; then
-    echo "Folder structure for output files were created successfully."
+    echo "Folder structure for output files was created successfully."
 else
     echo "Building folder structure failed."
     exit 1

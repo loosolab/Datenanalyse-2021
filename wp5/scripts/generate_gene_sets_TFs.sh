@@ -59,7 +59,7 @@ for TISSUE in $DIR/*; do
             echo "$FILE_NAME_2K_ALL was created."
         fi
            
-        FILE_PATH_ANNOTATION="${FILE_PATH_TISSUE}/snakemakeout/TFBS"
+        FILE_PATH_ANNOTATION="${FILE_PATH_TISSUE}/output/TFBS"
                 
         # check if the tissue is already analyzed
         TF_COUNTER=0  # counter for the to be analyzed TFs

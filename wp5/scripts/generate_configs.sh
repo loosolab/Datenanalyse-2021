@@ -14,8 +14,12 @@ for TISSUE in $TBSDIR/*/; do
     for SUB_TYPE in ${TISSUE}output/footprinting/*_footprints.bw; do
 	    SUB_NAME=$(basename "$SUB_TYPE" "_footprints.bw")
 	    if [ $ANN_CHECKER = "yes" ]; then
+            # create new folders and subfolders
+            ${SPATH}/utils/create_folders.sh $TIS_NAME $SUB_NAME
             ${SPATH}/utils/generate_configs_with_annotation.sh $TIS_NAME $SUB_NAME
 	    else
+            # create new folders and subfolders
+            ${SPATH}/utils/create_folders.sh $TIS_NAME $SUB_NAME
             ${SPATH}/utils/generate_configs_yml.sh $TIS_NAME $SUB_NAME
 	    fi
     done    
