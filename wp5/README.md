@@ -41,14 +41,7 @@ The variables have the following meaning:
 * MDP_PIPELINE : Path to your installation of the motif discovery pipeline
 * ANN_CHECKER=yes : If 'yes', then the motif discovery is carried out with the annotation step, otherwise the annotation is skipped.
 
-After adjusting the configuration file containing the global variables, call the script *create_needed_structure.sh* once with the following command:
-
-```
-./create_needed_structure.sh
-```
-This is necessary as the scripts expect a certain folder structure.
-
-After these preparations have been completed, you can start the pipeline with the following command:
+After adjusting the configuration file containing the global variables, you can start the pipeline with the following command:
 
 ```
 ./run_all.sh
@@ -59,7 +52,7 @@ Please make sure that you execute this command in the folder where the script *r
 > **Caution**: If you are working via an SSH connection, you should start this script in a screen, as it may require some time to run.
 
 The single steps of the pipeline consist of the following scripts:
-1. [generate_configs.sh](#1-generate-configs)    
+1. [preparations.sh](#1-preparations)    
 2. [run_pipeline.sh](#2-run-pipeline)
 3. [check_logs.sh](#3-check-logs) (optional)
 4. [renameAllMotifs.sh](#4-rename-motifs)
@@ -75,16 +68,16 @@ Steps 5 and 6 are used to analyse similarities between the motifs found in diffe
 Steps 7-10 are used to analyse the motifs found with the aim of hypothesising the important functions of the motifs.
 Since this pipeline is designed for ATAC-Seq data, the motif discovery pipeline is run for each cell type of each given tissue.
 
-### 1. Generate configs
-The script *generate_configs.sh* is called as follows:
+### 1. Preparations
+The script *preparations.sh* is called as follows:
 
 ```
-./generate_configs.sh
+./preparations.sh
 ```
 
 This script creates configuration files from the WP3 output. A configuration file is created for each WP3 run. These configuration files are used to 
 start the motif discovery pipeline for the different conditions (i.e. tissue and cell types) of the different runs.
-Along with this, this script creates all the necessary directories for further analysis.
+Along with this, this script creates all the necessary directories for further analysis, that are expected by the following scripts.
 
 ### 2. Run pipeline
 The script *run_pipeline.sh* is called as follows:
