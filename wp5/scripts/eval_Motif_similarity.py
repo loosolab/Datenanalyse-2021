@@ -62,7 +62,7 @@ if args.annotation_dir :
                 t_dict[f'cluster{line[0]}'] = line[1]
         anno_dict[tissue] = t_dict
     
-    df_motifs['Cell_type'] = df_motifs.apply(lambda x: anno_dict[x['Tissue'][x['Cell_type']]]  ,axis=1) # TODO test
+    df_motifs['Cell_type'] = df_motifs.apply(lambda x: anno_dict[x['Tissue']][x['Cell_type']] if x['Cell_type'] in anno_dict[x['Tissue']].keys() else "unclear", axis=1)
     
 # write to csv
 df_motifs.to_csv(f"{args.runs_dir}/{args.out}_clustering.csv")
