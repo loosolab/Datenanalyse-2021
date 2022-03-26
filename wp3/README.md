@@ -18,6 +18,26 @@ conda env create -f environments/snakemake.yaml
 ```
 For visualization purposes, you can use [WIlsON](https://academic.oup.com/bioinformatics/article/35/6/1055/5078467). A docker container as well as instructions how to use it is provided [here](https://hub.docker.com/r/loosolab/wilson/).
 
+Firstly, select "feature" on the top left corner.
+
+![featuure](https://user-images.githubusercontent.com/81377794/160215850-99368edd-89e5-4875-9091-c24488ab6dba.png)
+
+Select or upload the file you want to visualize.
+
+![file](https://user-images.githubusercontent.com/81377794/160215878-8a994827-b225-43e1-88da-95f7e3269b21.png)
+
+Go to "Heatmap > interactive" on the top of the screen.
+
+![heatmap1](https://user-images.githubusercontent.com/81377794/160215931-8d880e31-76f2-4f91-8f88-7af6d66055f7.png)
+
+Select all columns you want to compare on the bottom left, select other desired properties (we reversed the color scheme) nad press "plot" at the bottom.
+
+![columns](https://user-images.githubusercontent.com/81377794/160215976-142c6a55-6211-44e7-9123-6912849effda.png)
+
+You can download the plot at the top right of it.
+
+
+
 Workflow description and example
 --------------------------------
 
@@ -91,6 +111,7 @@ The output of the comparison of the clusters in one tissue can also be utilized 
 Known issues and limitations
 ----------------------------
 pysam does only work correctly under Linux operating systems, as it is a requirement for the clustering script it will probably not work on windows.
+ProfileSimilarity.py is currently unable to use family clusering when processing multiple input files and the colormap shows decimals when there is little overlap despite it making not biological sense. 
 
 # Example plots
 
@@ -98,8 +119,6 @@ pysam does only work correctly under Linux operating systems, as it is a require
 
 ![all](https://user-images.githubusercontent.com/81377794/160215644-570d3df9-996e-4d94-bca0-eb858ecd3274.png)
 
-
 ![liver_heatmap](https://user-images.githubusercontent.com/81377794/160215657-d3d3a5dc-921d-430f-88eb-400076766f46.png)
-
 
 ![liver](https://user-images.githubusercontent.com/81377794/160215663-d39dafaa-e149-4046-b04f-e0f4c13ca299.png)
