@@ -152,6 +152,7 @@ for TISSUE in $DIR/*; do
                                 COUNTER_ARR_1K=0
                                 # fill the *1k.txt file with data
                                 echo -e "${GENE_SET_NAME_1K}" >> $FILE_1K   # insert the gene set name to the file (1k)
+                                echo -e "${GENE_SET_NAME_1K}" >> $FILE_MOTIF_1K   # insert the gene set name to the file (1k)
                                 # append the genes to the assciated gene set name (1k)
                                 for elem in "${SORTED_UNIQUE_GENES_1K[@]}"; do
                                     echo -e "${SORTED_UNIQUE_GENES_1K[COUNTER_ARR_1K]}" >> $FILE_1K
@@ -165,6 +166,7 @@ for TISSUE in $DIR/*; do
                                 COUNTER_ARR_2K=0
                                 # fill the *2k.txt file with data
                                 echo -e "${GENE_SET_NAME_2K}" >> $FILE_2K   # insert the gene set name to the file (2k)
+                                echo -e "${GENE_SET_NAME_2K}" >> $FILE_MOTIF_2K   # insert the gene set name to the file (2k)
                                 # append the genes to the assciated gene set name (2k)
                                 for elem in "${SORTED_UNIQUE_GENES_2K[@]}"; do
                                     echo -e "${SORTED_UNIQUE_GENES_2K[COUNTER_ARR_2K]}" >> $FILE_2K
@@ -178,6 +180,7 @@ for TISSUE in $DIR/*; do
                                 COUNTER_ARR_1K_ALL=0
                                 # fill the *1k_all.txt file with data
                                 echo -e "${GENE_SET_NAME_1K}" >> $FILE_1K_ALL   # insert the gene set name to the file (1k_all)
+                                echo -e "${GENE_SET_NAME_1K}" >> $FILE_MOTIF_1K_ALL   # insert the gene set name to the file (1k_all)
                                 # append the genes to the assciated gene set name (1k_all)
                                 for elem in "${SORTED_GENES_1K[@]}"; do
                                     echo -e "${SORTED_GENES_1K[COUNTER_ARR_1K_ALL]}" >> $FILE_1K_ALL
@@ -191,6 +194,7 @@ for TISSUE in $DIR/*; do
                                 COUNTER_ARR_2K_ALL=0
                                 # fill the *2k_all.txt file with data
                                 echo -e "${GENE_SET_NAME_2K}" >> $FILE_2K_ALL   # insert the gene set name to the file (2k_all)
+                                echo -e "${GENE_SET_NAME_2K}" >> $FILE_MOTIF_2K_ALL   # insert the gene set name to the file (2k_all)
                                 # append the genes to the assciated gene set name (2k_all)
                                 for elem in "${SORTED_GENES_2K[@]}"; do
                                     echo -e "${SORTED_GENES_1K[COUNTER_ARR_2K_ALL]}" >> $FILE_2K_ALL
