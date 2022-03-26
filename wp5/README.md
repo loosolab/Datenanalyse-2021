@@ -73,6 +73,14 @@ Since this pipeline is designed for ATAC-Seq data, the motif discovery pipeline 
 
 The individual steps of the pipeline are briefly explained below. For more detailed explanations, please refer to the [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
 
+---
+
+**NOTE:**
+For step 10 some manual operations are required. You can find a brief explanation [here](#10-analyze-the-gene-sets).
+
+---
+
+
 ### 1. Preparations
 The script *preparations.sh* is called as follows:
 
