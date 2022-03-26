@@ -20,14 +20,6 @@ Additionally, it is necessary to create the conda environment from the provided 
 conda env create -f plotting_env.yml
 ```
 
-## Online Tools
-To use the annotation analysis you have to use two online tools:
-* [GO analysis](http://www.pantherdb.org)
-* [pathway analysis](https://reactome.org)
-
-For the gene ontology (GO) analysis you have to insert the gene sets from the files (motif gene sets are stored in *annotation/gene_sets_motifs*) you want to analyze. Please choose *Statistical overrepresentation test* and then *GO biologialprocess complete* in step 3 *3. Select Analysis.*. From the analysis results you have to export the "Table". The output file is named *analysis.txt* automatically. Please rename the file (add motif name) like *motifName_analysis.txt* and save the files in the folder *annotation/GO_analysis*.
-For the pathway analysis you have to choose the [Analysis Tools](https://reactome.org/PathwayBrowser/#TOOL=AT). There you have to insert the gene sets from the files (motif gene sets are stored in *annotation/gene_sets_motifs*) you want to analyze. From the analysis results you have to export the "Pathway analysis results" and the "Not found identifiers". The output files are named *result.csv* ("Pathway analysis results") and *not_found.csv* ("Not found identifiers") automatically. Please rename the files (add motif name) like *motifName_results.csv* or *motifName_not_found.csv* and save the files in the folder *annotation/GO_analysis*.
-
 ## Usage
 This work package consists of several scripts ( located in the *scripts* directory) that can be executed individually or as a cascading pipeline. More detailed information can be found in the [WP5 Wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
 
@@ -178,15 +170,20 @@ The script calculates which known TFs are correlated the most with the new motif
 The new motifs are also compared across tissues and cell types. The aim is to identify identical motifs on the one hand and correlated motifs on the other. In addition, the aim is to identify motif-specific genes.
 
 ### 10. Analyze the gene sets
-To analyse the gene sets of the motifs, this script performs a GO and pathway analysis based on the outputs of the two databases [pantherdb](http://www.pantherdb.org) and [reactome](https://reactome.org).
+
+To use the annotation analysis, it is necessary to use two online tools for [GO analysis](http://www.pantherdb.org) and [pathway analysis](https://reactome.org) beforehand. 
+
+For Gene Ontology (GO) analysis, you need to insert the gene sets to be analysed from the files (motif gene sets are stored in *annotation/gene_sets_motifs*). Please select *Statistical overrepresentation test* and then *GO biologialprocess complete* in step 3 *Select analysis*. From the analysis results, you need to export the "Table". The output file will automatically be named *analysis.txt*. Please rename the file (should contain the motif name), e.g. *motifName_analysis.txt* and save the files in the folder *annotation/GO_analysis*.
+
+For the pathway analysis you have to select the [Analysis Tools] (https://reactome.org/PathwayBrowser/#TOOL=AT). There you have to enter the gene sets from the files (motif gene sets are stored in *annotation/gene_sets_motifs*) you want to analyse. From the analysis results you have to export the "Pathway analysis results" and the "Not found identifiers". The output files are automatically named *result.csv* ("Pathway analysis results") and *not_found.csv* ("Not found identifiers"). Please rename the files (add the motif name) like *motifName_results.csv* or *motifName_not_found.csv* and save the files in the folder *annotation/GO_analysis*.
+
+To analyse the gene sets of the motifs, the script *analyze_GO_and_pathway.py* which is provided here performs a GO and pathway analysis based on the results of the two databases described above. The script extracts the most significant GO process from the GO output and the most significant pathway from the pathway output and generates a ranking table in csv format. The analysis criterion is the p-value.
 
 The script *analyze_GO_and_pathway.py* is called as follows:
 
 ```
 ./analyze_GO_and_pathway.py
 ```
-
-The script extracts the most significant GO process from the GO output and the most significant pathway from the pathway output and generates a ranking table in csv format. The analysis criterion is the p-value.
 
 ## Example
 TODO
