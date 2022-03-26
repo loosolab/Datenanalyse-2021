@@ -134,8 +134,8 @@ conda activate plotting
 ```
 
 ### 7. Generate gene sets
-In order to be able to evaluate the annotation of the motifs, the information must first be collected which genes belong to the motif.
-The script provided here collects this information from the **allhits.txt* of the different motifs. From this, txt files are created for each individual motif on the one hand, and txt files for each cell type on the other. The files of the cell types contain all associated motifs (not only one motif, as in the txt files of the individual motifs).
+In order to evaluate the annotation of the motifs, it is first necessary to collect the information about which genes belong to the motif.
+The script provided here collects this information from the **allhits.txt* of the different motifs. From this, txt files are created for each individual motif on the one hand and txt files for each cell type on the other hand. The files of the cell types contain all associated motifs (not just one motif, as is the case in the txt files of the individual motifs).
 
 The script *generate_gene_sets.sh* is called as follows:
 
