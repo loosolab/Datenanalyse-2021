@@ -35,6 +35,7 @@ The variables have the following meaning:
 * MDP_PIPELINE : Path to your installation of the motif discovery pipeline
 * GENOME : Genome fasta of the analysed organism. It should be the same file that was used in the preceeding work packages.
 * GTF : GTF of the analysed organism. It should be the same file that was used in the preceeding work packages.
+* DATA_PREP_DIR : Directory where the output of the data preparation (WP2) lies. Needed to assign cell type names.
 * ANN_CHECKER=yes : If 'yes', then the motif discovery is carried out with the annotation step, otherwise the annotation is skipped.
 
 After adjusting the configuration file containing the global variables, you can start the pipeline with the following command:

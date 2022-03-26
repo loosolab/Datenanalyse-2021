@@ -3,4 +3,5 @@ TBSDIR=/mnt/workspace_stud/allstud/wp3/new_tissiues
 MDP_PIPELINE=/mnt/workspace_stud/stud9/motif-discovery-pipeline/
 GENOME=/mnt/workspace_stud/allstud/homo_sapiens.104.mainChr.fa
 GTF=/mnt/workspace_stud/allstud/homo_sapiens.104.mainChr.gtf
+DATA_PREP_DIR=/mnt/workspace_stud/stud3/WP2_OUTPUT/FINISHED/
 ANN_CHECKER=yes

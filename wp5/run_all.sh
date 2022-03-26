@@ -45,7 +45,7 @@ ${SPATH}/scripts/renameAllMotifs.sh
 ${SPATH}/scripts/cluster_all.sh "overall"
 echo "Activating plotting environment..."
 source /opt/miniconda/bin/activate plotting
-${SPATH}/scripts/Eval_Motif_similarity.py --runs-dir $PROJECT_DIR --out "similarity_overall" --motifs "${PROJECT_DIR}/overall_Cluster/motif_comparison_clusters.yml"
+${SPATH}/scripts/Eval_Motif_similarity.py --runs-dir $PROJECT_DIR --out "similarity_overall" --motifs "${PROJECT_DIR}/overall_Cluster/motif_comparison_clusters.yml" --annotation-dir $DATA_PREP_DIR
 echo "Deactivating plotting environment..."
 conda deactivate
 
