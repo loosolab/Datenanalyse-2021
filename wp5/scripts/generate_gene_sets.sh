@@ -80,14 +80,15 @@ for TISSUE in $DIR/*; do
                     DT_CELL_TYPE=$(date '+%d/%m/%Y %H:%M:%S')   # start time of the cell type
                     echo "Starting ${CELL_TYPE} at ${DT_CELL_TYPE}."
                     for MOTIF in $FILE_PATH_ANNOTATION/*; do
-                        MOTIF=$(echo $MOTIF | rev | cut -d'/' -f-1 | rev)    # extract the motif name                        
+                        MOTIF=$(echo $MOTIF | rev | cut -d'/' -f-1 | rev)    # extract the motif name
+                        MOTIF_NAME=$(echo $MOTIF | cut -d'/' -f-2)  # extract the unique motif name
                         # check if the TF has already been analyzed
                         MOTIF_CHECKER=$(cat $FILE_1K | grep -c $MOTIF)   #  check if the TF is in the file
                         if [ $MOTIF_CHECKER -eq 0 ]; then
                             if [[ $MOTIF != "config" ]]; then
                                 # generate files for every motif
                                 # generate the file for the distance up to 1000 bp with uniq genes
-                                FILE_NAME_MOTIF_1K=${MOTIF}_1k.txt
+                                FILE_NAME_MOTIF_1K=${MOTIF_NAME}_1k.txt
                                 FILE_PATH_SAVE_MOTIF_1K="${FILE_PATH_CELL_TYPE}/annotation/gene_sets_motifs"   # path to save the file
                                 FILE_MOTIF_1K="${FILE_PATH_SAVE_MOTIF_1K}/$FILE_NAME_MOTIF_1K"
                                 if ! [ -f $FILE_MOTIF_1K ]; then  # only generate file if it isn't already existing
@@ -96,7 +97,7 @@ for TISSUE in $DIR/*; do
                                     echo "$FILE_NAME_MOTIF_1K was created."
                                 fi
                                 # generate the file for the distance up to 2000 bp with unique genes
-                                FILE_NAME_MOTIF_2K=${MOTIF}_2k.txt
+                                FILE_NAME_MOTIF_2K=${MOTIF_NAME}_2k.txt
                                 FILE_PATH_SAVE_MOTIF_2K="${FILE_PATH_CELL_TYPE}/annotation/gene_sets_motifs"   # path to save the file
                                 FILE_MOTIF_2K="${FILE_PATH_SAVE_MOTIF_2K}/$FILE_NAME_MOTIF_2K"
                                 if ! [ -f $FILE_MOTIF_2K ]; then  # only generate file if it isn't already existing
@@ -105,7 +106,7 @@ for TISSUE in $DIR/*; do
                                     echo "$FILE_NAME_MOTIF_2K was created."
                                 fi
                                 # generate the file for the distance up to 1000 bp with all genes
-                                FILE_NAME_MOTIF_1K_ALL=${MOTIF}_1k_all.txt
+                                FILE_NAME_MOTIF_1K_ALL=${MOTIF_NAME}_1k_all.txt
                                 FILE_PATH_SAVE_MOTIF_1K_ALL="${FILE_PATH_CELL_TYPE}/annotation/gene_sets_motifs"   # path to save the file
                                 FILE_MOTIF_1K_ALL="${FILE_PATH_SAVE_MOTIF_1K_ALL}/$FILE_NAME_MOTIF_1K_ALL"
                                 if ! [ -f $FILE_MOTIF_1K_ALL ]; then  # only generate file if it isn't already existing
@@ -114,7 +115,7 @@ for TISSUE in $DIR/*; do
                                     echo "$FILE_NAME_MOTIF_1K_ALL was created."
                                 fi
                                 # generate the file for the distance up to 2000 bp with all genes
-                                FILE_NAME_MOTIF_2K_ALL=${MOTIF}_2k_all.txt
+                                FILE_NAME_MOTIF_2K_ALL=${MOTIF_NAME}_2k_all.txt
                                 FILE_PATH_SAVE_MOTIF_2K_ALL="${FILE_PATH_CELL_TYPE}/annotation/gene_sets_motifs"   # path to save the file
                                 FILE_MOTIF_2K_ALL="${FILE_PATH_SAVE_MOTIF_2K_ALL}/$FILE_NAME_MOTIF_2K_ALL"
                                 if ! [ -f $FILE_MOTIF_2K_ALL ]; then  # only generate file if it isn't already existing
@@ -124,10 +125,10 @@ for TISSUE in $DIR/*; do
                                 fi
                             
                                 DT_MOTIF=$(date '+%d/%m/%Y %H:%M:%S')   # start time of the motif
-                                echo "Starting ${MOTIF} at ${DT_MOTIF}."
+                                echo "Starting ${MOTIF_NAME} at ${DT_MOTIF}."
                                 
-                                GENE_SET_NAME_1K="#${MOTIF}_1k" # column 1 -> 1k
-                                GENE_SET_NAME_2K="#${MOTIF}_2k" # column 1 -> 2k
+                                GENE_SET_NAME_1K="#${MOTIF_NAME}_1k" # column 1 -> 1k
+                                GENE_SET_NAME_2K="#${MOTIF_NAME}_2k" # column 1 -> 2k
                                 GENES_1K=()                     # columns after 2 -> 1k
                                 GENES_2K=()                     # columns after 2 -> 2k
                                     
@@ -200,7 +201,7 @@ for TISSUE in $DIR/*; do
                                 echo -e "" >> $FILE_MOTIF_2K_ALL    # insert a new line at the end of the motif data
                             fi
                         else
-                            echo "The motif $MOTIF of the cell type $CELL_TYPE of the tissue $TISSUE was already analyzed."
+                            echo "The motif $MOTIF_NAME of the cell type $CELL_TYPE of the tissue $TISSUE was already analyzed."
                         fi
                     done
                 else
