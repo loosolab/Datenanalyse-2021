@@ -23,7 +23,7 @@ conda env create -f plotting_env.yml
 To use the scripts of this work package, this repository must be cloned. The scripts are executed directly.
 
 ## Usage
-This work package consists of several scripts ( located in the *scripts* directory) that can be executed individually or as a cascading pipeline. More detailed information can be found in the [WP5 Wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
+This work package consists of several scripts ( located in the *scripts* directory) that can be executed individually or as a cascading pipeline. More detailed information can be found in the [WP5 wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
 
 Before you start the pipeline (or the individual scripts), it is **important** to adjust the configuration file with the global variables. 
 To do this, please open *global_vars.cnf* and adjust the 6 specified variables.
@@ -46,7 +46,7 @@ After adjusting the configuration file containing the global variables, you can 
 
 Please make sure that you execute this command in the directory where the script *run_all.sh* is located.
 
-If you want to activate the step "check logs" (see [below](#3-check-logs)) after the motif search, you can do this by adding the flag `--check-logs` or `-c`. In this case, the pipeline would be started as follows:
+If you want to activate the step "check logs" (see [below](#3-check-logs)) after the motif discovery, you can do this by adding the flag `--check-logs` or `-c`. In this case, the pipeline would be started as follows:
 
 ```
 ./run_all.sh --check-logs
@@ -70,6 +70,8 @@ Steps 1-4 include the actual motif-finding pipeline runs, as well as the necessa
 Steps 5 and 6 are used to analyse similarities between the motifs found in different runs of the pipeline (i.e. different tissue and cell types).
 Steps 7-10 are used to analyse the motifs found with the aim of hypothesising the important functions of the motifs.
 Since this pipeline is designed for ATAC-Seq data, the motif discovery pipeline is run for each cell type of each given tissue.
+
+The individual steps of the pipeline are briefly explained below. For more detailed explanations, please refer to the [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
 
 ### 1. Preparations
 The script *preparations.sh* is called as follows:
