@@ -1,6 +1,7 @@
 import math
 import os
 import statistics
+import sys
 
 
 def get_c_dict(clusters):
@@ -37,11 +38,12 @@ def get_duplicates(c_dict, th):
     return filtered
 
 
-def get_panglao(tissue, connect=False):
+def get_panglao(tissue, connect=False, smooth=False):
     """
     Read and parse panglao database file
     :param tissue: string
     :param connect: boolean
+    :param smooth: boolean
     :return: dictionary
     """
     tissues = [tissue]
@@ -51,6 +53,12 @@ def get_panglao(tissue, connect=False):
 
     if connect:
         tissues.append("tissue")
+
+    if smooth:
+        tissues.append("smooth")
+
+    if "artery" in tissues:
+        tissues.append("vessel")
 
     with open(path, "r") as panglao_file:
         panglao_file.readline()
@@ -86,18 +94,22 @@ def get_panglao(tissue, connect=False):
     return panglao_rank_dict
 
 
-def get_cell_types(cpath, tissue, connect=False):
+def get_cell_types(cpath, tissue, connect=False, smooth=False):
     """
     Prepare database and clusters for upcoming ranking calculations
     :param cpath: string
     :param tissue: string
     :param connect: boolean
+    :param smooth: boolean
     :return: dictionary
     """
     clusters = get_annotated_clusters(path=cpath)
+    print("Loading PanglaoDB")
+    pang_dict = get_panglao(tissue, connect=connect, smooth=smooth)
+    print("Detecting genes which appear in " + str(math.ceil(len(clusters) / 1.5)) + " or more clusters")
     dupls = get_duplicates(get_c_dict(clusters), math.ceil(len(clusters) / 1.5))
-    pang_dict = get_panglao(tissue, connect=connect)
 
+    print("Filter genes which appear in " + str(math.ceil(len(clusters) / 1.5)) + " or more clusters")
     filtered_clusters = {}
     for cluster_num in clusters.keys():
         filtered_clusters[cluster_num] = {}
@@ -105,6 +117,7 @@ def get_cell_types(cpath, tissue, connect=False):
             if gene not in dupls:
                 filtered_clusters[cluster_num][gene] = clusters[cluster_num][gene]
 
+    print("Calculating mean peaks of each cluster")
     mean_peaks = {}
     for cluster_num in filtered_clusters.keys():
         mean_peaks[cluster_num] = (statistics.mean(clusters[cluster_num].values()))
@@ -122,6 +135,7 @@ def get_cell_types(cpath, tissue, connect=False):
             ct_dict[key] = {}
 
         for celltype in cm_dict.keys():
+            print("Calculating scores of cell type " + celltype)
             gene_count = len(cm_dict[celltype])
             for c in filtered_clusters.keys():
                 count = 0
@@ -196,25 +210,28 @@ def get_annotated_clusters(path="CTI/liver/cluster/"):
     return annotated_clusters
 
 
-def perform_cell_type_annotation(sample, tissue, connect=False):
+def perform_cell_type_annotation(sample, tissue, connect=False, smooth=False):
     """
     Perform cell type identification and annotation, create cluster folder, generate cell type assignment table
     and create ranks folder with files for further investigation
     :param sample: string
     :param tissue: string
     :param connect: boolean
+    :param smooth: boolean
     """
     apath, ppath, cpath, opath = ["CTI/" + sample + "/annot/", "CTI/" + sample + "/npeaks/",
                                   "CTI/" + sample + "/cluster/", "CTI/" + sample + "/ranks/"]
 
     if not os.path.exists(cpath):
         os.makedirs(cpath)
+        print("Annotating peaks of clusters")
         annot_peaks(apath=apath, ppath=ppath, cpath=cpath)
 
     if not os.path.exists(opath):
         os.makedirs(opath)
 
-    ct_dict = get_cell_types(cpath, tissue, connect=connect)
+    print("Starting cell type annotation")
+    ct_dict = get_cell_types(cpath, tissue, connect=connect, smooth=smooth)
     with open("CTI/" + sample + "/annotation.txt", "w") as c_file:
         for dic in ct_dict.keys():
             sorted_dict = dict(sorted(ct_dict[dic].items(), key=lambda r: (r[1][0], r[1][1]), reverse=True))
@@ -229,24 +246,24 @@ def perform_cell_type_annotation(sample, tissue, connect=False):
 
 
 def main():
-    perform_cell_type_annotation("colon", "gi tract", connect=True)
-    print("done")
-    perform_cell_type_annotation("stomach", "gi tract", connect=True)
-    print("done")
-    perform_cell_type_annotation("liver", "liver", connect=True)
-    print("done")
-    perform_cell_type_annotation("lung", "lungs", connect=True)
-    print("done")
-    perform_cell_type_annotation("fat", "adipose tissue", connect=True)
-    print("done")
-    perform_cell_type_annotation("muscle", "muscle", connect=True)
-    print("done")
-    perform_cell_type_annotation("muscle2", "muscle", connect=True)
-    print("done")
-    perform_cell_type_annotation("skin", "skin", connect=True)
-    print("done")
-    perform_cell_type_annotation("pancreas", "pancreas")
-    print("done")
+    """
+    Using "annot" and "npeaks" subfolders of "CTI/sample" to perform cell type annotation.
+    Command line parameters: sample (parent folder of "annot" and "npeaks" folder, tissue and connect.
+    Leave third parameter blank when not taking connective tissue into account.
+    """
+    sample, tissue, connect = "sample", "tissue", True
+    if len(sys.argv) == 4:
+        sample, tissue, connect = sys.argv[1], sys.argv[2], True
+    elif len(sys.argv) == 3:
+        sample, tissue, connect = sys.argv[1], sys.argv[2], False
+    else:
+        print("Please use two or three parameters only!")
+        print("Example: python3 cell_type_annotation.py esophagus \"gi tract\" T")
+        exit(1)
+
+    print("Folder: CTI/" + sample, "\nTissue: " + tissue, "\nInclude connective tissue: " + str(connect))
+    perform_cell_type_annotation(sample, tissue, connect=connect)
+    print("Cell type annotation of " + sample + " finished.")
 
 
 if __name__ == '__main__':
