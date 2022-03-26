@@ -81,7 +81,7 @@ for TISSUE in $DIR/*; do
                     echo "Starting ${CELL_TYPE} at ${DT_CELL_TYPE}."
                     for MOTIF in $FILE_PATH_ANNOTATION/*; do
                         MOTIF=$(echo $MOTIF | rev | cut -d'/' -f-1 | rev)    # extract the motif name
-                        MOTIF_NAME=$(echo $MOTIF | cut -d'/' -f-2)  # extract the unique motif name
+                        MOTIF_NAME=$(echo $MOTIF | cut -d'_' -f-2)  # extract the unique motif name
                         # check if the TF has already been analyzed
                         MOTIF_CHECKER=$(cat $FILE_1K | grep -c $MOTIF)   #  check if the TF is in the file
                         if [ $MOTIF_CHECKER -eq 0 ]; then
@@ -137,8 +137,8 @@ for TISSUE in $DIR/*; do
                                 # read *allhits.txt
                                 # check if the feature = gene $7, check the distance $12, add the gene name $18 to array
                                 ALLHITS=($(find . | grep allhits.txt | sed 's,./,,g'))
-                                GENES_1K=($(cat $ALLHITS | awk -F'\t' '{if ($7 == "gene" && $12 != "NA" && $12 <= 1000 && $18 != "NA") print $18;}'))
-                                GENES_2K=($(cat $ALLHITS | awk -F'\t' '{if ($7 == "gene" && $12 != "NA" && $12 <= 2000 && $18 != "NA") print $18}'))
+                                GENES_1K=($(cat $ALLHITS | awk -F'\t' '{if ($7 == "gene" && $12 != "NA" && $12 <= 1000 && $22 != "NA") print $22;}'))
+                                GENES_2K=($(cat $ALLHITS | awk -F'\t' '{if ($7 == "gene" && $12 != "NA" && $12 <= 2000 && $22 != "NA") print $22}'))
                                 
                                 # only sort genes -> no unique genes
                                 SORTED_GENES_1K=($(echo "${GENES_1K[@]}" | tr ' ' '\n' | sort | tr '\n' ' '))
