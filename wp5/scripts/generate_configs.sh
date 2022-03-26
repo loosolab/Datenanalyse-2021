@@ -8,6 +8,9 @@ SPATH=$(dirname $0)
 CONF="${SPATH}/../global_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
+#generate needed folderstructure
+${SPATH}/utils/create_needed_structure.sh
+
 # generate config for each celltype of each tissue
 for TISSUE in $TBSDIR/*/; do
     TIS_NAME=$(basename $TISSUE)
