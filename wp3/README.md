@@ -5,6 +5,7 @@ Introduction
 ------------
 
 WP3 Contains a script to separate one .bam file of a tissue into seperate files using a cluster assignment table as instructions. It also contains a customised .yaml file for the TOBIAS Snakemake Pipeline, that was used to further process the data from these cluster .bam files.
+Afterwards, the footprinting scores are extracted and transcription factor profiles are visualized. 
 
 Installation
 ------------
@@ -17,26 +18,6 @@ You also need to download the [TOBIAS snakemake repository](https://github.molge
 conda env create -f environments/snakemake.yaml
 ```
 For visualization purposes, you can use [WIlsON](https://academic.oup.com/bioinformatics/article/35/6/1055/5078467). A docker container as well as instructions how to use it is provided [here](https://hub.docker.com/r/loosolab/wilson/).
-
-Firstly, select "feature" on the top left corner.
-
-![featuure](https://user-images.githubusercontent.com/81377794/160215850-99368edd-89e5-4875-9091-c24488ab6dba.png)
-
-Select or upload the file you want to visualize.
-
-![file](https://user-images.githubusercontent.com/81377794/160215878-8a994827-b225-43e1-88da-95f7e3269b21.png)
-
-Go to "Heatmap > interactive" on the top of the screen.
-
-![heatmap1](https://user-images.githubusercontent.com/81377794/160215931-8d880e31-76f2-4f91-8f88-7af6d66055f7.png)
-
-Select all columns you want to compare on the bottom left, select other desired properties (we reversed the color scheme) nad press "plot" at the bottom.
-
-![columns](https://user-images.githubusercontent.com/81377794/160215976-142c6a55-6211-44e7-9123-6912849effda.png)
-
-You can download the plot at the top right of it.
-
-
 
 Workflow description and example
 --------------------------------
@@ -88,8 +69,26 @@ The binding scores are extracted and brought into a format that allows futher pr
 python CompareClusterScore.py bindetect_results.txt -f [TF family file]
 ```
 It takes the binding scores for each cluster of the tissue and each transcription factor and writes them down in CLARION file format, which is necessary for heatmap visualization using WIlsON. 
-The heatmap gives a visual overview over the data, depicting a scoring profile for each cluster, and shows which transcription factors scored remarkably in some clusters in comparison to the others. 
-# ***INSTRUCTIONS HOW TO USE IT****
+The heatmap gives a visual overview over the data, depicting a scoring profile for each cluster, and shows which transcription factors scored remarkably in some clusters in comparison to the others. After setting up the docker container and opening the localhost in your browser, follow these steps:
+
+Firstly, select "feature" on the top left corner.
+
+![featuure](https://user-images.githubusercontent.com/81377794/160215850-99368edd-89e5-4875-9091-c24488ab6dba.png)
+
+Select or upload the file you want to visualize.
+
+![file](https://user-images.githubusercontent.com/81377794/160215878-8a994827-b225-43e1-88da-95f7e3269b21.png)
+
+Go to "Heatmap > interactive" on the top of the screen.
+
+![heatmap1](https://user-images.githubusercontent.com/81377794/160215931-8d880e31-76f2-4f91-8f88-7af6d66055f7.png)
+
+Select all columns you want to compare on the bottom left, select other desired properties (we reversed the color scheme) nad press "plot" at the bottom.
+
+![columns](https://user-images.githubusercontent.com/81377794/160215976-142c6a55-6211-44e7-9123-6912849effda.png)
+
+You can download the plot at the top right of it.
+
 
 To gain a better understanding of the transcriptions factors that were remarkably over-represented in certain clusters, the script "DefiningTF.py" extracts the top transcription factors by z score and writes them done in a .tsv file. 
 ```bash
