@@ -31,14 +31,16 @@ For the pathway analysis you have to choose the [Analysis Tools](https://reactom
 ## Usage
 This work package consists of several scripts ( located in the *scripts* directory) that can be executed individually or as a cascading pipeline. More detailed information can be found in the [WP5 Wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
 
-Before you start the pipeline (or the individual scripts), it is *important* to adjust the configuration file with the global variables. 
-To do this, please open **global_vars.cnf** and adjust the 4 specified variables.
+Before you start the pipeline (or the individual scripts), it is **important** to adjust the configuration file with the global variables. 
+To do this, please open *global_vars.cnf* and adjust the 6 specified variables.
 
 The variables have the following meaning:
 
 * PROJECT_DIR : Path to the folder to which all outputs are to be written
 * TBSDIR : Path to WP3 output (should contain all tissue folders)
 * MDP_PIPELINE : Path to your installation of the motif discovery pipeline
+* GENOME : Genome fasta of the analysed organism. It should be the same file that was used in the preceeding work packages.
+* GTF : GTF of the analysed organism. It should be the same file that was used in the preceeding work packages.
 * ANN_CHECKER=yes : If 'yes', then the motif discovery is carried out with the annotation step, otherwise the annotation is skipped.
 
 After adjusting the configuration file containing the global variables, you can start the pipeline with the following command:
