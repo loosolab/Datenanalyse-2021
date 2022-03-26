@@ -20,6 +20,8 @@ Additionally, it is necessary to create the conda environment from the provided 
 conda env create -f plotting_env.yml
 ```
 
+To use the scripts of this work package, this repository must be cloned. The scripts are executed directly.
+
 ## Usage
 This work package consists of several scripts ( located in the *scripts* directory) that can be executed individually or as a cascading pipeline. More detailed information can be found in the [WP5 Wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
 
