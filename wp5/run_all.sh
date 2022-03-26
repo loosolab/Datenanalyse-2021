@@ -1,7 +1,28 @@
 #!/bin/bash
 set -e
-
 ## Script to run whole WP5 pipeline
+
+#check for flag:
+if ! options=$(getopt -o c -l check-logs -- "$@"  2>/dev/null)
+then
+    # not correct flag
+    echo "Error: script usage: ./$(basename ${0}) [-c | --check-logs]" >&2
+    exit 1
+fi
+
+set -- $options
+
+while [ $# -gt 0 ]
+do
+    case $1 in
+    -c|--check-logs) check_logs=true ;;
+    (--) shift; break;;
+    (-?) echo "$0: error - unrecognized option $1" 1>&2; exit 1;;
+    (*) break;;
+    esac
+    shift
+done
+
 # get script path
 SPATH=$(dirname $0)
 #get config
@@ -11,12 +32,15 @@ sed -i 's/\r$//g' $CONF
 # read in config
 while read LINE; do declare "$LINE"; done < $CONF
 
-echo "starting pipeline"
 # run pipeline steps:
+echo "starting pipeline"
 ${SPATH}/scripts/generate_configs.sh
 ${SPATH}/scripts/run_pipeline.sh
-${SPATH}/scripts/check_logs.sh
+if [ "$check_logs" = true ] ; then
+    ${SPATH}/scripts/check_logs.sh
+fi 
 ${SPATH}/scripts/renameAllMotifs.sh
+
 # similarity analysis
 ${SPATH}/scripts/cluster_all.sh "overall"
 echo "Activating plotting environment..."
