@@ -11,6 +11,8 @@ This is done with single cell ATAC-Seq data provided by the [CATlas](http://catl
 
 [Work package 2](https://github.com/loosolab/Datenanalyse-2021/tree/main/wp2/):
 
+The ***preprocessing of snATAC-seq .fastq files using SnapATAC*** is done by WP2. First, a .snap file is created using [SnapTools](https://github.com/r3fang/SnapTools) and the respective .fastq files. This .snap file is read into R as a snap object, which is essential for further processing of the data. Now the following steps will be carried out using the R package [SnapATAC](https://github.com/r3fang/SnapATAC): Barcode filtering, bin filtering, dimensionality reduction (clustering) and finally peak calling of each cluster.
+Apart from the processing steps, we provide a Python script to assign cell types to the respective clusters using [Uropa](https://github.com/loosolab/UROPA), [Panglao DB](https://panglaodb.se) and the created peak files.
 
 [Work package 3](https://github.com/loosolab/Datenanalyse-2021/tree/main/wp3):
 
