@@ -26,7 +26,7 @@ To use the scripts of this work package, this repository must be cloned. The scr
 This work package consists of several scripts ( located in the *scripts* directory) that can be executed individually or as a cascading pipeline. More detailed information can be found in the [WP5 wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
 
 Before you start the pipeline (or the individual scripts), it is **important** to adjust the configuration file with the global variables. 
-To do this, please open *global_vars.cnf* and adjust the 6 specified variables.
+To do this, please open *global_vars.cnf* and adjust the 7 specified variables.
 
 The variables have the following meaning:
 
