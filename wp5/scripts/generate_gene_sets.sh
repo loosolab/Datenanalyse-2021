@@ -160,7 +160,6 @@ for TISSUE in $DIR/*; do
                                     let COUNTER_ARR_1K++
                                 done
                                 echo -e "" >> $FILE_1K    # insert a new line at the end of the motif data
-                                echo -e "" >> $FILE_MOTIF_1K    # insert a new line at the end of the motif data
 
                                 # counter for indices in arrays (SORTED_UNIQUE_GENES_2K)
                                 COUNTER_ARR_2K=0
@@ -174,7 +173,6 @@ for TISSUE in $DIR/*; do
                                     let COUNTER_ARR_2K++
                                 done
                                 echo -e "" >> $FILE_2K    # insert a new line at the end of the motif data
-                                echo -e "" >> $FILE_MOTIF_2K    # insert a new line at the end of the motif data
                                 
                                 # counter for indices in arrays (SORTED_GENES_1K)
                                 COUNTER_ARR_1K_ALL=0
@@ -188,7 +186,6 @@ for TISSUE in $DIR/*; do
                                     let COUNTER_ARR_1K_ALL++
                                 done
                                 echo -e "" >> $FILE_1K_ALL    # insert a new line at the end of the motif data
-                                echo -e "" >> $FILE_MOTIF_1K_ALL    # insert a new line at the end of the motif data
 
                                 # counter for indices in arrays (SORTED_GENES_2K)
                                 COUNTER_ARR_2K_ALL=0
@@ -202,7 +199,6 @@ for TISSUE in $DIR/*; do
                                     let COUNTER_ARR_2K_ALL++
                                 done
                                 echo -e "" >> $FILE_2K_ALL    # insert a new line at the end of the motif data
-                                echo -e "" >> $FILE_MOTIF_2K_ALL    # insert a new line at the end of the motif data
                             fi
                         else
                             echo "The motif $MOTIF_NAME of the cell type $CELL_TYPE of the tissue $TISSUE was already analyzed."
