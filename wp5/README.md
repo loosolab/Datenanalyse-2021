@@ -43,7 +43,13 @@ After adjusting the configuration file containing the global variables, you can 
 ./run_all.sh
 ```
 
-Please make sure that you execute this command in the folder where the script *run_all.sh* is located.
+Please make sure that you execute this command in the directory where the script *run_all.sh* is located.
+
+If you want to activate the step "check logs" (see [below](#3-check-logs)) after the motif search, you can do this by adding the flag `--check-logs` or `-c`. In this case, the pipeline would be started as follows:
+
+```
+./run_all.sh --check-logs
+```
 
 > **Caution**: If you are working via an SSH connection, you should start this script in a screen, as it may require some time to run.
 
