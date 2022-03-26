@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser(description='Evaluate differntial binding')
 parser.add_argument('--runs-dir', metavar="PATH/TO/RUNS", help='Path to directory where the motif discovery runs are stored', required=True )
 parser.add_argument('--motifs', metavar='MOTIF_CLUSTER.yml', help='Output of the motif clustering with TOBIAS', required=True)
 parser.add_argument('--out', metavar="FILENAME_prefix",help="Prefix of how the output files should be named.", required=True)
-parser.add_argument('--annotation_dir', metavar="PATH/TO/WP2", help='Path to where the preproceesed original data lies. Should contain an annotation.txt for all tissues with the assignment of cluster to tissue.')
+parser.add_argument('--annotation-dir', metavar="PATH/TO/WP2", help='Path to where the preproceesed original data lies. Should contain an annotation.txt for all tissues with the assignment of cluster to tissue.')
 args = parser.parse_args()
 
 ## prepare Dataframe 
