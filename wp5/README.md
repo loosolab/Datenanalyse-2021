@@ -191,7 +191,7 @@ The script *analyze_GO_and_pathway.py* is called as follows:
 ./analyze_GO_and_pathway.py
 ```
 
-The script extracts the most significant GO name from the GO output and the most significant pathway from the pathway output and generates a ranking table in csv format. The analysis criterion is the p-value.
+The script extracts the most significant GO process from the GO output and the most significant pathway from the pathway output and generates a ranking table in csv format. The analysis criterion is the p-value.
 
 ## Example
 TODO
