@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## Script to generate config for each celltype of each tissue
+## Script to create needed folders and generate config for each celltype of each tissue to prepare for motif discovery pipeline runs
 
 # get script path
 SPATH=$(dirname $0)
