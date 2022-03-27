@@ -22,9 +22,9 @@ for TISSUE in $DIR/*/; do
         # check if file exists
         FILE=${CT}/motif_discovery_pipeline/3_evaluation/motifs.meme
         if test -f "$FILE"; then
-            PATTERN="${TIS_NAME}-${CT_NAME}"
+            PATTERN="${TIS_NAME}_${CT_NAME}"
 	    {
-            sed -E -i "s/motif_([[:digit:]]+)([[:blank:]]+)motif_([[:digit:]]+)/${PATTERN}-\1\2${PATTERN}-\3/" $FILE
+            sed -E -i "s/motif_([[:digit:]]+)([[:blank:]]+)motif_([[:digit:]]+)/${PATTERN}_\1\2${PATTERN}_\3/" $FILE
     	    } || {
 	    SUCCESS=false    	    
 	    }
