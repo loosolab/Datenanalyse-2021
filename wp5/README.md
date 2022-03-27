@@ -137,6 +137,8 @@ To perform the clustering, the script is called as follows:
 
 The parameter "<Clustering_Name>" is the prefix that the output folder of the clustering will carry. It should therefore be indicative of the output. In the pipeline *run_all.sh*, the specified prefix is "overall".
 
+> **Info:** If you want to vary the threshold you can do so by giving the alternative threshold as a seccond parameter. For mor information, please refer to the [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
+
 ### 6. Evaluate motif similarity
 With this step, the results of the clustering can be evaluated by plotting them. 
 To do this, you can call the script as follows:
