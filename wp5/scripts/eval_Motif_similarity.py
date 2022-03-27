@@ -10,7 +10,7 @@ parser.add_argument('--runs-dir', metavar="PATH/TO/RUNS", help='Path to director
 parser.add_argument('--motifs', metavar='MOTIF_CLUSTER.yml', help='Output of the motif clustering with TOBIAS', required=True)
 parser.add_argument('--out', metavar="FILENAME_prefix",help="Prefix of how the output files should be named.", required=True)
 parser.add_argument('--annotation-dir', metavar="PATH/TO/WP2", help='Path to where the preproceesed original data lies. Should contain an annotation.txt for all tissues with the assignment of cluster to tissue.')
-parser.add_argument('--cutoff', metavar="N", help='Minimum number of motifs within a cluster for the cluster to appear in the analysis.', type=int, default=2)
+parser.add_argument('--cutoff', metavar="N", help='Minimum number of motifs within a cluster for the cluster to appear in the analysis. (default = 2)', type=int, default=2)
 parser.add_argument('--jitter', action='store_true', help="If this flag is set, the dot plot will have jitter activated" )
 args = parser.parse_args()
 
