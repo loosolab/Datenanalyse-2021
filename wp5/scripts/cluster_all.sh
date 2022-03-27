@@ -10,8 +10,10 @@ while read LINE; do declare "$LINE"; done < $CONF
 
 # Temporary Directory to store MEME files in, Input $2 is the prefix the directory should have
 TEMP_DIR="${PROJECT_DIR}/runs/tmp_motifs_dir"
+
 # File prefix for output file
 CLUSTERING_NAME=$1
+THRESH=${2:-0.3}
 
 # Create temporaray directory to which all the MEME files with the motifs will be stored
 mkdir $TEMP_DIR
@@ -28,7 +30,7 @@ for TISSUE in $PROJECT_DIR/runs/*/; do
 done
 
 # execute clustering
-${SPATH}/utils/getSimilarMotifs.sh $PROJECT_DIR $CLUSTERING_NAME $TEMP_DIR/*
+${SPATH}/utils/getSimilarMotifs.sh $THRESH $PROJECT_DIR $CLUSTERING_NAME $TEMP_DIR/*
 
 # remove temporary file
 rm -r $TEMP_DIR
