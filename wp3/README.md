@@ -17,7 +17,7 @@ You also need to download the [TOBIAS snakemake repository](https://github.molge
 ```bash
 conda env create -f environments/snakemake.yaml
 ```
-For visualization purposes, you can use [WIlsON](https://academic.oup.com/bioinformatics/article/35/6/1055/5078467). A docker container as well as instructions how to use it is provided [here](https://hub.docker.com/r/loosolab/wilson/).
+For visualization purposes, you can use [WIlsON](https://academic.oup.com/bioinformatics/article/35/6/1055/5078467). A docker container as well as instructions how to use it are provided [here](https://hub.docker.com/r/loosolab/wilson/).
 
 Workflow description and example
 --------------------------------
