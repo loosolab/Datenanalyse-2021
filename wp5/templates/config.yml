@@ -1,12 +1,12 @@
 run_params:
-  output: 
+  output:
 
 footprint:
   ##### MANDATORY INPUT FILES #####
-  genome_fasta: 
-  score_bigwig: 
-  peak_bed: 
-  motif_file: 
+  genome_fasta:
+  score_bigwig:
+  peak_bed:
+  motif_file:
 
   # peak parameter
   # Extension of base pairs on both sides for all regions in peak_bed. To ensure full peak is collected.
@@ -47,7 +47,7 @@ motif:
     threads: 15
     # Minimum and maximum allowed motif width
     min_len: 4
-    max_len: 20 # max len must be <= footprint min_size (ONLY for mod = oops)
+    max_len: 10 # max len must be <= footprint min_size (ONLY for mod = oops)
     # Minimum e-value a motif must have
     e_value: 0.05
     # Sequence binding model
@@ -107,3 +107,5 @@ annotation:
   #  all = '.+' (or leave empty)
   annotate: ['motif_\d+_motif_\d+']
   threads: 15
+  # Additional UROPA parameters (space separated). See https://uropa-manual.readthedocs.io/output.html
+  flags: ""
