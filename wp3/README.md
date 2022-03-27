@@ -110,7 +110,7 @@ The output of the comparison of the clusters in one tissue can also be utilized 
 Known issues and limitations
 ----------------------------
 pysam does only work correctly under Linux operating systems, as it is a requirement for the clustering script it will probably not work on windows.
-ProfileSimilarity.py is currently unable to use family clusering when processing multiple input files and the colormap shows decimals when there is little overlap despite it making not biological sense. 
+ProfileSimilarity.py is currently unable to use family clusering when processing multiple input files and the colormap shows decimals when there is little overlap despite it making no biological sense. 
 
 # Example plots
 
