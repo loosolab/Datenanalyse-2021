@@ -146,12 +146,14 @@ To do this, you can call the script as follows:
 
 For more information on the parameters, please refer to the wiki or the manual of the script (`--help` flag). 
 The script produces various diagrams to visualise the occurrence of similar motifs in different tissues and cell types. 
-It also saves the names of the found motifs together with their cluster, cell type and tissue in a tsv table.
+It also saves the names of the found motifs together with their cluster, cell type and tissue in a CSV-file.
 
 If you want to run this script on its own, please activate the plotting environment beforehand:
 ```
 conda activate plotting
 ```
+
+All outputs of this script will be written into the directory called 'similarity'.
 
 ### 7. Generate gene sets
 In order to evaluate the annotation of the motifs, it is first necessary to collect the information about which genes belong to the motif.
