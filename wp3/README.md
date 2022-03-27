@@ -37,7 +37,7 @@ For unsorted .bam files you can alternatively use "preprocessingBam.sh" or leave
 
 Running the clustering script:
 ```bash
-./cluster.py -b ./sample_sorted.bam -t ./cluster_assignment_table.tsv -o ./clusterBams/
+./cluster.py -b input/sample_sorted.bam -t input/cluster_assignment_table.tsv -o clusterBams/
 ```
 
 The clustering script produces a seperate .bam file for each cluster in the assignment table. It also generates a "snakemakeIn.txt" text file containing the paths and names of the newly created cluster .bam files.
