@@ -76,7 +76,8 @@ counts = df_motifs['Cluster'].value_counts()
 df_red = df_motifs[~df_motifs['Cluster'].isin(counts[counts < args.cutoff].index)].copy()
 
 # write to csv
-df_red.to_csv(f"{args.runs_dir}/similarity/{args.out}_clustering_reduced.csv")
+if df_motifs.shape[0] != df_red.shape[0]:
+    df_red.to_csv(f"{args.runs_dir}/similarity/{args.out}_clustering_reduced.csv")
 
 
 
