@@ -1,5 +1,5 @@
 # Datenanlyse 2021 - ignore
-/wp6/testdaten/hg19_masked.fa*
+/wp6/testdaten/*.fa*
 /wp6/testdaten/enhancers/*
 /wp6/testdaten/example_data/*
 /wp6/testdaten/wp2/*
