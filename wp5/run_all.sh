@@ -49,9 +49,11 @@ ${SPATH}/scripts/Eval_Motif_similarity.py --runs-dir $PROJECT_DIR --out "similar
 echo "Deactivating plotting environment..."
 conda deactivate
 
-${SPATH}/scripts/generate_gene_sets.sh
-${SPATH}/scripts/generate_gene_sets_TFs.sh
-${SPATH}/scripts/compare_gene_sets.py
-${SPATH}/scripts/analyse_GO_and_pathway.py
+# gene set analysis
+if [ $ANN_CHECKER = "yes" ]; then
+    ${SPATH}/scripts/generate_gene_sets.sh
+    ${SPATH}/scripts/generate_gene_sets_TFs.sh
+    ${SPATH}/scripts/compare_gene_sets.py
+fi
 
 echo "pipeline finished"

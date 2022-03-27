@@ -64,21 +64,22 @@ The single steps of the pipeline consist of the following scripts:
 7. [generate_gene_sets.sh](#7-generate-gene-sets)
 8. [generate_gene_sets_TFs.sh](#8-generate-gene-sets-for-transcription-factors)
 9. [compare_gene_sets.py](#9-compare-the-gene-sets)
-10. [analyze_GO_and_pathway.py](#10-analyze-the-gene-sets)
+
 
 Steps 1-4 include the actual motif-finding pipeline runs, as well as the necessary preparation and post-processing.
 Steps 5 and 6 are used to analyse similarities between the motifs found in different runs of the pipeline (i.e. different tissue and cell types).
-Steps 7-10 are used to analyse the motifs found with the aim of hypothesising the important functions of the motifs.
+Steps 7-9 are used to analyse the motifs found with the aim of hypothesising the important functions of the motifs. These final 3 steps are only executed if the `ANN_CHECKER` global variable is set to 'yes'.
 Since this pipeline is designed for ATAC-Seq data, the motif discovery pipeline is run for each cell type of each given tissue.
 
+---
+
+**Info:**
+
+Furthermore, a script for GO and pathway analysis (*analyze_GO_and_pathway.py*) is also provided. For this, however, manual steps are necessary beforehand, which is why it is not integrated into the pipeline. You can find a brief explanation [here](#10-analyze-the-gene-sets).
+
+---
+
 The individual steps of the pipeline are briefly explained below. For more detailed explanations, please refer to the [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
-
----
-
-**NOTE:**
-For step 10 some manual operations are required. You can find a brief explanation [here](#10-analyze-the-gene-sets).
-
----
 
 
 ### 1. Preparations
