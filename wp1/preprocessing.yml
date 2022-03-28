@@ -202,4 +202,3 @@ dependencies:
     - tbb==2021.5.1
     - uropa==4.0.2
     - xlrd==1.2.0
-prefix: /home/stud2/.conda/envs/datanew
