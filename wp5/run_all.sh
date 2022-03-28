@@ -42,8 +42,12 @@ fi
 ${SPATH}/scripts/renameAllMotifs.sh
 
 # similarity analysis
-${SPATH}/scripts/cluster_all.sh "overall"
+CUR_PWD=$(pwd)
+cd "${SPATH}/scripts"
+./cluster_all.sh "overall"
+cd $CUR_PWD
 echo "Activating plotting environment..."
+echo "evaluating clusters..."
 source /opt/miniconda/bin/activate plotting
 ${SPATH}/scripts/eval_Motif_similarity.py --runs-dir $PROJECT_DIR --out "similarity_overall" --motifs "${PROJECT_DIR}/overall_Cluster/motif_comparison_clusters.yml" --annotation-dir $DATA_PREP_DIR
 echo "Deactivating plotting environment..."
