@@ -36,7 +36,8 @@ By sampling and aggregation of similar cells in groups `Cicero` quantifies corre
 
 The user provides `Cicero` with clustered cells as input. The algorithm then creates a great amount of cell groups, each group containing 50 cells in similar position in clustering. This ensures the overcome of the sparsity of data, it furthermore aggregates accessible profiles for cells in groups to produce counts that subtract effects of technical variables and it measures correlations in accessibility between all pairs of sites inside a 500 kb frame. The output of `Cicero` consists of this correlations, the co-accessibility-score. 
 
-![Figure3.jpg](attachment:Figure3.jpg)
+
+![Figure3](https://user-images.githubusercontent.com/93346891/160401932-d1845007-094a-4c48-a8c6-8b3ae3bd4484.jpg)
 ***
 <center>
 An overview of the Cicero algorithm
@@ -77,121 +78,6 @@ library(stringr)
 library(monocle3)
 library(cicero)
 ```
-
-    Loading required package: Biobase
-    
-    Loading required package: BiocGenerics
-    
-    
-    Attaching package: ‘BiocGenerics’
-    
-    
-    The following objects are masked from ‘package:stats’:
-    
-        IQR, mad, sd, var, xtabs
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-        dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-        grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-        order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-        rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-        union, unique, unsplit, which.max, which.min
-    
-    
-    Welcome to Bioconductor
-    
-        Vignettes contain introductory material; view with
-        'browseVignettes()'. To cite Bioconductor, see
-        'citation("Biobase")', and for packages 'citation("pkgname")'.
-    
-    
-    Loading required package: SingleCellExperiment
-    
-    Loading required package: SummarizedExperiment
-    
-    Loading required package: MatrixGenerics
-    
-    Loading required package: matrixStats
-    
-    
-    Attaching package: ‘matrixStats’
-    
-    
-    The following objects are masked from ‘package:Biobase’:
-    
-        anyMissing, rowMedians
-    
-    
-    
-    Attaching package: ‘MatrixGenerics’
-    
-    
-    The following objects are masked from ‘package:matrixStats’:
-    
-        colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
-        colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
-        colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
-        colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
-        colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
-        colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
-        colWeightedMeans, colWeightedMedians, colWeightedSds,
-        colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
-        rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
-        rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
-        rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
-        rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
-        rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
-        rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
-        rowWeightedSds, rowWeightedVars
-    
-    
-    The following object is masked from ‘package:Biobase’:
-    
-        rowMedians
-    
-    
-    Loading required package: GenomicRanges
-    
-    Loading required package: stats4
-    
-    Loading required package: S4Vectors
-    
-    
-    Attaching package: ‘S4Vectors’
-    
-    
-    The following objects are masked from ‘package:Matrix’:
-    
-        expand, unname
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        expand.grid, I, unname
-    
-    
-    Loading required package: IRanges
-    
-    Loading required package: GenomeInfoDb
-    
-    
-    Attaching package: ‘monocle3’
-    
-    
-    The following objects are masked from ‘package:Biobase’:
-    
-        exprs, fData, fData<-, pData, pData<-
-    
-    
-    Loading required package: Gviz
-    
-    Loading required package: grid
-    
-
-
 ***
 The first step that must be taken is to create a object of the ***cell_data_set (CDS)*** class. This format provides an interface defined from the Bioconductor ***SingleCellExperiment*** class. Three input files are required. 
 
@@ -227,9 +113,6 @@ head(indata)
     [4,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ......
     [5,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ......
     [6,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ......
-    
-     .....suppressing 28036 columns in show(); maybe adjust 'options(max.print= *, width = *)'
-     ..............................
 
 
 The information the data frame ***cellinfo*** provides is the information of the assignment of a cell into a cluster. Read in the file with the cell-information by using the function `read.csv()`, specifying the correct separator. 
@@ -373,10 +256,6 @@ head(cl_indata)
 writeMM(obj = cl_indata, file="/mnt/workspace_stud/stud10/output/esophagus_mucosa/cl_indata_esophagus_mucosa.mtx")
 ```
 
-       [[ suppressing 34 column names 'AACGACGTGTAATGGTTCCCTT_0', 'AAGCAAAGTCTTCGGTTCCCAC_5', 'AAGTCCTTAGACTCTTCCTCAT_0' ... ]]
-    
-
-
 
     6 x 28070 sparse Matrix of class "dgTMatrix"
                                                                                   
@@ -394,12 +273,6 @@ writeMM(obj = cl_indata, file="/mnt/workspace_stud/stud10/output/esophagus_mucos
     chr1_632120_632520 . . . . ......
     chr1_779618_780018 . . . . ......
     
-     .....suppressing 28036 columns in show(); maybe adjust 'options(max.print= *, width = *)'
-     ..............................
-
-
-
-    NULL
 
 
 The function `new_cell_data_set()` creates a CDS object with the arguments: expression_data (***indata***), cell_metadata (***cellinfo***) and gene_metadata (***peakinfo***).
@@ -441,15 +314,6 @@ ls()
 ```
 
 
-<style>
-.list-inline {list-style: none; margin:0; padding: 0}
-.list-inline>li {display: inline-block}
-.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
-</style>
-<ol class=list-inline><li>'cds_object'</li><li>'cicero_cds'</li></ol>
-
-
-
 ***
 ## Section 2: Preprocess CDS and make Cicero CDS
 
@@ -462,152 +326,6 @@ library(dplyr)
 library(monocle3)
 library(cicero)
 ```
-
-    
-    Attaching package: ‘dplyr’
-    
-    
-    The following objects are masked from ‘package:stats’:
-    
-        filter, lag
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        intersect, setdiff, setequal, union
-    
-    
-    Loading required package: Biobase
-    
-    Loading required package: BiocGenerics
-    
-    
-    Attaching package: ‘BiocGenerics’
-    
-    
-    The following objects are masked from ‘package:dplyr’:
-    
-        combine, intersect, setdiff, union
-    
-    
-    The following objects are masked from ‘package:stats’:
-    
-        IQR, mad, sd, var, xtabs
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-        dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-        grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-        order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-        rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-        union, unique, unsplit, which.max, which.min
-    
-    
-    Welcome to Bioconductor
-    
-        Vignettes contain introductory material; view with
-        'browseVignettes()'. To cite Bioconductor, see
-        'citation("Biobase")', and for packages 'citation("pkgname")'.
-    
-    
-    Loading required package: SingleCellExperiment
-    
-    Loading required package: SummarizedExperiment
-    
-    Loading required package: MatrixGenerics
-    
-    Loading required package: matrixStats
-    
-    
-    Attaching package: ‘matrixStats’
-    
-    
-    The following objects are masked from ‘package:Biobase’:
-    
-        anyMissing, rowMedians
-    
-    
-    The following object is masked from ‘package:dplyr’:
-    
-        count
-    
-    
-    
-    Attaching package: ‘MatrixGenerics’
-    
-    
-    The following objects are masked from ‘package:matrixStats’:
-    
-        colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
-        colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
-        colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
-        colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
-        colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
-        colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
-        colWeightedMeans, colWeightedMedians, colWeightedSds,
-        colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
-        rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
-        rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
-        rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
-        rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
-        rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
-        rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
-        rowWeightedSds, rowWeightedVars
-    
-    
-    The following object is masked from ‘package:Biobase’:
-    
-        rowMedians
-    
-    
-    Loading required package: GenomicRanges
-    
-    Loading required package: stats4
-    
-    Loading required package: S4Vectors
-    
-    
-    Attaching package: ‘S4Vectors’
-    
-    
-    The following objects are masked from ‘package:dplyr’:
-    
-        first, rename
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        expand.grid, I, unname
-    
-    
-    Loading required package: IRanges
-    
-    
-    Attaching package: ‘IRanges’
-    
-    
-    The following objects are masked from ‘package:dplyr’:
-    
-        collapse, desc, slice
-    
-    
-    Loading required package: GenomeInfoDb
-    
-    
-    Attaching package: ‘monocle3’
-    
-    
-    The following objects are masked from ‘package:Biobase’:
-    
-        exprs, fData, fData<-, pData, pData<-
-    
-    
-    Loading required package: Gviz
-    
-    Loading required package: grid
-    
 
 
 The following code chunk is the process of trajectory building of Monocle3. 
@@ -653,9 +371,7 @@ plot_cells(cds_object,
 ```
 
 
-    
-![png](output_38_0.png)
-    
+![UMAP](https://user-images.githubusercontent.com/93346891/160402230-9b25a678-cba7-4ba8-983f-8a46e2346081.png)
 
 
 Because of the sparsity of single-cell chromatin accessibility data, an estimation of the co-accessibility scores requires an aggregation of similar cells in order to create more dense count data. The approach of k-nearest neighbor, creation of overlapping sets of cells, is used by Cicero to do so. Cicero then constructs these sets while using a reduced dimension coordinate map, representing cell similarity. 
@@ -725,16 +441,6 @@ save.image()
 ls()
 ```
 
-
-<style>
-.list-inline {list-style: none; margin:0; padding: 0}
-.list-inline>li {display: inline-block}
-.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
-</style>
-<ol class=list-inline><li>'cds_object'</li><li>'cicero_cds'</li></ol>
-
-
-
 ***
 ## Section 3: Create outputfiles and run Cicero
 
@@ -751,163 +457,6 @@ library(seqTools)
 library(stringr)
 library(Matrix)
 ```
-
-    
-    Attaching package: ‘dplyr’
-    
-    
-    The following objects are masked from ‘package:stats’:
-    
-        filter, lag
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        intersect, setdiff, setequal, union
-    
-    
-    Loading required package: Biobase
-    
-    Loading required package: BiocGenerics
-    
-    
-    Attaching package: ‘BiocGenerics’
-    
-    
-    The following objects are masked from ‘package:dplyr’:
-    
-        combine, intersect, setdiff, union
-    
-    
-    The following objects are masked from ‘package:stats’:
-    
-        IQR, mad, sd, var, xtabs
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-        dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-        grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-        order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-        rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-        union, unique, unsplit, which.max, which.min
-    
-    
-    Welcome to Bioconductor
-    
-        Vignettes contain introductory material; view with
-        'browseVignettes()'. To cite Bioconductor, see
-        'citation("Biobase")', and for packages 'citation("pkgname")'.
-    
-    
-    Loading required package: SingleCellExperiment
-    
-    Loading required package: SummarizedExperiment
-    
-    Loading required package: MatrixGenerics
-    
-    Loading required package: matrixStats
-    
-    
-    Attaching package: ‘matrixStats’
-    
-    
-    The following objects are masked from ‘package:Biobase’:
-    
-        anyMissing, rowMedians
-    
-    
-    The following object is masked from ‘package:dplyr’:
-    
-        count
-    
-    
-    
-    Attaching package: ‘MatrixGenerics’
-    
-    
-    The following objects are masked from ‘package:matrixStats’:
-    
-        colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
-        colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
-        colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
-        colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
-        colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
-        colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
-        colWeightedMeans, colWeightedMedians, colWeightedSds,
-        colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
-        rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
-        rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
-        rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
-        rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
-        rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
-        rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
-        rowWeightedSds, rowWeightedVars
-    
-    
-    The following object is masked from ‘package:Biobase’:
-    
-        rowMedians
-    
-    
-    Loading required package: GenomicRanges
-    
-    Loading required package: stats4
-    
-    Loading required package: S4Vectors
-    
-    
-    Attaching package: ‘S4Vectors’
-    
-    
-    The following objects are masked from ‘package:dplyr’:
-    
-        first, rename
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        expand.grid, I, unname
-    
-    
-    Loading required package: IRanges
-    
-    
-    Attaching package: ‘IRanges’
-    
-    
-    The following objects are masked from ‘package:dplyr’:
-    
-        collapse, desc, slice
-    
-    
-    Loading required package: GenomeInfoDb
-    
-    
-    Attaching package: ‘monocle3’
-    
-    
-    The following objects are masked from ‘package:Biobase’:
-    
-        exprs, fData, fData<-, pData, pData<-
-    
-    
-    Loading required package: Gviz
-    
-    Loading required package: grid
-    
-    Loading required package: zlibbioc
-    
-    
-    Attaching package: 'Matrix'
-    
-    
-    The following object is masked from 'package:S4Vectors':
-    
-        expand
-    
-    
 
 
 The GTF (General Transfer Format) file is a variation of the GFF (General Feature Format) File Format. It consists of one line per feature, displaying 9 columns of data, such as ***seqname*** = name of chromosome/scaffold, ***feature*** = feature type name (e.g. Gene), ***start*** = start position of feature, ***strand*** = forward (+) or reverse (-) strand and more[<sup>6</sup>](#fn6). 
@@ -1046,18 +595,7 @@ f <- f[order(f)]
 f <- as.data.frame(f)
 f <- tail(f, n = 8)
 chroms <- as.character(f$Var1)
-chroms
 ```
-
-
-<style>
-.list-inline {list-style: none; margin:0; padding: 0}
-.list-inline>li {display: inline-block}
-.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
-</style>
-<ol class=list-inline><li>'chr7'</li><li>'chr12'</li><li>'chr19'</li><li>'chr3'</li><li>'chr17'</li><li>'chr11'</li><li>'chr2'</li><li>'chr1'</li></ol>
-
-
 
 The easiest way to get Cicero co-accessibility scores is to run `run_cicero()`. To do so, you need a Cicero CDS object (created above) and a genome coordinates file, which contains the lengths of each of the chromosomes in your organism. This data is obtained from the .fai file provided in the directory `/mnt/workspace_stud/allstud/`.
 
@@ -1190,9 +728,6 @@ write(x = colnames(cicero_gene_activities),
       file = "/mnt/workspace_stud/stud10/output/esophagus_mucosa/cicero_gene_activities_cols.tsv")
 writeMM(cicero_gene_activities, '/mnt/workspace_stud/stud10/output/esophagus_mucosa/cicero_genes_activity.mtx')
 ```
-
-
-    NULL
 
 
 ***
