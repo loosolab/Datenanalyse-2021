@@ -34,7 +34,7 @@ while read LINE; do declare "$LINE"; done < $CONF
 
 # run pipeline steps:
 echo "starting pipeline"
-${SPATH}/scripts/generate_configs.sh
+${SPATH}/scripts/preparations.sh
 ${SPATH}/scripts/run_pipeline.sh
 if [ "$check_logs" = true ] ; then
     ${SPATH}/scripts/check_logs.sh
@@ -45,7 +45,7 @@ ${SPATH}/scripts/renameAllMotifs.sh
 ${SPATH}/scripts/cluster_all.sh "overall"
 echo "Activating plotting environment..."
 source /opt/miniconda/bin/activate plotting
-${SPATH}/scripts/Eval_Motif_similarity.py --runs-dir $PROJECT_DIR --out "similarity_overall" --motifs "${PROJECT_DIR}/overall_Cluster/motif_comparison_clusters.yml" --annotation-dir $DATA_PREP_DIR
+${SPATH}/scripts/eval_Motif_similarity.py --runs-dir $PROJECT_DIR --out "similarity_overall" --motifs "${PROJECT_DIR}/overall_Cluster/motif_comparison_clusters.yml" --annotation-dir $DATA_PREP_DIR
 echo "Deactivating plotting environment..."
 conda deactivate
 
