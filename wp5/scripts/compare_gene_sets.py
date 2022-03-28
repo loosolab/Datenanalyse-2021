@@ -490,7 +490,7 @@ fullname_identify_special_genes = os.path.join(outdir, outname_identify_special_
 df_identify_special_genes.to_csv(fullname_identify_special_genes)
 # reduce with cutoff
 cutoff_counter_genes = 15
-df_identify_special_genes_red = df_identify_special_genes[df_identify_special_genes['difference_number_of_genes'] > cutoff_counter_genes].copy()
+df_identify_special_genes_red = df_identify_special_genes[df_identify_special_genes['counter_gene_2k'] > cutoff_counter_genes].copy()
 # write to csv
 outname_identify_special_genes_red = 'identify_special_genes_red.csv'
 fullname_identify_special_genes_red = os.path.join(outdir, outname_identify_special_genes_red)
@@ -524,18 +524,9 @@ df_correlation_to_motif_red_2.to_csv(fullname_correlation_to_motif_red)
 
 
 ### plotting
-colorlist = ["aliceblue", "antiquewhite", "aqua", "aquamarine", "azure", "beige", "bisque", "black", "blanchedalmond", "blue", "blueviolet", "brown", "burlywood", "cadetblue",
-             "chartreuse", "chocolate", "coral", "cornflowerblue", "cornsilk", "crimson", "cyan", "darkblue", "darkcyan", "darkgoldenrod", "darkgray", "darkgrey", "darkgreen",
-             "darkkhaki", "darkmagenta", "darkolivegreen", "darkorange", "darkorchid", "darkred", "darksalmon", "darkseagreen", "darkslateblue", "darkslategray", "darkslategrey",
-             "darkturquoise", "darkviolet", "deeppink", "deepskyblue", "dimgray", "dimgrey", "dodgerblue", "firebrick", "floralwhite", "forestgreen", "fuchsia", "gainsboro",
-             "ghostwhite", "gold", "goldenrod", "gray", "grey", "green", "greenyellow", "honeydew", "hotpink", "indianred", "indigo", "ivory", "khaki", "lavender", "lavenderblush", "lawngreen",
-             "lemonchiffon", "lightblue", "lightcoral", "lightcyan", "lightgoldenrodyellow", "lightgray", "lightgrey", "lightgreen", "lightpink", "lightsalmon", "lightseagreen",
-             "lightskyblue", "lightslategray", "lightslategrey", "lightsteelblue", "lightyellow", "lime", "limegreen", "linen", "magenta", "maroon", "mediumaquamarine",
-             "mediumblue", "mediumorchid", "mediumpurple", "mediumseagreen", "mediumslateblue", "mediumspringgreen", "mediumturquoise", "mediumvioletred", "midnightblue",
-             "mintcream", "mistyrose", "moccasin", "navajowhite", "navy", "oldlace", "olive", "olivedrab", "orange", "orangered", "orchid", "palegoldenrod", "palegreen", "paleturquoise",
-             "palevioletred", "papayawhip", "peachpuff", "peru", "pink", "plum", "powderblue", "purple", "red", "rosybrown", "royalblue", "saddlebrown", "salmon", "sandybrown",
-             "seagreen", "seashell", "sienna", "silver", "skyblue", "slateblue", "slategray", "slategrey", "snow", "springgreen", "steelblue", "tan", "teal", "thistle", "tomato", "turquoise",
-             "violet", "wheat", "white", "whitesmoke", "yellow", "yellowgreen"]
+colorlist = [ "darkmagenta","darkblue","aquamarine","coral", "cornflowerblue", "darkred", "deeppink","forestgreen",
+             "hotpink","lightgreen", "lightseagreen", "yellow", "darkseagreen", "darkslategray", "goldenrod", "mediumseagreen","orangered" ,"olivedrab", "orchid",
+             "palevioletred", "chartreuse", "slateblue","slategray", "yellowgreen", "rebeccapurple"]
 
 ## create percentage bar plots for compare_1k_2k 
 # create unique Motif and Cell_Type name and add to Data Frame
