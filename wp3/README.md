@@ -12,11 +12,13 @@ Installation
 Simply clone this repository. Before running the clustering script you will need to also install [pysam](https://pypi.org/project/pysam/) in your python environment. Also, for processing the data, the use of [SAM-Tools](https://www.htslib.org/download/) is recommended.
 The post TOBIAS scripts require the python modules argparse, numpy, pandas, scipy, os and matplotlib to function. 
 
-You also need to download the [TOBIAS snakemake repository](https://github.molgen.mpg.de/loosolab/TOBIAS_snakemake) and set up the anaconda environment with the yaml file provided in it like this:
+You need to download the [TOBIAS snakemake repository](https://github.molgen.mpg.de/loosolab/TOBIAS_snakemake) and set up the anaconda environment with the yaml file provided in it like this:
 
 ```bash
 conda env create -f environments/snakemake.yaml
 ```
+You will also need to place the folders "scripts", "snakfiles", "environments", and the "Sankefile" from the same repository in the folder you want to do your analysis in.
+
 For visualization purposes, you can use [WIlsON](https://academic.oup.com/bioinformatics/article/35/6/1055/5078467). A docker container as well as instructions how to use it are provided [here](https://hub.docker.com/r/loosolab/wilson/).
 
 Workflow description and example
@@ -33,7 +35,7 @@ samtools view -S -b sample.sam > sample.bam
 samtools sort sample.bam -o sample_sorted.bam
 samtools index sample_sorted.bam
 ```
-For unsorted .bam files you can alternatively use "preprocessingBam.sh" or leave out the first of the 3 commands above.
+For unsorted .bam files you can alternatively use "preprocessingBam.sh" or start from the second command above.
 
 Running the clustering script:
 ```bash
