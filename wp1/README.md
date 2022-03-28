@@ -14,10 +14,11 @@ The most of preprocessing steps has been done with (Epi-)Scanpy and contains Fil
 
 - Anaconda 4.10.3
 - Python 3.9.0
-- Python Packages
+- Relevant packages (also listed in wp1/preprocessing.yml)
     - ipython 8.0.1
     - scanpy 1.8.0
     - episcanpy 0.3.2
+    - scikit-learn 1.0.2
     - pandas 1.3.5
     - numpy 1.21.5
     - anndata 0.7.8
