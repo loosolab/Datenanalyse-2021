@@ -28,7 +28,7 @@ The most of preprocessing steps has been done with (Epi-)Scanpy and contains Fil
 
 - First set up a new environment with anaconda by the provided `wp1/preprocessing.yml` using the following command
 ```Bash
-conda env create -n "[name_of_your_env]" -f environments/preprocessing.yml
+conda env create -n "[name_of_your_env]" -f wp1/preprocessing.yml
 ```
 - Next add your new environment as a Jupyter Notebook kernel with
 ```Bash
