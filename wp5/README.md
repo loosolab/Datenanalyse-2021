@@ -145,10 +145,10 @@ To do this, you can call the script as follows:
 ```
 ./eval_Motif_similarity.py --runs_dir <PATH/TO/RUNS> --motifs <motif_comparison_clusters.yml> --out <FILENAME_prefix>
 ```
-
-For more information on the parameters, please refer to the wiki or the manual of the script (`--help` flag). 
+ 
 The script produces various diagrams to visualise the occurrence of similar motifs in different tissues and cell types. 
 It also saves the names of the found motifs together with their cluster, cell type and tissue in a CSV-file.
+The script also has a number of optional parameters that are not listed here. A particularly interesting parameter for analyses could be `--cutoff', which reduces the data to the clusters that have at least the specified number of motifs. For more information on the parameters, please refer to the wiki or the manual of the script (`--help` flag).
 
 If you want to run this script on its own, please activate the plotting environment beforehand:
 ```
