@@ -62,4 +62,4 @@ It's a data frame of pairwise peak comparison with subsequently calculated co-ac
 
 ## Example Case 
 
-[Example Run](wp4/R Scripts/Example Run.md)
+[Example Run](wp4/Example Case/Example Run.md)
