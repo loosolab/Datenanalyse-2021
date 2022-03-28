@@ -92,15 +92,16 @@ if args.jitter:
   # save
   fig.write_html(f"{args.runs_dir}/similarity/{args.out}_jitter_Dotplot.html")
 
-# bubble plot
-grouped = df_red.groupby(['Tissue','Cell_type','Cluster']).count().reset_index()
-fig = px.scatter(grouped, x="Cell_type", y="Tissue", size="count", color="Cluster", size_max=60)
-# save
-fig.write_html(f"{args.runs_dir}/similarity/{args.out}_Bubbleplot.html", title="Motif Similarity relations", color_discrete_sequence=colorlist)
-
-## create count bar plot
 # add count to Data Frame
 df_red["count"] = 1
+
+# bubble plot
+grouped = df_red.groupby(['Tissue','Cell_type','Cluster']).count().reset_index()
+fig = px.scatter(grouped, x="Cell_type", y="Tissue", size="count", color="Cluster", size_max=60, title="Motif Similarity relations", color_discrete_sequence=colorlist)
+# save
+fig.write_html(f"{args.runs_dir}/similarity/{args.out}_Bubbleplot.html")
+
+## create count bar plot
 
 ## Bar plots
 # Tissue
