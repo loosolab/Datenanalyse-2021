@@ -53,7 +53,11 @@ conda deactivate
 if [ $ANN_CHECKER = "yes" ]; then
     ${SPATH}/scripts/generate_gene_sets.sh
     ${SPATH}/scripts/generate_gene_sets_TFs.sh
+    echo "Activating plotting environment..."
+    source /opt/miniconda/bin/activate plotting
     ${SPATH}/scripts/compare_gene_sets.py
+    echo "Deactivating plotting environment..."
+    conda deactivate
 fi
 
 echo "pipeline finished"
