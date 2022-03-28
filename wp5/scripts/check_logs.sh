@@ -13,8 +13,11 @@ while read LINE; do declare "$LINE"; done < $CONF
 DIR="${PROJECT_DIR}/runs"
 FILE_PATH=$DIR  # put into the evaluation folder
 
+# start time of the script
+DT=$(date '+%d/%m/%Y %H:%M:%S')
+
 # output file
-FILE_NAME=check_logs.txt
+FILE_NAME="check_logs_${DT}.txt"
 FILE=${FILE_PATH}/$FILE_NAME
 if ! [ -f $FILE ]; then # check if the file is already existing
     cd $FILE_PATH
