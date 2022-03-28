@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# read given paths an variables
 while [ $# -gt 0 ];do
 	case $1 in
 	      --fasta1=*)
@@ -22,12 +23,6 @@ while [ $# -gt 0 ];do
                 ;;
               --path=*)
                 path="${1#*=}"
-                ;;
-
-
-	      --help)
-		printf "TODO Usage\n"
-		exit 0
 		;;
 	      *)
 		printf "Error: invalid argument: $1"
@@ -40,13 +35,15 @@ done
 out_path="snap_out/"
 
 
-### Step 1. Index reference genome
+# index bwa path
 bwa=$(which bwa)
 bwapath=$(dirname "$bwa")
 bwapath=$bwapath"/"
+# print bwa path
 echo $bwapath
 #refgenome=refgenome
 #refname=refname
+# read tissue name
 name_tmp=$(basename "$fasta1")
 name="${name_tmp%.*}"
 name="${name%.*}"
@@ -59,6 +56,7 @@ log="fasta-to-snap.log"
 
 SCRIPTPATH=$(dirname $(realpath -s $0))
 
+# print the given paths
 printf "LOG FASTA TO SNAP\n"
 printf "bwa is = $bwa\n"
 printf "refgenome is = $refgenome\n"
@@ -68,22 +66,7 @@ printf "Fasta1 is $fasta1"
 printf "Fasta2 is $fasta2"
 
 
-index_refgenome () {
-printf "starting indexing reference genome...\n"
-printf "bwa is = $bwa\n"
-printf "refgenome is = $refgenome\n"
-printf "refname is = $refname\n\n"
-printf "chrom.sizes is $chrom_sizes\n\n"
-
-snaptools index-genome \
-	--input-fasta=$refgenome \
-	--output-prefix=$refname \
-	--aligner=bwa \
-	--path-to-aligner=$bwapath \
-	--num-threads=5
-
-printf "finished indexing reference genome.\n\n"
-}
+# alignment based on SnapTools github tutorial. Creates the .bam file
 alignment () {
 ### Step 2. Alignment
 
@@ -112,6 +95,7 @@ snaptools align-paired-end  \
 
 }
 
+# pre_processing based on SnapTools github tutorial. Creates the .snap file.
 pre_processing () {
 
 snaptools snap-pre  \
@@ -131,7 +115,7 @@ snaptools snap-pre  \
 
 
 }
-
+# add bmat based on tutorial from Snaptools github tutorial
 add_bmat () {
 
 snaptools snap-add-bmat	\
@@ -141,9 +125,6 @@ snaptools snap-add-bmat	\
 
 }
 
-printf "Start indexing ref_genome..." >>$log 
-#index_refgenome
-printf "finished indexing ref_genome..." >>$log
 printf "Start alignment..." >>$log
 alignment
 echo "finished alignment"
