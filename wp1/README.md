@@ -37,7 +37,7 @@ conda install [name_of_the_package]
 ```
 - Next add your new environment as a Jupyter Notebook kernel with
 ```Bash
-python -m ipykernel install --user --name [name_of_your_env] --display-name “[displayed_name]”
+python -m ipykernel install --user --name [name_of_your_env] --display-name "[displayed_name]"
 ```
 - At last start a new Jupyter Notebook
 
