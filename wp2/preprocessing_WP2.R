@@ -8,26 +8,8 @@ blacklist_regions = "/home/rstudio/workspaces/stud4/SnaptoolsTest/blacklists/hg3
 gtf.gr = rtracklayer::import("/home/rstudio/workspaces/mbentse/homo_sapiens/homo_sapiens.104.mainChr.gtf")
 
 # load .snap file
-s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1JKYN-020-SM-C1PX3_snATAC_thoracic_aorta.snap"
-sample_name = "thoracic-aorta"
-s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/JF1O9_gastrocnemius_medialis/JF1O9_gastrocnemius_medialis.snap"
-sample_name = "muscle_new"
-s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap"
-sample_name = "right-lobe-of-liver_new"
-s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/CSSD4_omental_fat_pad/CSSD4_omental_fat_pad.snap"
-sample_name = "fat_new"
-s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/JF1O6_body_of_pancreas/JF1O6_body_of_pancreas.snap"
-sample_name = "pancreas_new"
-s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/IQYCP_lower_leg_skin/IQYCP_lower_leg_skin.snap"
-sample_name = "skin_new"
-s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/A8CPH_esophagus_muscularis_mucosa/A8CPH_esophagus_muscularis_mucosa.snap"
-sample_name = "muscle2_new"
-s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/JF1NP_stomach/JF1NP_stomach.snap"
-sample_name = "stomach_new" # GI tract
-s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/ACCPU_upper_lobe_of_left_lung/ACCPU_upper_lobe_of_left_lung.snap"
-sample_name = "lung_new" # Lungs
-s_file="/home/rstudio/workspaces/stud3/WP2_OUTPUT/FINISHED/JF1O8_colon_sigmoid/JF1O8_colon_sigmoid.snap"
-sample_name = "colon_new" # GI tract
+s_file="path" # path to .snap file
+sample_name = "sample" # sample name (folder name)
 
 # set/getwd and create folder
 setwd("/home/rstudio/workspaces/stud3/rstudio_workspace/Datenanalyse_2/Datenanalyse-2021")
