@@ -2,7 +2,7 @@
 
 base_path="/mnt/"
 path="WP2_workflow_output"
-config=""
+config=FALSE
 fastq_path="$base_path""data/fastq_data/renlab.sdsc.edu/kai/data/fastq/first/"
 clear=TRUE
 tissue=ALL
@@ -23,6 +23,9 @@ while [ $# -gt 0 ];do
                 ;;
               eigenvector=*)
                 eigenvector="${1#*=}"
+                ;;
+	      fastq_path=*)
+                FASTQPATH="${1#*=}"
                 ;;
 
               *)
@@ -45,7 +48,7 @@ create_conf () {
 if [ "$config" == "" ];
 	then
 		printf "config file in $path is created\n"
-		config="$base_path""$path""/wp2_workflow.conf"
+		config="$base_path""$path""/wp2_workflow_docker.conf"
 		touch $config
 		echo "#Output directory" > $config
 		echo -e "PATH=""$base_path""$path\n" >> $config
@@ -116,7 +119,7 @@ if [[ ! -f "$base_path""$path""/""$SHORTNAME""/""$SHORTNAME"".snap"  &&  ! -f "$
 
 echo "#####################Start!"$f
 #DOSNAP
-/mnt/$path/start-fasta-to-snap.sh "$f" "$SHORTNAME" "$base_path$path/"
+/mnt/$path/start-fasta-to-snap.sh "$f" "$SHORTNAME" "$base_path$path/" "$FASTQPATH"
 
 mkdir "$base_path""$path""/""$SHORTNAME"
 mkdir "$base_path""$path""/""$SHORTNAME/plots_and_information"
@@ -238,7 +241,12 @@ cp /narrowpeaks_to_bed.py "$base_path""$path"
 
 
 help
-create_conf
+if [ $config = FALSE ];then
+	create_conf
+else
+loop_workflow
+fi
+#create_conf
 #echo "$config"
 #if  test -f "$config" ; then
 #    echo "$config exists."
@@ -250,7 +258,7 @@ create_conf
 #fi
 
 #print_config
-loop_workflow
+#loop_workflow
 
 if [ $clear = "TRUE" ];then
 	rm "$base_path""$path""/fasta-to-snap.sh"
