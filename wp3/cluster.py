@@ -46,9 +46,9 @@ def writeClusterBam (clusterID,cellIDsForCluster,sourceFilePath,outputDir):
     sourceFile.close()
     clusterFile.close()
 
-#hopefully faster way to write single cluster bam files
+#faster way to write single cluster bam files
 def writeClusters (deduplicatedClusterIDs,cellClusterDict,sourceFilePath,outputDir):
-    #creating files
+    #creating file dictionary and opening source
     sourceFile = ps.AlignmentFile(sourceFilePath,"rb")
     clusterFileDict = {}
     #creating new files
@@ -129,7 +129,7 @@ def main():
                          'that should be used to save this programs output.',
                          default="outputWP3/")
     args=aParser.parse_args()
-    #read tsv file and convert it into lists
+    #read tsv file and convert it into lists (Deprecated)
     #cellIDs,clusterIDs,combinedIDs,cellClusterDict = listifyTSV(args.tsv)
 
     clusterDict, clusterIDs = tsvToDict(args.tsv)
@@ -137,12 +137,6 @@ def main():
     
     writeClusters(deduplicatedClusterIDs, clusterDict, args.bam, args.outputDir)
     
-    #clustering starts here
-    # for cluster in deduplicatedClusterIDs:
-    #     #getting all cellbarcodes for current cluster
-    #     barcodesForCluster = getSingleClusterBarcodeList(cluster, combinedIDs)
-    #     #writing bam file for current cluster
-    #     writeClusterBam(cluster, barcodesForCluster, args.bam, args.outputDir)
     
         
     #generating file for TOBIAS Snakemake pipeline
