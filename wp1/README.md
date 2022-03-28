@@ -26,14 +26,9 @@ The most of preprocessing steps has been done with (Epi-)Scanpy and contains Fil
 
 ## Setup
 
-- First set up a new environment with anaconda using the following command
+- First set up a new environment with anaconda by the provided `wp1/preprocessing.yaml` using the following command
 ```Bash
-conda create -n "[name_of_your_env]" python=3.9
-```
-- Then activate your environment and install all listed packages with
-```Bash
-conda activate [name_of_your_env]
-conda install [name_of_the_package]
+conda env create -f environments/preprocessing.yaml
 ```
 - Next add your new environment as a Jupyter Notebook kernel with
 ```Bash
@@ -53,4 +48,4 @@ python -m ipykernel install --user --name [name_of_your_env] --display-name "[di
 
 ## Example Case
 
-An example case is given in the provided Jupyter Notebook file with comments to most of the executed steps.
+An example case is given in the provided `wp1/complete_preprocessing.ipynb` with comments to most of the executed steps.
