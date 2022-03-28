@@ -39,7 +39,7 @@ conda install [name_of_the_package]
 ```Bash
 python -m ipykernel install --user --name [name_of_your_env] --display-name “[displayed_name]”
 ```
-- At last start a new Jupyter Noteboot
+- At last start a new Jupyter Notebook
 
 ## Input Files
 
