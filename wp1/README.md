@@ -26,10 +26,20 @@ The most of preprocessing steps has been done with (Epi-)Scanpy and contains Fil
 
 ## Setup
 
-- First set up a new environment with anaconda using the following command `conda create -n "[name_of_your_env]" python=3.9`
-- Then activate your environment with `conda activate [name_of_your_env]` and install all listed packages with `conda install [name_of_the_package]`
-- Add your new environment as a Jupyter Notebook kernel with `python -m ipykernel install --user --name [name_of_your_env] --display-name “[displayed_name]”`
-- At least start a new Jupyter Notebook
+- First set up a new environment with anaconda using the following command
+```Bash
+conda create -n "[name_of_your_env]" python=3.9
+```
+- Then activate your environment and install all listed packages with
+```Bash
+conda activate [name_of_your_env]
+conda install [name_of_the_package]
+```
+- Next add your new environment as a Jupyter Notebook kernel with
+```Bash
+python -m ipykernel install --user --name [name_of_your_env] --display-name “[displayed_name]”
+```
+- At last start a new Jupyter Noteboot
 
 ## Input Files
 
