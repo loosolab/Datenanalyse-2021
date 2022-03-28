@@ -14,7 +14,7 @@ DIR="${PROJECT_DIR}/runs"
 FILE_PATH=$DIR  # put into the evaluation folder
 
 # start time of the script
-DT=$(date '+%d/%m/%Y %H:%M:%S')
+DT=$(date '+%d.%m.%Y_%H:%M:%S')
 
 # output file
 FILE_NAME="check_logs_${DT}.txt"
