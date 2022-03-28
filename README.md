@@ -1,16 +1,14 @@
 # Datenanalyse-2021
 
-## Introduction
-The task of work package 4 was to correlate the chromatin accessibility data from the original ATAC-seq study. The used algorithm was the R package Cicero. 
-
-## Requirements
-R Version 4.1.2
-
 ## Setup
 In order to run Cicero, the packages Monocle3 and Cicero must be installed. 
 For installation instructions load the script `Install_MC.R`
 Once the installation is done, you can run the Script `Run_Cicero.R`, make sure to input the right data if necessary change the input directories. 
-__Further information about individual code chunks is provided in the Notebook `R Markdown.ipynb`.__
+__Further information about individual code chunks is provided in the Section Example Case.__
+
+
+## Requirements
+R Version 4.1.2
 
 ## Input Files 
 
@@ -60,7 +58,7 @@ It's a data frame of pairwise peak comparison with subsequently calculated co-ac
 
 ## Example Case 
 
-# Introduction 
+## Introduction 
 
 Chromatin, which consists of DNA, is a dynamic structure. Regulation of transcription is based on the interaction between the structure of chromatin and the recruitment of numberous transcription factors, proximal promoter elements and upstream activator sequences. 
 Accessbile chromatin is crutial for transcriptional regulation. This accessibility is marked by DNA methylation and histone modification. 
@@ -70,7 +68,7 @@ To visualize regions of accessible chromatin in real time (genome-wide) the meth
 
 `Cicero` was developed as algorithm to create a link between this chromatin accessibility of regulatory elements to their target genes and is by that creating a prediction of gene expression. 
 
-# Looso-Lab Project 
+## Looso-Lab Project 
 
 This student project was created by the team around Mario Looso from the MPI in Bad-Nauheim. In the course Biodatenanalyse, data of an already conducted study[<sup>2</sup>](#fn2) should be bioinformatically processed. The team chose the study "A cell atlas of chromatin accessibility across 25 adult human tissues" from Zhang et. al. 
 This study was conducted by the usage of 70 bio-samples, with 25 different tissue types, obtained from four donors. The clustering of 472.373 nuclei resulted in 54 obvious cell types. 
@@ -79,7 +77,7 @@ By splitting the workload into individual work packages, the raw data was furthe
 
 This work package looks at the co-accessible chromatin regions, creating a score to link chromatin regions with same opening scheme to distal regions in the upstream genome and annotating the open regions to known promoters, transcription start sites or transcription factors. The software `Cicero` was used to get to the bottom of this question. 
 
-# Cicero Introduction
+## Cicero Introduction
 
 Cicero[<sup>3</sup>](#fn3) is an algorithm identifying co-accessibility pairs of DNA elements whilst connecting regulatory elements to their putative target genes based on dynamics of accessibility of linked distal elements. 
 
@@ -125,7 +123,7 @@ As this epigenetic field evolves cell atlases defining each cell type and its mo
 The limitation of `Cicero`is mainly based on the putative type of it's generated connections. Further experiments are necessary to determine whether a linked distal DNA element is essential for regulatory influence or sufficient. 
 
 ***
-# Example Run 
+## Example Run 
 
 ## Section 1: Read in data and create CDS object
 
