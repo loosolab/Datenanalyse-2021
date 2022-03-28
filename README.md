@@ -59,7 +59,13 @@ It's a data frame of pairwise peak comparison with subsequently calculated co-ac
 
 4. `Cicero` also creates gene activity scroes, which combines the score of the regional accessibility with gene expression. This file `cicero_genes_activitiy.mtx` contains genes and the corresponding scores. This information is stored in the directory `/mnt/workspace_stud/stud10/output/<tissue_of_interest>/cicero_gene_activity.mtx`. 
 
-
 ## Example Case 
+An Example Run of Cicero is provided under this link: [Example Run](https://github.com/loosolab/Datenanalyse-2021/blob/wp4/wp4/Example%20Case/Example%20Run.md)
 
-[Example Run](https://github.com/loosolab/Datenanalyse-2021/blob/wp4/wp4/Example%20Case/Example%20Run.md)
+The biological Approaches of Cicero with the example case are stored here: 
+
+## Workflow
+![Workflow_WP4 drawio](https://user-images.githubusercontent.com/93346891/160412551-ce8f17be-edce-4200-99ad-0a3fdf4ccc05.png)
+
+
+
