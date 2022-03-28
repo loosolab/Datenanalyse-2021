@@ -1,8 +1,16 @@
 # Datenanlyse 2021 - ignore
-/wp6/testdaten/*.*
-/wp6/testdaten/*
+
+#WP3
+/wp3/testdaten/*
+
+/wp6/testdaten/*.fa*
+/wp6/testdaten/enhancers/*
+/wp6/testdaten/example_data/*
+/wp6/testdaten/wp2/*
+/wp6/testdaten/wp5/*
 /wp6/analyse/results/*
 /wp6/analyse/results/*.*
+
 # Setup
 # PyCharm
 .idea
