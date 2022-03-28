@@ -71,13 +71,6 @@ Steps 5 and 6 are used to analyse similarities between the motifs found in diffe
 Steps 7-9 are used to analyse the motifs found with the aim of hypothesising the important functions of the motifs. These final 3 steps are only executed if the `ANN_CHECKER` global variable is set to 'yes'.
 Since this pipeline is designed for ATAC-Seq data, the motif discovery pipeline is run for each cell type of each given tissue.
 
----
-
-**Info:**
-
-Furthermore, a script for GO and pathway analysis (*analyze_GO_and_pathway.py*) is also provided. For this, however, manual steps are necessary beforehand, which is why it is not integrated into the pipeline. You can find a brief explanation [here](#10-analyze-the-gene-sets).
-
----
 
 The individual steps of the pipeline are briefly explained below. For more detailed explanations, please refer to the [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP5).
 
@@ -193,21 +186,4 @@ The script *compare_gene_sets.py* is called as follows:
 The script calculates which known TFs are correlated the most with the new motifs (= new TFs). 
 The new motifs are also compared across tissues and cell types. The aim is to identify identical motifs on the one hand and correlated motifs on the other. In addition, the aim is to identify motif-specific genes.
 
-### 10. Analyze the gene sets
-
-To use the annotation analysis, it is necessary to use two online tools for [GO analysis](http://www.pantherdb.org) and [pathway analysis](https://reactome.org) beforehand. 
-
-For Gene Ontology (GO) analysis, you need to insert the gene sets to be analysed from the files (motif gene sets are stored in *annotation/gene_sets_motifs*). Please select *Statistical overrepresentation test* and then *GO biologialprocess complete* in step 3 *Select analysis*. From the analysis results, you need to export the "Table". The output file will automatically be named *analysis.txt*. Please rename the file (should contain the motif name), e.g. *motifName_analysis.txt* and save the files in the folder *annotation/GO_analysis*.
-
-For the pathway analysis you have to select the [Analysis Tools](https://reactome.org/PathwayBrowser/#TOOL=AT). There you have to enter the gene sets from the files (motif gene sets are stored in *annotation/gene_sets_motifs*) you want to analyse. From the analysis results you have to export the "Pathway analysis results" and the "Not found identifiers". The output files are automatically named *result.csv* ("Pathway analysis results") and *not_found.csv* ("Not found identifiers"). Please rename the files (add the motif name) like *motifName_results.csv* or *motifName_not_found.csv* and save the files in the folder *annotation/GO_analysis*.
-
-To analyse the gene sets of the motifs, the script *analyze_GO_and_pathway.py* which is provided here performs a GO and pathway analysis based on the results of the two databases described above. The script extracts the most significant GO process from the GO output and the most significant pathway from the pathway output and generates a ranking table in csv format. The analysis criterion is the p-value.
-
-The script *analyze_GO_and_pathway.py* is called as follows:
-
-```
-./analyze_GO_and_pathway.py
-```
-
-## Example
-TODO
+> **Caution**: If you are working via an ssh connection, make sure you start this script in a screen as it may require some time to complete.
