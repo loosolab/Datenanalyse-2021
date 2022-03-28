@@ -22,7 +22,7 @@ The most of preprocessing steps has been done with (Epi-)Scanpy and contains Fil
     - numpy 1.21.5
     - anndata 0.7.8
 - SCSA 1.0
-- ~64GB of RAM
+- ~64GB of RAM (recommended)
 
 ## Setup
 
