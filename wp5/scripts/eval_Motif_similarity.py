@@ -11,7 +11,7 @@ parser.add_argument('--motifs', metavar='MOTIF_CLUSTER.yml', help='Output of the
 parser.add_argument('--out', metavar="FILENAME_prefix",help="Prefix of how the output files should be named.", required=True)
 parser.add_argument('--annotation-dir', metavar="PATH/TO/WP2", help='Path to where the preproceesed original data lies. Should contain an annotation.txt for all tissues with the assignment of cluster to tissue.')
 parser.add_argument('--cutoff', metavar="N", help='Minimum number of motifs within a cluster for the cluster to appear in the analysis. (default = 2)', type=int, default=2)
-parser.add_argument('--jitter', action='store_true', help="If this flag is set, the dot plot will have jitter activated" )
+parser.add_argument('--jitter', action='store_true', help="If this flag is set, an additional dot-plot with jitter activated wil be produced" )
 args = parser.parse_args()
 
 ## prepare Dataframe 
@@ -85,18 +85,18 @@ if df_motifs.shape[0] != df_red.shape[0]:
 colorlist = [ "darkmagenta","darkblue","aquamarine","coral", "cornflowerblue", "darkred", "deeppink","forestgreen",
              "hotpink","lightgreen", "lightseagreen", "yellow", "darkseagreen", "darkslategray", "goldenrod", "mediumseagreen","orangered" ,"olivedrab", "orchid",
              "palevioletred", "chartreuse", "slateblue","slategray", "yellowgreen", "rebeccapurple"]
-## create Dotplot
+## create jitter Dotplot
 if args.jitter:
   fig = px.strip(df_red, x="Cell_type", y="Tissue", color="Cluster", hover_data=['motif_name'], title="Motif Similarity relations", color_discrete_sequence=colorlist)
   fig.for_each_trace(lambda t: t.update({"marker":{"size":10}}))
   # save
   fig.write_html(f"{args.runs_dir}/similarity/{args.out}_jitter_Dotplot.html")
-else:
-  fig = px.scatter(df_red, x="Cell_type", y="Tissue", color="Cluster", hover_data=['motif_name'], title="Motif Similarity relations", color_discrete_sequence=colorlist)
-  fig.update_traces(marker=dict(size=15),
-                    selector=dict(mode='markers'))
-  # save
-  fig.write_html(f"{args.runs_dir}/similarity/{args.out}_Dotplot.html")
+
+# bubble plot
+grouped = df_red.groupby(['Tissue','Cell_type','Cluster']).count().reset_index()
+fig = px.scatter(grouped, x="Cell_type", y="Tissue", size="count", color="Cluster", size_max=60)
+# save
+fig.write_html(f"{args.runs_dir}/similarity/{args.out}_Bubbleplot.html", title="Motif Similarity relations", color_discrete_sequence=colorlist)
 
 ## create count bar plot
 # add count to Data Frame
