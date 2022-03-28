@@ -9,7 +9,7 @@ CONF="${SPATH}/../global_vars.cnf"
 while read LINE; do declare "$LINE"; done < $CONF
 
 # Temporary Directory to store MEME files in, Input $2 is the prefix the directory should have
-TEMP_DIR="${PROJECT_DIR}/runs/tmp_motifs_dir"
+TEMP_DIR="${PROJECT_DIR}/tmp_motifs_dir"
 
 # File prefix for output file
 CLUSTERING_NAME=$1
