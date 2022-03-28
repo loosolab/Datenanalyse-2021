@@ -4,8 +4,8 @@ library(viridisLite)
 library(ggplot2)
 library(rtracklayer)
 
-blacklist_regions = "/home/rstudio/workspaces/stud4/SnaptoolsTest/blacklists/hg38-blacklist.v2_parsed.bed"
-gtf.gr = rtracklayer::import("/home/rstudio/workspaces/mbentse/homo_sapiens/homo_sapiens.104.mainChr.gtf")
+blacklist_regions = "path" # path to blacklist file
+gtf.gr = rtracklayer::import("path") # path to .gtf file
 
 # load .snap file
 s_file="path" # path to .snap file
