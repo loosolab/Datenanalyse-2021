@@ -7,6 +7,7 @@ The goal of the project is an investigation of the landscape of chromatin access
 This is done with single cell ATAC-Seq data provided by the [CATlas](http://catlas.org/humanenhancer/#!/) database that is processed in multiple steps by various work packages. 
 
 [Work package 1](https://github.com/loosolab/Datenanalyse-2021/tree/main/wp1/):
+
 WP1 uses [scanpy](https://github.com/theislab/scanpy) and [episcanpy](https://github.com/colomemaria/epiScanpy) for processing of anndata files.
 This includes filtering and clustering of the provided data.
 
