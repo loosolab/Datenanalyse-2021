@@ -2,32 +2,39 @@
 
 base_path="/mnt/"
 path="WP2_workflow_output"
-config=FALSE
-fastq_path="$base_path""data/fastq_data/renlab.sdsc.edu/kai/data/fastq/first/"
+#fastq_path="$base_path""data/fastq_data/renlab.sdsc.edu/kai/data/fastq/first/"
+fastq_path="base_path"
 clear=TRUE
-tissue=ALL
 eigenvector="15"
 while [ $# -gt 0 ];do
         case $1 in
               path=*)
                 path="${1#*=}"
                 ;;
-              config=*)
-                config="${1#*=}"
-                ;;
               clear=*)
                 clear="${1#*=}"
-                ;;
-	      tissue=*)
-                tissue="${1#*=}"
                 ;;
               eigenvector=*)
                 eigenvector="${1#*=}"
                 ;;
 	      fastq_path=*)
-                FASTQPATH="${1#*=}"
+                fastq_path="$base_path""${1#*=}"
                 ;;
-
+              refgenome=*)
+		refgenome="${1#*=}"
+		;;
+	      chrom_sizes=*)
+		chrom_sizes="${1#*=}"
+		;;
+	      gencode_bed=*)
+		gencode_bed="$base_path""${1#*=}"
+		;;
+	      blacklist=*)
+		blacklist="$base_path""${1#*=}"
+		;;
+	      gtf=*)
+		gtf="$base_path""${1#*=}"
+		;;
               *)
                 printf "Error: invalid argument: $1"
                 exit 1
@@ -35,49 +42,22 @@ while [ $# -gt 0 ];do
         shift
 done
 
-help () {
 
-printf "Help TODO \n"
-
-
-}
-
-#config="$base_path""$path""/wp2_workflow.conf"
-
-create_conf () {
-if [ "$config" == "" ];
-	then
-		printf "config file in $path is created\n"
-		config="$base_path""$path""/wp2_workflow_docker.conf"
-		touch $config
-		echo "#Output directory" > $config
-		echo -e "PATH=""$base_path""$path\n" >> $config
-		echo "#fastq files path" >> $config
-		echo -e "FASTQ_PATH""$fastq_path\n" >> $config
-                echo "#number of cores" >> $config
-                echo -e "CORES=""5\n" >> $config
-                echo "#If TRUE script will process all fastq files" >> $config
-                echo -e "ALL=""FALSE\n" >> $config
-                echo "#If TRUE script will create .bam and .snap files" >> $config
-                echo -e "SNAP=FALSE\n" >> $config
-                echo "#If TRUE script will crate Eigenvector Images" >> $config
-                echo -e "EIGENVEKTOR=FALSE\n" >> $config
-                echo "#IF TRUE script will create Tsne plots" >> $config
-                echo -e "TSNE=""FALSE\n" >> $config
+print_conf () {
 
 
-	fi
+		printf "starting with following values \n"
+		echo "#Output directory \n"
+		echo -e "PATH=""$base_path""$path\n"
+		echo "#fastq files path \n"
+		echo -e "FASTQ_PATH""$fastq_path \n"
+                echo "#number of cores \n"
+                echo -e "CORES=""5 \n"
+                echo "#Default EIGENVEKTOR value \n"
+                echo -e "EIGENVEKTOR=$eigenvector \n"
 
 }
 
-print_config () {
-echo "#####################"
-echo "Create Path: $base_path$path";
-echo "config: $config";
-echo "fastq files path = $base_path$fastq_path"
-echo "#####################"
-
-}
 
 loop_workflow () {
 
@@ -98,7 +78,6 @@ echo "Files in fastq path: $count"
 
 file_arr_unique=( $(printf '%s\n' "${file_arr[@]}" | sort -u) )
 
-i=0
 for f in "${file_arr_unique[@]}"
 do
 
@@ -111,15 +90,13 @@ echo "$SHORTNAME"
 echo "####################################################################################"
 
 
-printf "testing for file in ""$base_path""WP2_OUTPUT/FINISHED""/""$SHORTNAME""/""$SHORTNAME"".snap"
+printf "testing for file in ""$base_path""$path""/""$SHORTNAME""/""$SHORTNAME"".snap"
 #snap files
-#if [[ ! -f "$base_path""$path""/""$SHORTNAME""/""$SHORTNAME"".snap"  &&  ! -f "$base_path""WP2_OUTPUT/FINISHED""/""$SHORTNAME""/""$SHORTNAME"".snap" ]]; then
-if [[ ! -f "$base_path""$path""/""$SHORTNAME""/""$SHORTNAME"".snap"  &&  ! -f "$base_path""WP2_OUTPUT/FINISHED""/""$SHORTNAME""/""$SHORTNAME"".snap" ]]; then
-#if [  -f "$base_path""$path""/""$SHORTNAME""/""$SHORTNAME"".snap" ]; then
+if [[ ! -f "$base_path""$path""/""$SHORTNAME""/""$SHORTNAME"".snap"  ]]; then
 
-echo "#####################Start!"$f
+echo "#####################Start! alignment "$f
 #DOSNAP
-/mnt/$path/start-fasta-to-snap.sh "$f" "$SHORTNAME" "$base_path$path/" "$FASTQPATH"
+/mnt/$path/start-fasta-to-snap.sh "$f" "$SHORTNAME" "$base_path$path/" "$fastq_path" "$base_path$refgenome" "$base_path$chrom_sizes"
 
 mkdir "$base_path""$path""/""$SHORTNAME"
 mkdir "$base_path""$path""/""$SHORTNAME/plots_and_information"
@@ -131,35 +108,18 @@ mv "$base_path""$path""/""$SHORTNAME"".bam" "$base_path""$path""/""$SHORTNAME""/
 #cp "$base_path""$path""/""$SHORTNAME""/""$SHORTNAME"".bam" "$base_path""$path""/""$SHORTNAME""/""$SHORTNAME""_backup"".bam"
 mv "$base_path""$path""/""$SHORTNAME"".snap" "$base_path""$path""/""$SHORTNAME""/"
 #parsebam
-#/mnt/$path/parsebam.py "$base_path""$path""/""$SHORTNAME""/""$SHORTNAME"
 mv "$base_path""$path""/""$SHORTNAME""/""$SHORTNAME"".bam" "$base_path""$path""/""$SHORTNAME""/WP3/"
-#/mnt/$path/parsebam.py "$base_path""$path""/""$SHORTNAME""/WP3/""$SHORTNAME"
 /mnt/$path/parsebam.py "$base_path""$path""/""$SHORTNAME""/WP3/""$SHORTNAME"
 mv "$base_path""$path""/""$SHORTNAME""/WP3/""$SHORTNAME""_parsed.bam" "$base_path""$path""/""$SHORTNAME""/WP3/""$SHORTNAME"".bam"
 
 
 fi
-#TODO if condition
-#/mnt/$path/parsebam.py "$base_path""$path""/""$SHORTNAME""/WP3/""$SHORTNAME"
-#mv "$base_path""$path""/""$SHORTNAME""/WP3/""$SHORTNAME""_parsed.bam" "$base_path""$path""/""$SHORTNAME""/WP3/""$SHORTNAME"".bam"
 
-#eigenvectoren
-#if [[ ! -f "$base_path""$path""/""$SHORTNAME""/plots_and_informations/""$SHORTNAME""_Eigenvector_plot.jpeg"  &&  ! -f "$base_path""WP2_OUTPUT/FINISHED""/""$SHORTNAME""/""plots_and_informations/""$SHORTNAME""_Eigenvector_plot.jpeg" ]]; then
-#printf "go for eigenvectors""$base_path""$path""/""$SHORTNAME""/plots_and_informations/""$SHORTNAME""_Eigenvector_plot.jpeg"
-#Rscript /mnt/$path/preprocessing_WP2.R "$base_path$path/" "$SHORTNAME"
-#mv "$base_path""$path""/""$SHORTNAME""_coverage_hist.jpeg" "$base_path""$path""/""$SHORTNAME""/plots_and_informations/""$SHORTNAME""_coverage_hist.jpeg"
-#mv "$base_path""$path""/""$SHORTNAME""_Eigenvector_plot.jpeg" "$base_path""$path""/""$SHORTNAME""/plots_and_informations/""$SHORTNAME""_Eigenvector_plot.jpeg"
-
-#fi
 #t-sne
-if [[ ! -f "$base_path""$path""/""$SHORTNAME""/plots_and_informations/t-sne.png"  &&  ! -f "$base_path""WP2_OUTPUT/FINISHED""/""$SHORTNAME""/plots_and_information/""t-sne.png" ]] ; then
-#if [  -f "$base_path""$path""/""$SHORTNAME""/""$SHORTNAME""_t-sne_plot_""$eigencevtor"".jpeg" ]; then
-#printf "go for tsne""$base_path""$path""/""$SHORTNAME""/plots_and_informations/""$SHORTNAME""_t-sne_plot_""$eigenvector"".jpeg"
-#/mnt/$path/parsebam.py "$base_path""$path""/""$SHORTNAME""/WP3/""$SHORTNAME"
-#mv "$base_path""$path""/""$SHORTNAME""/WP3/""$SHORTNAME""_parsed.bam" "$base_path""$path""/""$SHORTNAME""/WP3/""$SHORTNAME"".bam"
+if [[ ! -f "$base_path""$path""/""$SHORTNAME""/plots_and_informations/t-sne.png" ]] ; then
 
 
-Rscript /mnt/$path/preprocessing_WP2_2.R "$base_path$path/" "$SHORTNAME" "$eigenvector"
+Rscript /mnt/$path/preprocessing_WP2_2.R "$base_path$path/" "$SHORTNAME" "$eigenvector" "$gencode" "blacklist" "gtf"
 mv "$base_path""$path""/t-sne.png" "$base_path""$path""/""$SHORTNAME""/plots_and_information/"
 mv "$base_path""$path""/barcodes.png" "$base_path""$path""/""$SHORTNAME""/plots_and_information/"
 mv "$base_path""$path""/""$SHORTNAME""_cluster_assignment_table.txt" "$base_path""$path""/""$SHORTNAME""/WP3/"
@@ -175,58 +135,14 @@ echo "Parse Done"
 
 fi
 
-
-
-    if [[ "$i" -eq 8 ]]; then
-         break
-    fi
-    ((i++))
-
-
 done
 
 }
 
 
 
-single_workflow () {
 
 
-echo "starting for :"$tissue
-
-/mnt/testing/start-fasta-to-snap.sh "$tissue"
-if [ ! -f "$base_path""$path""/""$tissue""/""$tissue"".snap" ]; then
-echo "#####################Start!"$tissue
-mkdir "$base_path""$path""/""$tissue"
-mkdir "$base_path""$path""/""$tissue/plots_and_informations"
-mkdir "$base_path""$path""/""$tissue/WP3"
-mkdir "$base_path""$path""/""$tissue/WP6"
-
-
-
-
-mv "$base_path""$path""/""$tissue"".bam" "$base_path""$path""/""$tissue""/"
-mv "$base_path""$path""/""$tissue"".snap" "$base_path""$path""/""$tissue""/"
-fi
- 
-#start Rscript for Eigenvectors
-#Rscript /mnt/testing/preprocessing_WP2.R "$base_path$path/" "$tissue"
-
-
-
-}
-
-
-
-
-
-#################
-
-#cat /mnt/docker_files/workflow_docker/base.sh
-#cat /mnt/docker_files/workflow_docker/base.sh
-
-######
-#cat /fasta-to-snap.sh
 echo "create tmp folder..."
 mkdir "$base_path"$path
 echo  "#logfile" >> "$base_path""$path""/wp2_workflow.log"
@@ -240,51 +156,23 @@ cp /parsebam.py "$base_path""$path"
 cp /narrowpeaks_to_bed.py "$base_path""$path"
 
 
-help
-if [ $config = FALSE ];then
-	create_conf
-else
-loop_workflow
-fi
-#create_conf
-#echo "$config"
-#if  test -f "$config" ; then
-#    echo "$config exists."
-#    print_config
-#    loop_workflow
-#else
-#   echo "create config"
-#   create_conf
-#fi
 
-#print_config
-#loop_workflow
+print_conf
+loop_workflow
+
 
 if [ $clear = "TRUE" ];then
 	rm "$base_path""$path""/fasta-to-snap.sh"
         rm "$base_path""$path""/start-fasta-to-snap.sh"
         rm "$base_path""$path""/preprocessing_WP2.R"
         rm -r "$base_path""$path""/tmp"
-
+	rm "$base_path""$path""/parsebam.py"
+	rm "$base_path""$path""/narrowpeaks_to_bed.py"
+	rm "$base_path""$path""/preprocessing_WP2.R"
+	rm "$base_path""$path""/preprocessing_WP2.R"
+	rm "$base_path""$path""/wp2_workflow.log"
 fi
 
-echo "Start..."
+echo "Finished..."
 
-#exec "$base_path""$path"/start-fasta-to-snap.sh
 
-#exec which python3
-#exec snaptools
-#exec /mnt/testing/start-fasta-to-snap.sh
-#echo "remove test folder"
-#rm -r /mnt/testing
-#######################
-echo "start r script"
-#exec python3 -V
-#exec grep
-#exec Rscript /mnt/testing/preprocessing_WP2.R "$base_path$path/"
-
-echo "starting...."
-#echo "ls"
-#find / ENC-1LGRB-194-SM-A9HOW_snATAC_colon_transverse.snap
-#echo "ls"
-#single_workflow

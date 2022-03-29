@@ -8,11 +8,14 @@ args = commandArgs(trailingOnly=TRUE)
 print("base_path ist:")
 print(args[1])
 print(args[2])
+print(args[3])
+print(args[4])
+print(args[5])
 
-genefile = paste(args[1],"gencode.filtered.bed",sep="")
+genefile = args[3]
 print(genefile)
-blacklist_regions = paste(args[1],"hg38-blacklist.v2_parsed.bed",sep="")
-gtf.gr = rtracklayer::import(paste(args[1],"genome/homo_sapiens.104.mainChr.gtf",sep=""))
+blacklist_regions = args[4]
+gtf.gr = rtracklayer::import(args[5])
 
 sample_name = args[2]
 

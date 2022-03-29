@@ -20,9 +20,9 @@ echo $3
 exec "$3"fasta-to-snap.sh \
 --fasta1=$fasta1 \
 --fasta2=$fasta2 \
---refgenome=$3genome/hg38.fa \
+--refgenome=$5 \
 --refname="hg38" \
---chrom-sizes=$3"genome/hg38.chrom.sizes" \
+--chrom-sizes=$6 \
 --short-name=$2 \
 --path=$3
 

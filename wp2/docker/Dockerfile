@@ -73,9 +73,9 @@ RUN pip install pysam
 
 RUN echo $FOO
 COPY ./base.sh /
+RUN chmod +x /base.sh
 COPY ./fasta-to-snap.sh /
 COPY ./start-fasta-to-snap.sh /
-COPY ./preprocessing_WP2.R /
 COPY ./preprocessing_WP2_2.R /
 COPY ./parsebam.py /
 COPY ./narrowpeaks_to_bed.py /
