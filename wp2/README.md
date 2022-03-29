@@ -26,4 +26,4 @@ Install [SnapTools](https://github.com/r3fang/SnapTools), [SnapATAC](https://git
 * cell type annotation
 
 ## Example
-*coming soon*
+See [wiki](https://github.com/loosolab/Datenanalyse-2021/wiki/WP2) for detailed explanations of each step of the workflow.
