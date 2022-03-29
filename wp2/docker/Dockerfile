@@ -1,39 +1,28 @@
 FROM rocker/r-ver:3.6.0
 USER root
+#based in rocker/r docker
 
-
+# install essential librarys
 RUN apt-get update && apt-get install -y \
         git\
 	tree\
         ssh\
         zlib1g-dev\
         sudo
-
+# install essential librarys
 RUN sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
         libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
         xz-utils tk-dev libffi-dev liblzma-dev
 
-
+#install bwa pip
 RUN apt-get install -y python-pip
 RUN sudo apt-get install -y libbz2-dev
 RUN sudo apt-get install -y liblzma-dev
-#RUN sudo apt-get install -y python3
-#RUN sudo apt-get install -y python3-pip
+
 RUN sudo apt-get install bwa
 
-#RUN pip3 install snaptools
-#RUN apt-get update && apt-get install -y software-properties-common gcc && \
-#    add-apt-repository -y ppa:deadsnakes/ppa
 
-#RUN apt-get update && apt-get install -y python3.6 python3-distutils python3-pip python3-apt
-#RUN wget https://www.python.org/ftp/python/3.6.9/Python-3.6.9.tgz
-#RUN tar xvf Python-3.6.9.tgz
-#RUN Python-3.6.9/configure --enable-optimizations --enable-shared --with-ensurepip=install
-
-#RUN sudo make altinstall
-
-#RUN python3 -V
-
+#install python 3,6.8
 ARG BUILDDIR="/tmp/build"
 ARG PYTHON_VER="3.6.8"
 WORKDIR ${BUILDDIR}
@@ -48,9 +37,9 @@ cd Python-${PYTHON_VER} && \
 make > /dev/null 2>&1 && \
 make install > /dev/null 2>&1 && \
 rm -rf ${BUILDDIR} 
-#RUN curl https://bootstrap.pypa.io/pip/3.6/get-pip.py | sudo -H python3.6
+
+# install SnapATAC and dependencies for R-script
 RUN python3 -m pip install numpy
-#RUN pip3 install numpy
 RUN pip3 install macs2
 RUN install2.r devtools
 RUN install2.r usethis 
@@ -71,6 +60,7 @@ RUN Rscript -e 'BiocManager::install("rtracklayer")'
 RUN pip3 install snaptools
 RUN pip install pysam
 
+# copy scripts in docker image
 RUN echo $FOO
 COPY ./base.sh /
 RUN chmod +x /base.sh
