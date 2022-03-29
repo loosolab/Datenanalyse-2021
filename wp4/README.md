@@ -62,10 +62,5 @@ It's a data frame of pairwise peak comparison with subsequently calculated co-ac
 ## Example Case 
 An Example Run of Cicero is provided under this link: [Example Run](https://github.com/loosolab/Datenanalyse-2021/blob/c238d0849c8d54c81a5d3166651388453e2aa340/wp4/Example%20Case/Example%20Run.md)
 
-The biological Approaches of Cicero with the example case are stored here: wp4/Example Case/Example Run.md
-
-## Workflow
-![Workflow_WP4 drawio](https://user-images.githubusercontent.com/93346891/160412551-ce8f17be-edce-4200-99ad-0a3fdf4ccc05.png)
-
-
+The biological Approaches of Cicero with the example case are stored here: [Biological Approach](https://github.com/loosolab/Datenanalyse-2021/blob/4a6321f815b998b0220bbfb91923626c332a3f69/wp4/Example%20Case/Biological%20Approaches%20of%20Cicero.md)
 
