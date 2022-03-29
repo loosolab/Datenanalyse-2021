@@ -66,7 +66,7 @@ The single steps of the pipeline consist of the following scripts:
 9. [compare_gene_sets.py](#9-compare-the-gene-sets)
 
 
-Steps 1-4 include the actual motif-finding pipeline runs, as well as the necessary preparation and post-processing.
+Steps 1-4 include the actual motif discovery pipeline runs, as well as the necessary preparation and post-processing.
 Steps 5 and 6 are used to analyse similarities between the motifs found in different runs of the pipeline (i.e. different tissue and cell types).
 Steps 7-9 are used to analyse the motifs found with the aim of hypothesising the important functions of the motifs. These final 3 steps are only executed if the `ANN_CHECKER` global variable is set to 'yes'.
 Since this pipeline is designed for ATAC-Seq data, the motif discovery pipeline is run for each cell type of each given tissue.
