@@ -8,8 +8,8 @@ This is done with single cell ATAC-Seq data provided by the [CATlas](http://catl
 
 [Work package 1](https://github.com/loosolab/Datenanalyse-2021/tree/main/wp1/):
 
-WP1 uses [scanpy](https://github.com/theislab/scanpy) and [episcanpy](https://github.com/colomemaria/epiScanpy) for processing of anndata files.
-This includes filtering and clustering of the provided data.
+WP1 uses [scanpy](https://github.com/theislab/scanpy) and [episcanpy](https://github.com/colomemaria/epiScanpy) for processing of anndata files, 
+which includes filtering and clustering of the provided data.
 
 After clustering, peaks are assigned to genes and non-assigned/intergenics are removed.
 The [SCSA](https://github.com/bioinfo-ibms-pumc/SCSA) script is used to assign cell types to each cluster, based on the most relevant marker genes.
