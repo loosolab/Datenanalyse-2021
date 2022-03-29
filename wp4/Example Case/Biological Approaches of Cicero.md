@@ -866,6 +866,9 @@ The red bars represents the peaks, under there the genome window is displayed as
 
 Many distal peaks are found, some on other genes and some in the genome distal from the assigned promoter region. 
 
-***
-For reasons of comparability, the connection plot of SP1 is shown here again. 
+
+#### Cicero Connection Plot of ST6GAL1
+
+For reasons of comparability, the connection plot of ST6GAL1 is shown here again. 
+
 ![Plot Connection SP](https://user-images.githubusercontent.com/93346891/160595780-c7f61fe5-bd44-49d9-b3e4-1554e1d39ef3.png)
