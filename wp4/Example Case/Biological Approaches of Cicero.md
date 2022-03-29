@@ -865,3 +865,7 @@ Visualized by this plot are the connections from a peak that is assigned to a pr
 The red bars represents the peaks, under there the genome window is displayed as grey arrows. Is a gene assigned to this genome window it is shown in the green bar with the corresponding name in front. 
 
 Many distal peaks are found, some on other genes and some in the genome distal from the assigned promoter region. 
+
+***
+For reasons of comparability, the connection plot of SP1 is shown here again. 
+![Plot Connection SP](https://user-images.githubusercontent.com/93346891/160595780-c7f61fe5-bd44-49d9-b3e4-1554e1d39ef3.png)
