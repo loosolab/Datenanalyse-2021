@@ -152,7 +152,7 @@ All outputs of this script will be written into the directory called 'similarity
 
 ### 7. Generate gene sets
 In order to evaluate the annotation of the motifs, it is first necessary to collect the information about which genes belong to the motif.
-The script provided here collects this information from the **allhits.txt* of the different motifs. From this, txt files are created for each individual motif on the one hand and txt files for each cell type on the other hand. The files of the cell types contain all associated motifs (not just one motif, as is the case in the txt files of the individual motifs).
+The script provided here collects this information from the *allhits.txt* of the different motifs. From this, txt files are created for each individual motif on the one hand and txt files for each cell type on the other hand. The files of the cell types contain all associated motifs (not just one motif, as is the case in the txt files of the individual motifs).
 
 The script *generate_gene_sets.sh* is called as follows:
 
@@ -164,7 +164,7 @@ The script *generate_gene_sets.sh* is called as follows:
 
 ### 8. Generate gene sets for transcription factors
 In order to evaluate the annotation of the motifs, it is also necessary to collect information about which genes belong to the known TFs.
-The script provided here collects this information per tissue from the **overview.txt* of the different TFs (from the WP3 output data) and creates txt files for all tissues (all associated TFs are stored in this file).
+The script provided here collects this information per tissue from the *overview.txt* of the different TFs (from the WP3 output data) and creates txt files for all tissues (all associated TFs are stored in this file).
 
 The script *generate_gene_sets_TFs.sh* is called as follows:
 
