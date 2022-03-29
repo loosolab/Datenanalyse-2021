@@ -21,21 +21,6 @@ library(stringr)
 library(Matrix)
 ```
 
-    
-    Attaching package: ‘dplyr’
-    
-    
-    The following objects are masked from ‘package:stats’:
-    
-        filter, lag
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        intersect, setdiff, setequal, union
-    
-    
-
 
 ***conns.csv*** is loaded to the variable ***conns***, by the function `read.csv()`, specifing which seperator was used. The columnames should be ***Peak1/2*** and ***coaccess***. 
 
@@ -257,11 +242,6 @@ colnames(cluster_peaks) <- c("Peak2", "0", "1", "2", "3", "4", "5",
 head(cluster_peaks)
 ```
 
-    Warning message in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, :
-    “EOF within quoted string”
-
-
-
 <table class="dataframe">
 <caption>A data.frame: 5 × 19</caption>
 <thead>
@@ -381,6 +361,7 @@ for (a in sublist){
     [1] "4  is equal with every data frame."
     [1] "5  is equal with every data frame."
 
+So no Peaks were found with differing co-accessibility sheme. 
 
 *2. Check: Are there unique Peaks with co-accessibility scores found per Cluster:* 
 
@@ -548,11 +529,6 @@ gene_matrix <- gene_matrix[order(gene_matrix$activity_score), ]
 tail(gene_matrix)
 ```
 
-    <sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient
-    
-
-
-
 <table class="dataframe">
 <caption>A data.frame: 6 × 2</caption>
 <thead>
@@ -602,7 +578,6 @@ Basend on the annotation of peaks to promoter regions, an interesting question w
 The second biological question `Cicero` could answer is then:
 ### Is there a specific promoter region that is only found in one tissue type, comparing all tissues with one another. 
 
-In order to compare promoters, the ***conns.csv*** data frame has to be extended by the column tissue. Check if this column is already provided, otherwise add. 
 
 CAUTION: just run this code chunk if the tissue isn't in ***conns_all*** yet. 
 
@@ -792,146 +767,6 @@ library(ggplot2)
 library(stringr)
 ```
 
-    Loading required package: monocle3
-    
-    Loading required package: Biobase
-    
-    Loading required package: BiocGenerics
-    
-    
-    Attaching package: ‘BiocGenerics’
-    
-    
-    The following objects are masked from ‘package:dplyr’:
-    
-        combine, intersect, setdiff, union
-    
-    
-    The following objects are masked from ‘package:stats’:
-    
-        IQR, mad, sd, var, xtabs
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-        dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-        grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-        order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-        rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-        union, unique, unsplit, which.max, which.min
-    
-    
-    Welcome to Bioconductor
-    
-        Vignettes contain introductory material; view with
-        'browseVignettes()'. To cite Bioconductor, see
-        'citation("Biobase")', and for packages 'citation("pkgname")'.
-    
-    
-    Loading required package: SingleCellExperiment
-    
-    Loading required package: SummarizedExperiment
-    
-    Loading required package: MatrixGenerics
-    
-    Loading required package: matrixStats
-    
-    
-    Attaching package: ‘matrixStats’
-    
-    
-    The following objects are masked from ‘package:Biobase’:
-    
-        anyMissing, rowMedians
-    
-    
-    The following object is masked from ‘package:dplyr’:
-    
-        count
-    
-    
-    
-    Attaching package: ‘MatrixGenerics’
-    
-    
-    The following objects are masked from ‘package:matrixStats’:
-    
-        colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
-        colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
-        colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
-        colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
-        colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
-        colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
-        colWeightedMeans, colWeightedMedians, colWeightedSds,
-        colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
-        rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
-        rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
-        rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
-        rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
-        rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
-        rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
-        rowWeightedSds, rowWeightedVars
-    
-    
-    The following object is masked from ‘package:Biobase’:
-    
-        rowMedians
-    
-    
-    Loading required package: GenomicRanges
-    
-    Loading required package: stats4
-    
-    Loading required package: S4Vectors
-    
-    
-    Attaching package: ‘S4Vectors’
-    
-    
-    The following objects are masked from ‘package:Matrix’:
-    
-        expand, unname
-    
-    
-    The following objects are masked from ‘package:dplyr’:
-    
-        first, rename
-    
-    
-    The following objects are masked from ‘package:base’:
-    
-        expand.grid, I, unname
-    
-    
-    Loading required package: IRanges
-    
-    
-    Attaching package: ‘IRanges’
-    
-    
-    The following objects are masked from ‘package:dplyr’:
-    
-        collapse, desc, slice
-    
-    
-    Loading required package: GenomeInfoDb
-    
-    
-    Attaching package: ‘monocle3’
-    
-    
-    The following objects are masked from ‘package:Biobase’:
-    
-        exprs, fData, fData<-, pData, pData<-
-    
-    
-    Loading required package: Gviz
-    
-    Loading required package: grid
-    
-
-
 The Cicero package includes a plotting functing. The function `plot_connections()` visualizes the pairwise co-accessibility. By usage of the `Gviz` framework `Cicero`plots genome browser-style plots. This function has many options. The function first requires the connection-score data frame, a frame of connections including the columns ***Peak1***, ***Peak2*** and ***coaccess***. This information is provided by the data frame ***conns***. Furthermore a chromosome on which the plotting has to be performed must be given as well as the information on ***minbp*** and ***maxbp***, base pair coordinates of start and end region of the plot.
 To automate the plotting variables are used, which are likely to show good plot results. 
 
@@ -1023,9 +858,7 @@ plot_connections(dff, chrom, minbp, maxbp,
 ```
 
 
-    
-![png](output_75_0.png)
-    
+![output_75_0](https://user-images.githubusercontent.com/93346891/160593455-b04a4737-aa63-4cab-91a0-028b2c270116.png)
 
 
 Visualized by this plot are the connections from a peak that is assigned to a promoter region in the genome.
