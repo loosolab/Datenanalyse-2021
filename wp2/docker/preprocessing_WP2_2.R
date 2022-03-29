@@ -23,7 +23,6 @@ setwd(args[1])
 
 # load .snap file
 s_file=paste(args[1],args[2],"/",args[2],".snap",sep="")
-#s_file="/home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1JKYN-020-SM-C1PX3_snATAC_thoracic_aorta.snap"
 x.sp = createSnap(
   file=s_file,
   sample=sample_name,
@@ -88,8 +87,6 @@ hist(
   xlim=c(0, 5)
 );
 
-#system('touch /mnt/testing/saving_plot1.jpg')
-#jpeg(file="saving_plot1.jpeg")
 #dev.off()
 print("hist done")
 # filter bins with low coverage
@@ -106,7 +103,6 @@ x.sp = runDiffusionMaps(
 );
 
 # show first 25 pairs of eigenvectors
-#jpeg(file=paste(args[2],"_Eigenvector_plot.jpeg",sep=""))
 
 plotDimReductPW(
   obj=x.sp, 
@@ -129,7 +125,6 @@ v_pair = as.integer(args[3])
 
 # continue dimensional reduction with first n eigenvectors
 
-# continue dimensional reduction with first n eigenvectors
 x.sp = runKNN(
   obj=x.sp,
   eigs.dims=1:v_pair,
@@ -157,7 +152,6 @@ x.sp = runViz(
 );
 
 # plot t-sne
-#jpeg(file=paste(args[2],"_t-sne_plot_",args[3],".jpeg",sep=""))
 png(filename="t-sne.png", width=6, height=6, units="in", res=300)
 
 
@@ -179,25 +173,6 @@ plotViz(
   legend.add=FALSE
 );
 dev.off()
-
-
-## new gene annotation
-## TODO
-## # gene annotation
-## genes = read.table(genefile);
-## genes.gr = GRanges(genes[,1], 
-##                      IRanges(genes[,2], genes[,3]), name=genes[,4]
-## );
-## 
-## x.sp = addBmatToSnap(x.sp);
-## # TODO: Select highest "expressed" genes of each cluster
-## x.sp = createGmatFromMat(
-##   obj=x.sp, 
-##   input.mat="bmat",
-##   genes=genes.gr,
-##   do.par=TRUE,
-##   num.cores=6
-## );
 
 ## generate cluster assignment table
 
@@ -238,23 +213,6 @@ write.table(peaks.df,file = paste(args[2],"peaks.combined.bed",sep=""),append=FA
               row.names = FALSE, col.names = FALSE, qmethod = c("escape", "double"),
               fileEncoding = "")
 
-saveRDS(x.sp, file=paste(sample_name, ".rds", sep=""))
-
-# TODO: don't think that the commented steps are necessary for our pipeline?
-# create cell-by-peak matrix and add to the snap file
-# Terminal: snaptools snap-add-pmat \
-# --snap-file /home/rstudio/workspaces/stud4/SnaptoolsTest/ENC-1LGRB-069-SM-A8WNZ_snATAC_right_lobe_of_liver.snap \
-# --peak-file peaks.combined.bed
-
-# add cell-by-peak matrix
-# x.sp = readRDS("right_lobe_of_liver.snap.rds");
-# x.sp = addPmatToSnap(x.sp);
-# x.sp = makeBinary(x.sp, mat="pmat");
-
-#?paste
-
-#ptest = paste(sample_name, ".", sep="")
-#ptest
 
 #x.sp
 saveRDS(x.sp, file=paste(args[2],sample_name, ".rds", sep=""))
